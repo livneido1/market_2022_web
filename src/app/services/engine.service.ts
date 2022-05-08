@@ -12,7 +12,7 @@ const httpOptions = {
 })
 export class EngineService {
   private serverUrl: string = 'http://localhost:8080';
-  constructor(private http: HttpClient, private headers: HttpHeaders) {}
+  constructor(private http: HttpClient) {}
 
   register(request: string): Observable<string> {
     return this.http.post<string>('/register', request, httpOptions);

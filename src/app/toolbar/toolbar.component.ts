@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { EngineService } from 'app/services/engine.service';
 import { ConfigService } from '../services/config-service.service';
 
 @Component({
@@ -13,7 +14,9 @@ export class ToolbarComponent implements OnInit {
   search_argument:string;
 
 
-  constructor(private config: ConfigService) {
+  constructor(
+    private config: ConfigService,
+    private engine: EngineService) {
       this.productSearchBy = "Product Name";
       this.search_argument = "";
    }
@@ -48,7 +51,11 @@ export class ToolbarComponent implements OnInit {
 
   }
   searchByCategory(){
-
+    this.engine.guestLogin().subscribe(_=>{
+      const x=3;
+      const y = 3 + x;
+    }
+      )
   }
 
   searchBy(){
