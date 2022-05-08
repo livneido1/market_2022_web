@@ -1,6 +1,6 @@
-import { Deserializeable } from "../facadeObjects/deserializable";
+import { Deserializable } from "../facadeObjects/deserializable";
 
-export class AddPersonalQueryRequest implements Deserializeable {
+export class AddPersonalQueryRequest implements Deserializable {
 
   private userAdditionalQueries: string;
   private userAdditionalAnswers: string;
@@ -16,7 +16,7 @@ export class AddPersonalQueryRequest implements Deserializeable {
     if (!value){
      return this;
     }
-    Object.assign(value);
+    Object.assign(this,value);
     return this;
   }
 

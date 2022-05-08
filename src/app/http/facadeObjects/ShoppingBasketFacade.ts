@@ -1,20 +1,23 @@
-import { Deserializer } from "v8";
-import { Deserializeable } from "./deserializable";
+import { Deserializable } from './deserializable';
 
-export class ItemFacade implements Deserializeable{
+export class ItemFacade implements Deserializable {
+  private items: Map<ItemFacade, number>;
+  private price: number;
+  constructor() {
+    this.items = new Map([]);
+    this.price = 0;
+  }
 
-    private items : Map<ItemFacade, number>
-    private price : number
-    constructor(){
-        this.items=new Map([]);
-        this.price=0
+  deserialize(value: any): this {
+    if (!value) {
+      return this;
     }
-
-    deserialize(value: any): this {
-        Object.assign(value);
-        for (let entry of value.items.entries()) {
-            this.items.set(entry[0], entry[1]);    //"Lokesh" 37 "Raj" 35 "John" 40
-        }
-        return this;
+    Object.assign(this, value);
+    this.items= new Map();
+    for (const entry of value.items.entries()) {
+      const item  = new ItemFacade().deserialize(entry[0]);
+      this.items.set(item, entry[1]);
     }
+    return this;
+  }
 }

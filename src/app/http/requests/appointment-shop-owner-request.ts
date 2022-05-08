@@ -1,6 +1,6 @@
-import { Deserializeable } from "../facadeObjects/deserializable";
+import { Deserializable } from "../facadeObjects/deserializable";
 
-export class AppointmentShopOwnerRequest implements Deserializeable{
+export class AppointmentShopOwnerRequest implements Deserializable{
 
   private shopOwnerName: string;
   private appointedShopOwner: string;
@@ -18,7 +18,7 @@ export class AppointmentShopOwnerRequest implements Deserializeable{
     if (!value){
      return this;
     }
-    Object.assign(value);
+    Object.assign(this,value);
     return this;
   }
 

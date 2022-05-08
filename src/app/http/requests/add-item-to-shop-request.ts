@@ -1,7 +1,7 @@
-import { Deserializeable } from "../facadeObjects/deserializable";
-import { Category } from "../facadeObjects/item-facade";
+import { Deserializable } from '../facadeObjects/deserializable';
+import { Category } from '../facadeObjects/ItemFacade';
 
-export class AddItemToShopRequest implements Deserializeable {
+export class AddItemToShopRequest implements Deserializable {
   private shopOwnerName: string;
   private name: string;
   private price: number;
@@ -11,29 +11,27 @@ export class AddItemToShopRequest implements Deserializeable {
   private amount: number;
   private shopName: string;
 
-  constructor(){
-    this.shopOwnerName = "";
-    this.name = "";
+  constructor() {
+    this.shopOwnerName = '';
+    this.name = '';
     this.price = 0;
     this.category = Category.general;
-    this.info = "";
+    this.info = '';
     this.keywords = [];
     this.amount = 0;
-    this.shopName = "";
+    this.shopName = '';
   }
-
 
   deserialize(value: any): this {
-      if (!value){
-       return this;
-      }
-      Object.assign(value);
-      this.category = value.category;
-      this.keywords = []
-      for (const keyword of value.keywords){
-        this.keywords.push(keyword);
-      }
+    if (!value) {
       return this;
+    }
+    Object.assign(this,value);
+    this.category = value.category;
+    this.keywords = [];
+    for (const keyword of value.keywords) {
+      this.keywords.push(keyword);
+    }
+    return this;
   }
-
 }

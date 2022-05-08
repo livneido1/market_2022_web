@@ -1,7 +1,7 @@
-import { Deserializeable } from "../facadeObjects/deserializable";
+import { Deserializable } from "../facadeObjects/deserializable";
 import { ItemFacade } from "../facadeObjects/ShoppingBasketFacade";
 
-export class EditItemFromShoppingCartRequest implements Deserializeable {
+export class EditItemFromShoppingCartRequest implements Deserializable {
 
   private amount: number;
   private itemFacade: ItemFacade;
@@ -21,7 +21,7 @@ export class EditItemFromShoppingCartRequest implements Deserializeable {
     if (!value){
      return this;
     }
-    Object.assign(value);
+    Object.assign(this,value);
     this.itemFacade=  new ItemFacade().deserialize(value.itemFacade);
     return this;
   }
