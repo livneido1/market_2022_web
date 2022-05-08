@@ -1,0 +1,39 @@
+<div class="toolbar_background">
+
+  <button class="cartIcon">
+    <span class="material-icons">shopping_cart</span>
+  </button>
+  <button class="memberSetttingButton" *ngIf="isMemberLoggedIn()">{{getMemberName()}}</button>
+  <button class="loginButton" *ngIf="!isMemberLoggedIn()"
+    (click)="loginClicked()">
+    login
+  </button>
+  <button class="registerButton" *ngIf="!isMemberLoggedIn()"
+    (click)="register()">
+    register
+
+  </button>
+  <p style="margin-left: 10px;">{{getMarketName()}}</p>
+
+  <div>
+    <mat-form-field appearance="fill">
+      <mat-label>Search By</mat-label>
+      <mat-select #fontSize [(value)]="productSearchBy" >
+        <mat-option value="Category">Category</mat-option>
+        <mat-option value="Keyword">Keyword</mat-option>
+        <mat-option value="Product Name">Product Name</mat-option>
+
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="searchBar" appearance="fill">
+      <mat-label >Search by {{productSearchBy}}</mat-label>
+      <input matInput #last>
+    </mat-form-field>
+    <button class="searchButton"
+      (click)="searchItem()">
+      <span class='material-icons'>search</span>
+    </button>
+
+  </div>
+</div>

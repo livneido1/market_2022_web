@@ -1,0 +1,21 @@
+<div class="backgroundComp">
+  <p class="title">{{title}}</p>
+  <mat-form-field class="searchBar" appearance="fill">
+    <mat-label > Name</mat-label>
+    <input matInput #last>
+  </mat-form-field>
+  <br>
+  <mat-form-field class="searchBar" appearance="fill">
+    <mat-label >Password </mat-label>
+    <input matInput #last>
+  </mat-form-field>
+  <br>
+  <mat-form-field class="searchBar" appearance="fill">
+    <mat-label >Validate Password</mat-label>
+    <input matInput #last>
+  </mat-form-field>
+  <br>
+  <button [disabled]="!canSubmit()">
+    Submit!
+  </button>
+</div>
