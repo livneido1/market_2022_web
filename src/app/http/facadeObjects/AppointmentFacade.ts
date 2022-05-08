@@ -12,4 +12,8 @@ export abstract class AppointmentFacade{
         this.relatedShop = undefined
         this.permissions = []
     }
+
+    deserialize(value: any): this {
+        
+    }
 }
