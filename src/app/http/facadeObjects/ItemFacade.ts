@@ -1,7 +1,7 @@
 import { Deserializer } from "v8";
 import { Deserializeable } from "./deserializable";
 
-enum Category{
+export enum Category{
     general,
     fruit,
     meat,
