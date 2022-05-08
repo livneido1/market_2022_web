@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { EngineService } from 'app/services/engine.service';
 
 @Component({
   selector: 'app-register',
@@ -11,7 +12,7 @@ export class RegisterComponent implements OnInit {
   password:string;
   validatePassword:string;
   title:string = "Register";
-  constructor() {
+  constructor(private engine: EngineService) {
     this.name="";
     this.password="";
     this.validatePassword="";
@@ -26,6 +27,10 @@ export class RegisterComponent implements OnInit {
       this.password !=="" &&
       this.validatePassword !=="" &&
       this.validatePassword === this.password;
+  }
+
+  submit(){
+
   }
 
 }
