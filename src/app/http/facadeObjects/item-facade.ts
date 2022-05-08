@@ -19,6 +19,14 @@ export class ItemFacade implements Deserializeable{
     private rankers : number;
 
     constructor(){
+        this.info = "";
+        this.ID = 0;
+        this.name = "";
+        this.price = 0;
+        this.category = Category.general;
+        this.keywords=[];
+        this.rank=0;
+        this.rankers=0;
     }
 
     deserialize(value: any): this {
@@ -30,13 +38,5 @@ export class ItemFacade implements Deserializeable{
         }
         return this;
     }
-
-    get get_info(): string{
-        return this.info;
-    }
-    
-
-
-
     
 }

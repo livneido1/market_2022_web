@@ -6,6 +6,8 @@ export class ItemFacade implements Deserializeable{
     private items : Map<ItemFacade, number>
     private price : number
     constructor(){
+        this.items=new Map([]);
+        this.price=0
     }
 
     deserialize(value: any): this {
