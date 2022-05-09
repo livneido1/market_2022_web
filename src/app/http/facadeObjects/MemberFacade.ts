@@ -13,7 +13,7 @@ export class MemberFacade implements Deserializable {
 
   constructor() {
     this.name = '';
-    this.myCart = new ShoppingCartFacade();
+    this.myCart = Object();
     this.appointedByMe = [];
     this.myAppointments = [];
     this.purchaseHistory = [];
@@ -27,10 +27,10 @@ export class MemberFacade implements Deserializable {
     this.appointedByMe = [];
     for (const appointment of value.appointedByMe){
       switch (appointment.type){
-        // case "ShopManagerAppointmentFacade":
-        //   let app2 =new ShopManagerAppointmentFacade().deserialize(appointment);
-        //   this.appointedByMe.push(app2);
-        //   break;
+        case "ShopManagerAppointmentFacade":
+          let app2 =new ShopManagerAppointmentFacade().deserialize(appointment);
+          this.appointedByMe.push(app2);
+          break;
         case "ShopOwnerAppointmentFacade":
           let app = new ShopOwnerAppointmentFacade().deserialize(appointment);
           this.appointedByMe.push(app);

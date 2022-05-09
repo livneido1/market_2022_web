@@ -3,7 +3,7 @@ import { MemberFacade } from './MemberFacade';
 import { PermissionFacade } from './PermissionFacade';
 import { ShopFacade } from './shop-facade';
 
-export class AppointmentFacade   {
+export abstract class AppointmentFacade {
   appointed: MemberFacade; //  the actual appointed member
   superVisor: MemberFacade; //  member appointedMe
   relatedShop: ShopFacade;
@@ -11,16 +11,12 @@ export class AppointmentFacade   {
   type: string;
 
   constructor() {
-    this.appointed = new MemberFacade();
-    this.superVisor = new MemberFacade();
-    this.relatedShop = new ShopFacade();
+
+    this.appointed = Object();
+    this.superVisor = Object();
+    this.relatedShop = Object();
     this.permissions = [];
     this.type = '';
+
   }
-
-
-
-
-
-
 }

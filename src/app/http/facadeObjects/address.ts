@@ -1,7 +1,6 @@
 import { Deserializable } from './deserializable';
-import { FacadeObject } from './facade-object';
 
-export class Address implements Deserializable, FacadeObject<Address> {
+export class Address implements Deserializable {
   city: string;
   street: string;
   buildingNum: string;

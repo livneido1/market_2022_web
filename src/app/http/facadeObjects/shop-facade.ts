@@ -1,12 +1,13 @@
 import { AppointmentFacade } from './AppointmentFacade';
 import { Deserializable } from './deserializable';
 import { ItemFacade } from './ItemFacade';
+import { ShopManagerAppointmentFacade } from './shop-manager-appointment-facade';
 import { ShopOwnerAppointmentFacade } from './ShopOwnerAppointmentFacade';
 
 export class ShopFacade implements Deserializable {
   private shopName: string;
   private itemMap: Map<number, ItemFacade>; //<ItemID,main.businessLayer.Item>
-  private employees: Map<String, AppointmentFacade>; //<name, appointment>
+  private employees: Map<String,AppointmentFacade>; //<name, appointment>
   private itemsCurrentAmount: Map<ItemFacade, number>;
   private closed: boolean;
 
@@ -28,17 +29,19 @@ export class ShopFacade implements Deserializable {
       this.itemMap.set(entry[0], new ItemFacade().deserialize(entry[1]));
     }
     this.employees = new Map();
-    for (const entry of value.employees.entries()) {
-      let appointment: AppointmentFacade= new ShopOwnerAppointmentFacade();
-      switch (entry[1].type) {
+    for (const entry of Object.entries(value.employees)) {
+      const appointmentJson = entry[1] as AppointmentFacade;
+      switch (appointmentJson.type) {
         case 'ShopOwnerAppointment':
-          appointment = new ShopOwnerAppointmentFacade().deserialize(value);
+            let appointment = new ShopOwnerAppointmentFacade().deserialize(appointmentJson);
+            appointment.relatedShop = this;
+            this.employees.set(entry[0], appointment);
           break;
-        case 'ShopOwnerAppointment':
-          appointment = new ShopOwnerAppointmentFacade().deserialize(value);
+        case 'ShopManagerAppointmentFacade':
+          let appointment1 = new ShopManagerAppointmentFacade().deserialize(appointmentJson);
+          this.employees.set(entry[0],appointment1);
           break;
       }
-      this.employees.set(entry[0],appointment);
     }
     this.itemsCurrentAmount = new Map();
     for (const entry of value.itemsCurrentAmount.entries()) {

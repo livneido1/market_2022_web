@@ -18,13 +18,13 @@ export class ShopOwnerAppointmentFacade extends AppointmentFacade implements Des
       return this;
     }
     Object.assign(this, value);
-    this.appointed = new MemberFacade().deserialize(value.appointed);
-    this.superVisor = new MemberFacade().deserialize(value.superVisor);
-    this.relatedShop = new ShopFacade().deserialize(value.relatedShop);
-    this.permissions = [];
-    for (const permission of value.permissions) {
-      this.permissions.push(permission);
-    }
+    // this.appointed = new MemberFacade().deserialize(value.appointed);
+    // this.superVisor = new MemberFacade().deserialize(value.superVisor);
+    // // this.relatedShop = new ShopFacade().deserialize(value.relatedShop);
+    // this.permissions = [];
+    // for (const permission of value.permissions) {
+    //   this.permissions.push(permission);
+    // }
 
     return this;
   }

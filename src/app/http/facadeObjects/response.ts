@@ -5,8 +5,6 @@ export class Response implements Deserializable {
   constructor() {
     this.errorMessage = '';
   }
-
-
   isErrorOccurred(){
     return !this.errorMessage && this.errorMessage !== '';
   }

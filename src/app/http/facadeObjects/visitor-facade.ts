@@ -8,8 +8,8 @@ export class VisitorFacade implements Deserializable {
   cart: ShoppingCartFacade;
   constructor() {
     this.name = '';
-    this.member = new MemberFacade();
-    this.cart = new ShoppingCartFacade();
+    this.member = Object();
+    this.cart = Object();
   }
 
   deserialize(value: any): this {

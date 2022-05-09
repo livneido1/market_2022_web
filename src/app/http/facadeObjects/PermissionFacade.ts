@@ -6,7 +6,6 @@ export class PermissionFacade implements Deserializable{
     constructor(){
         this.name=""
     }
-
     deserialize(value: any): this {
       if (!value){
         return this;
@@ -14,7 +13,4 @@ export class PermissionFacade implements Deserializable{
       Object.assign(this,value);
       return this
     }
-
-
-
 }
