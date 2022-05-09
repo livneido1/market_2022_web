@@ -3,9 +3,9 @@ import { MemberFacade } from './MemberFacade';
 import { ShoppingCartFacade } from './shopping-cart-facade';
 
 export class VisitorFacade implements Deserializable {
-  private name: string;
-  private member: MemberFacade;
-  private cart: ShoppingCartFacade;
+  name: string;
+  member: MemberFacade;
+  cart: ShoppingCartFacade;
   constructor() {
     this.name = '';
     this.member = new MemberFacade();

@@ -1,4 +1,3 @@
-import { Deserializer } from 'v8';
 import { AppointmentFacade } from './AppointmentFacade';
 import { Deserializable } from './deserializable';
 import { MemberFacade } from './MemberFacade';
@@ -8,22 +7,25 @@ export class ShopManagerAppointmentFacade
   extends AppointmentFacade
   implements Deserializable
 {
+  field: boolean;
   constructor() {
     super();
+    this.field = false;
   }
 
-  override deserialize(value: any): this {
+  deserialize(value: any): this {
     if (!value) {
       return this;
     }
     Object.assign(this, value);
     this.appointed = new MemberFacade().deserialize(value.appointed);
     this.superVisor = new MemberFacade().deserialize(value.superVisor);
-    this.relatedShop =  new ShopFacade().deserialize(value.relatedShop);
+    this.relatedShop = new ShopFacade().deserialize(value.relatedShop);
     this.permissions = [];
-    for (const permission of value.permissions){
+    for (const permission of value.permissions) {
       this.permissions.push(permission);
     }
+
     return this;
   }
 }

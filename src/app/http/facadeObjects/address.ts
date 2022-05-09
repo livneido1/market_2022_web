@@ -1,9 +1,10 @@
 import { Deserializable } from './deserializable';
+import { FacadeObject } from './facade-object';
 
-export class Address implements Deserializable {
-  private city: string;
-  private street: string;
-  private buildingNum: string;
+export class Address implements Deserializable, FacadeObject<Address> {
+  city: string;
+  street: string;
+  buildingNum: string;
   constructor() {
     this.city = '';
     this.street = '';
@@ -17,4 +18,10 @@ export class Address implements Deserializable {
     Object.assign(this, value);
     return this;
   }
+
+  getObj(): Address {
+      return new Address();
+  }
+
+
 }

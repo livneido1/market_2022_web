@@ -1,4 +1,3 @@
-import { Deserializer } from "v8";
 import { Deserializable } from "./deserializable";
 
 export class PermissionFacade implements Deserializable{
@@ -15,4 +14,7 @@ export class PermissionFacade implements Deserializable{
       Object.assign(this,value);
       return this
     }
+
+
+
 }

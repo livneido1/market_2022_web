@@ -2,9 +2,9 @@ import { Deserializable } from "./deserializable";
 import { PaymentMethod } from "./payment-method";
 
 export class CreditCard implements Deserializable,PaymentMethod {
-  private cardNumber: string;
-  private expiredDate: string;
-  private threeDigits: string;
+  cardNumber: string;
+  expiredDate: string;
+  threeDigits: string;
 
   constructor(){
     this.cardNumber = "";
@@ -20,4 +20,6 @@ export class CreditCard implements Deserializable,PaymentMethod {
       Object.assign(this,value);
       return this;
   }
+
+
 }

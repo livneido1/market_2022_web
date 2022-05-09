@@ -1,4 +1,3 @@
-import { Deserializer } from 'v8';
 import { Deserializable } from './deserializable';
 
 export enum Category {
@@ -9,14 +8,14 @@ export enum Category {
   electricity,
 }
 export class ItemFacade implements Deserializable {
-  private info: string;
-  private ID: number;
-  private name: string;
-  private price: number;
-  private category: Category;
-  private keywords: string[];
-  private rank: number;
-  private rankers: number;
+  info: string;
+  ID: number;
+  name: string;
+  price: number;
+  category: Category;
+  keywords: string[];
+  rank: number;
+  rankers: number;
 
   constructor() {
     this.info = '';
@@ -41,4 +40,6 @@ export class ItemFacade implements Deserializable {
     }
     return this;
   }
+
+
 }

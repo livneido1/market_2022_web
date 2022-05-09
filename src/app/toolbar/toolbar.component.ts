@@ -1,84 +1,74 @@
 import { Component, OnInit } from '@angular/core';
+import { ResponseT } from 'app/http/facadeObjects/response-t';
+import { VisitorFacade } from 'app/http/facadeObjects/visitor-facade';
 import { EngineService } from 'app/services/engine.service';
 import { ConfigService } from '../services/config-service.service';
+import { Response } from 'app/http/facadeObjects/response';
 
 @Component({
   selector: 'app-toolbar',
   templateUrl: './toolbar.component.html',
-  styleUrls: ['./toolbar.component.scss']
+  styleUrls: ['./toolbar.component.scss'],
 })
 export class ToolbarComponent implements OnInit {
+  productSearchBy: string;
+  search_argument: string;
 
-
-  productSearchBy:string;
-  search_argument:string;
-
-
-  constructor(
-    private config: ConfigService,
-    private engine: EngineService) {
-      this.productSearchBy = "Product Name";
-      this.search_argument = "";
-   }
-
-  ngOnInit(): void {
+  constructor(private config: ConfigService, private engine: EngineService) {
+    this.productSearchBy = 'Product Name';
+    this.search_argument = '';
   }
 
+  ngOnInit(): void {}
 
-  loginClicked():void {
-    this.config.isMemberLoggedIn=true;
-
+  loginClicked(): void {
+    this.config.isMemberLoggedIn = true;
   }
 
-  searchItem(){
-    switch (this.productSearchBy){
-      case "Category":
+  searchItem() {
+    switch (this.productSearchBy) {
+      case 'Category':
         this.searchByCategory();
         break;
-      case "Keyword":
+      case 'Keyword':
         this.searchByKeyword();
         break;
-      case "Product Name":
+      case 'Product Name':
         this.searchByProductName();
         break;
     }
   }
 
-  searchByProductName(){
+  searchByProductName() {}
+  searchByKeyword() {}
+  searchByCategory() {
+    this.engine.guestLogin().subscribe((response: ResponseT<VisitorFacade>) => {
 
-  }
-  searchByKeyword(){
+        const visitor: VisitorFacade = new VisitorFacade().deserialize(
+          response.value
+        );
 
-  }
-  searchByCategory(){
-    this.engine.guestLogin().subscribe(_=>{
-      const x=3;
-      const y = 3 + x;
-    }
-      )
-  }
+        const n = visitor.name;
+        this.config.marketName = n;
 
-  searchBy(){
-
+    });
   }
 
-  register(){
-    this.config.isRegisterClicked= true;
+  searchBy() {}
+
+  register() {
+    this.config.isRegisterClicked = true;
   }
 
-  getMarketName(){
+  getMarketName() {
     return this.config.marketName;
   }
 
-  getMemberName(){
+  getMemberName() {
     return this.config.memberName;
   }
 
-
-  isMemberLoggedIn(): boolean{
+  isMemberLoggedIn(): boolean {
     return this.config.isMemberLoggedIn;
   }
-
-
-
 }

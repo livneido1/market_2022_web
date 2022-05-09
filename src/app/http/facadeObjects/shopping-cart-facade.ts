@@ -8,7 +8,7 @@ export class ShoppingCartFacade  implements Deserializable{
 
   constructor(){
       this.cart = new Map();
-      this.price =-1;
+      this.price =-2;
   }
 
   deserialize(value: any): this {
@@ -17,7 +17,8 @@ export class ShoppingCartFacade  implements Deserializable{
       }
       Object.assign(this,value);
       this.cart = new Map();
-      for (const entry of value.cart.entries()) {
+      // for (const entry of value.cart.entries()) {
+      for (const entry of Object.entries(value.cart)) {
         const shop:ShopFacade  = new ShopFacade().deserialize(entry[0]);
         const cart:ShoppingCartFacade  = new ShoppingCartFacade().deserialize(entry[1]);
         this.cart.set(shop, cart);
