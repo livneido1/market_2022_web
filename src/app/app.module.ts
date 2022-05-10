@@ -10,7 +10,7 @@ import { ToolbarComponent } from './toolbar/toolbar.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatIconModule} from '@angular/material/icon';
 import {TextFieldModule} from '@angular/cdk/text-field';
-import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatFormFieldModule, MAT_FORM_FIELD_DEFAULT_OPTIONS} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
 import { RegisterComponent } from './register/register.component';
@@ -19,9 +19,8 @@ import { SearchItemComponent } from './search-item/search-item.component';
 import {MatTableModule} from '@angular/material/table';
 import { FormsModule } from '@angular/forms';
 import { ItemMatDialogComponent } from './item-mat-dialog/item-mat-dialog.component';
-
-
-
+import { LoginComponentComponent } from './login-component/login-component.component';
+import { ShoppingCartInfoComponent } from './shopping-cart-info/shopping-cart-info.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -30,7 +29,9 @@ import { ItemMatDialogComponent } from './item-mat-dialog/item-mat-dialog.compon
     ToolbarComponent,
     RegisterComponent,
     SearchItemComponent,
-    ItemMatDialogComponent
+    ItemMatDialogComponent,
+    LoginComponentComponent,
+    ShoppingCartInfoComponent
   ],
   imports: [
     BrowserModule,
@@ -46,9 +47,12 @@ import { ItemMatDialogComponent } from './item-mat-dialog/item-mat-dialog.compon
     BrowserModule,
     FormsModule,
     MatCheckboxModule,
-    MatDialogModule
+    MatDialogModule,
+
   ],
-  providers: [],
+  providers: [
+    {provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: {floatLabel: 'always'}}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -22,4 +22,11 @@ export class MainPageComponent implements OnInit {
   isSearchItemClicked() : boolean{
     return this.config.isSearchItemClicked;
   }
+  isLoginClicked(): boolean{
+    return this.config.isLoginClicked;
+  }
+
+  isShoppingCartInfoClicked(){
+    return this.config.isCartInfoClicked;
+  }
 }

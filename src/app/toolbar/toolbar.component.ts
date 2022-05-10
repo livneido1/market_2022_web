@@ -22,9 +22,12 @@ export class ToolbarComponent implements OnInit {
   ngOnInit(): void {}
 
   loginClicked(): void {
-    this.config.isMemberLoggedIn = true;
+    this.config.isLoginClicked =true;
   }
 
+  shoppingCartInfoClick(){
+    this.config.isCartInfoClicked = true;
+  }
   searchItem() {
     this.config.isSearchItemClicked=true;
     switch (this.productSearchBy) {

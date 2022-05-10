@@ -1,6 +1,6 @@
 <div class="toolbar_background">
 
-  <button class="cartIcon">
+  <button class="cartIcon" (click)="shoppingCartInfoClick()">
     <span class="material-icons">shopping_cart</span>
   </button>
   <button class="memberSetttingButton" *ngIf="isMemberLoggedIn()">{{getMemberName()}}</button>
