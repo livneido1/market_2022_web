@@ -23,6 +23,7 @@ import { LoginComponentComponent } from './login-component/login-component.compo
 import { ShoppingCartInfoComponent } from './shopping-cart-info/shopping-cart-info.component';
 import { CheckOutComponentComponent } from './check-out-component/check-out-component.component';
 import { UserSettingsComponent } from './user-settings/user-settings.component';
+import { ShopInfoComponentComponent } from './shop-info-component/shop-info-component.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -35,7 +36,8 @@ import { UserSettingsComponent } from './user-settings/user-settings.component';
     LoginComponentComponent,
     ShoppingCartInfoComponent,
     CheckOutComponentComponent,
-    UserSettingsComponent
+    UserSettingsComponent,
+    ShopInfoComponentComponent
   ],
   imports: [
     BrowserModule,

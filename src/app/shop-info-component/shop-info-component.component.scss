@@ -1,0 +1,109 @@
+.backgroundComp{
+  background:#ccd5da;
+  height: 100%;
+  position: fixed;
+  width: 100%;
+  display: table;
+  clear:both
+}
+.SideBar{
+  width: 20%;
+  float: left;
+  color: white;
+  height: 100%;
+
+}
+
+.resultTitle{
+  font-family: cursive;
+  margin-top: 5%;
+  text-align: center;
+  font-size: xxx-large;
+  margin-bottom: 30px;
+}
+.mainTitle{
+  font-size: xxx-large;
+  font-family: cursive;
+  text-align:center;
+  margin-top: 5%;
+}
+
+.resultColumn{
+  width: 80%;
+  float: left;
+  height: 100%;
+
+
+}
+
+.titleTh{
+  text-align: left;
+  width: 400px ;
+  font-size: xx-large;
+  padding-top: 10px;
+  padding-bottom: 10px;
+
+}
+
+.table{
+  width: 90%;
+  margin-left:10%;
+  margin-left: auto;
+  margin-right: auto;
+  border: 1px solid black;
+  border-collapse: collapse;
+  overflow-y: auto;
+  background-color: white;
+
+  th{
+
+    // border: 1px solid black;
+    border-collapse: collapse;
+    background-color: white;
+
+  }
+  td{
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-bottom:1px solid black;
+    border-top:1px solid black;
+    // border: 1px solid black;
+    border-collapse: collapse;
+    background-color: white;
+
+  }
+}
+
+
+.itemButton{
+  font-size:x-large;
+}
+
+.proceedButton{
+  background-color: rgb(52, 146, 52);
+  width: 75%;
+  height: 50px;
+  margin-left: 12.5%;
+  cursor: pointer;
+
+}
+.proceedButton:hover{
+  background-color: rgb(78, 187, 78);
+
+}
+
+.optionalButtonsDiv{
+  height: 20%;
+  text-align: center;
+}
+
+.optionalButton{
+  border-radius: 10px;
+  border-color: purple;
+  border-width: 10px;
+  width: 50%;
+  height: 50px;
+}
+
+
+

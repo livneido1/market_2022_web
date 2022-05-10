@@ -1,0 +1,59 @@
+<div  class="backgroundComp">
+
+
+
+
+  <div *ngIf="data.length>1" class="resultColumn">
+    <p class="mainTitle"> Kolbo Ram On </p>
+    <p class="resultTitle">Items in Shop</p>
+    <div style="display: block; height:300px; overflow-y: scroll;">
+      <table class="table">
+        <thead>
+          <tr>
+            <th class = "titleTh" >Products</th>
+            <th> </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of data">
+
+            <td style="cursor: pointer;" (click)="openDialog(item)">
+              <p style="font-size:x-large;">{{item.name}}</p>
+              <p>{{item.email}}</p>
+
+            </td>
+            <td>
+              <button style="cursor: pointer;">add to cart</button>
+            </td>
+
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div *ngIf="data.length<1">
+    <p class="resultTitle">No Result Found</p>
+  </div>
+
+  <div class="SideBar">
+    <div style="height: 20%; text-align: center; margin-top: 20%;">
+      <button class="optionalButton"
+      >
+        Employees
+      </button>
+    </div>
+    <div class="optionalButtonsDiv">
+      <button class="optionalButton"
+      >
+        Purchase History
+      </button>
+    </div>
+    <div class="optionalButtonsDiv">
+      <button class="optionalButton"
+      >
+        Close Shop
+      </button>
+    </div>
+
+  </div>
+</div>

@@ -37,4 +37,8 @@ export class MainPageComponent implements OnInit {
   isUserSettingClicked(){
     return this.config.isUserSettingClicked;
   }
+
+  isShopInfoClicked(){
+    return this.config.isShopInfoClicked;
+  }
 }
