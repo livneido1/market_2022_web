@@ -1,19 +1,22 @@
-import { NONE_TYPE } from "@angular/compiler";
-import { PermissionFacade } from "./PermissionFacade";
+import { Deserializable } from './deserializable';
+import { MemberFacade } from './MemberFacade';
+import { PermissionFacade } from './PermissionFacade';
+import { ShopFacade } from './shop-facade';
 
-export abstract class AppointmentFacade{
-    protected appointed : member;       //  the actual appointed member
-    protected superVisor : member;      //  member appointedMe
-    protected relatedShop : shop;
-    private permissions : PermissionFacade[];
-    constructor(){
-        this.appointed = undefined
-        this.superVisor = undefined
-        this.relatedShop = undefined
-        this.permissions = []
-    }
+export abstract class AppointmentFacade {
+  appointed: MemberFacade; //  the actual appointed member
+  superVisor: MemberFacade; //  member appointedMe
+  relatedShop: ShopFacade;
+  permissions: PermissionFacade[];
+  type: string;
 
-    deserialize(value: any): this {
-        
-    }
+  constructor() {
+
+    this.appointed = Object();
+    this.superVisor = Object();
+    this.relatedShop = Object();
+    this.permissions = [];
+    this.type = '';
+
+  }
 }

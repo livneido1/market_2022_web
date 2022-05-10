@@ -1,15 +1,16 @@
-import { Deserializer } from "v8";
-import { Deserializeable } from "./deserializable";
+import { Deserializable } from "./deserializable";
 
-export class PermissionFacade implements Deserializeable{
+export class PermissionFacade implements Deserializable{
     private name : string
 
     constructor(){
         this.name=""
     }
-
     deserialize(value: any): this {
-        Object.assign(value)
-        return this
-    }   
+      if (!value){
+        return this;
+      }
+      Object.assign(this,value);
+      return this
+    }
 }

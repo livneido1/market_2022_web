@@ -1,16 +1,14 @@
-
 import { AppointmentFacade } from './AppointmentFacade';
 import { Deserializable } from './deserializable';
 import { MemberFacade } from './MemberFacade';
 import { ShopFacade } from './shop-facade';
 
-export class ShopOwnerAppointmentFacade extends AppointmentFacade implements Deserializable {
-
-  private isShopFounder:boolean;
-
+export class ShopManagerAppointmentFacade
+  extends AppointmentFacade
+  implements Deserializable
+{
   constructor() {
     super();
-    this.isShopFounder = false;
   }
 
   deserialize(value: any): this {
@@ -28,5 +26,4 @@ export class ShopOwnerAppointmentFacade extends AppointmentFacade implements Des
 
     return this;
   }
-
 }
