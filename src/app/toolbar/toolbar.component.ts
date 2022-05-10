@@ -25,6 +25,10 @@ export class ToolbarComponent implements OnInit {
     this.config.isLoginClicked =true;
   }
 
+  openUserSettings(){
+    this.config.isUserSettingClicked = true;
+  }
+
   shoppingCartInfoClick(){
     this.config.isCartInfoClicked = true;
   }

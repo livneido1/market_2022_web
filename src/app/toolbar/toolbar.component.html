@@ -3,7 +3,12 @@
   <button class="cartIcon" (click)="shoppingCartInfoClick()">
     <span class="material-icons">shopping_cart</span>
   </button>
-  <button class="memberSetttingButton" *ngIf="isMemberLoggedIn()">{{getMemberName()}}</button>
+  <button class="memberSetttingButton"
+    *ngIf="isMemberLoggedIn()"
+    (click)="openUserSettings()">
+    {{getMemberName()}}
+
+  </button>
   <button class="loginButton" *ngIf="!isMemberLoggedIn()"
     (click)="loginClicked()">
     login

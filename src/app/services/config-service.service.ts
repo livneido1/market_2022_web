@@ -24,11 +24,14 @@ export class ConfigService {
     this._memberName = 'Shaked';
     this._isMemberLoggedIn = false;
     this._isRegisterClicked = false;
-    this._isSearchItemClicked = true;
+    // this._isSearchItemClicked = true;
+    this._isSearchItemClicked = false;
+
     this._isLoginClicked = false;
     this._isCartInfoClicked = false;
     this._isCheckOutClicked = false;
-    this._isUserSettingClicked = false;
+    // this._isUserSettingClicked = false;
+    this._isUserSettingClicked = true;
   }
 
   cleanAllComponents() {
