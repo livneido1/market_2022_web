@@ -1,0 +1,68 @@
+.backgroundComp{
+
+  background:#ccd5da;
+  height: 100%;
+  position: fixed;
+  width: 100%;
+  display: table;
+  clear:both
+
+}
+
+
+.resultColumn{
+  margin-left: 20%;
+  width: 60%;
+  float: left;
+  height: 80%;
+}
+
+.titleTh{
+  text-align: left;
+  width: 400px ;
+  font-size: xx-large;
+  padding-top: 10px;
+  padding-bottom: 10px;
+
+}
+
+.table{
+  margin-left: auto;
+  margin-right: auto;
+  border: 1px solid black;
+  border-collapse: collapse;
+  overflow-y: auto;
+  background-color: white;
+  width: 100%;
+  th{
+    // border: 1px solid black;
+    border-collapse: collapse;
+    background-color: white;
+  }
+  td{
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-bottom:1px solid black;
+    border-top:1px solid black;
+    // border: 1px solid black;
+    border-collapse: collapse;
+    background-color: white;
+
+  }
+}
+.resultTitle{
+  font-family: cursive;
+  margin-top: 10%;
+  text-align: center;
+  font-size: xxx-large;
+  margin-bottom: 30px;
+}
+.plusButton{
+  background-color: rgb(78, 187, 78);
+  cursor: pointer;
+  float: right;
+  background: transparent;
+  border: unset;
+  color: red;
+}
+
