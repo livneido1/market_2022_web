@@ -14,6 +14,7 @@ export class ConfigService {
   private _isCheckOutClicked: boolean;
   private _isUserSettingClicked: boolean;
   private _isShopInfoClicked: boolean;
+  private _isEmployeesinfoClicked: boolean;
 
   //dynamic settings
   private _marketName: string;
@@ -25,13 +26,14 @@ export class ConfigService {
     this._memberName = 'Shaked';
     this._isMemberLoggedIn = false;
     this._isRegisterClicked = false;
-    this._isSearchItemClicked = true;
-
+    // this._isSearchItemClicked = true;
+    this._isSearchItemClicked = false;
     this._isLoginClicked = false;
     this._isCartInfoClicked = false;
     this._isCheckOutClicked = false;
     this._isUserSettingClicked = false;
     this._isShopInfoClicked = false;
+    this._isEmployeesinfoClicked = true;
   }
 
   cleanAllComponents() {
@@ -42,7 +44,18 @@ export class ConfigService {
     this._isCheckOutClicked = false;
     this._isShopInfoClicked = false;
     this._isUserSettingClicked = false;
+    this._isEmployeesinfoClicked = false;
+
   }
+
+  get isEmployeesinfoClicked(): boolean {
+    return this._isEmployeesinfoClicked;
+  }
+  set isEmployeesinfoClicked(value: boolean) {
+    this.cleanAllComponents();
+    this._isEmployeesinfoClicked = value;
+  }
+
 
   get isShopInfoClicked(): boolean {
     return this._isShopInfoClicked;
