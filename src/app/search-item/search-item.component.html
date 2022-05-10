@@ -71,13 +71,14 @@
         </thead>
         <tbody>
           <tr *ngFor="let item of data">
-            <td>
+
+            <td style="cursor: pointer;" (click)="openDialog(item)">
               <p style="font-size:x-large;">{{item.name}}</p>
               <p>{{item.email}}</p>
 
             </td>
             <td>
-              <button>add to cart</button>
+              <button style="cursor: pointer;">add to cart</button>
             </td>
 
           </tr>

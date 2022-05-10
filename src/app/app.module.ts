@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import {MatDialogModule} from '@angular/material/dialog';
 import { BrowserModule } from '@angular/platform-browser';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { AppRoutingModule } from './app-routing.module';
@@ -17,6 +18,7 @@ import { HttpClientModule, HttpHeaders , HttpClient} from '@angular/common/http'
 import { SearchItemComponent } from './search-item/search-item.component';
 import {MatTableModule} from '@angular/material/table';
 import { FormsModule } from '@angular/forms';
+import { ItemMatDialogComponent } from './item-mat-dialog/item-mat-dialog.component';
 
 
 
@@ -27,7 +29,8 @@ import { FormsModule } from '@angular/forms';
     InitMarketComponent,
     ToolbarComponent,
     RegisterComponent,
-    SearchItemComponent
+    SearchItemComponent,
+    ItemMatDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -42,7 +45,8 @@ import { FormsModule } from '@angular/forms';
     MatTableModule,
     BrowserModule,
     FormsModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]

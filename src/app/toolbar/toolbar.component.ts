@@ -26,6 +26,7 @@ export class ToolbarComponent implements OnInit {
   }
 
   searchItem() {
+    this.config.isSearchItemClicked=true;
     switch (this.productSearchBy) {
       case 'Category':
         this.searchByCategory();
