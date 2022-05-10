@@ -6,11 +6,13 @@ import { ConfigService } from 'app/services/config-service.service';
 import { EngineService } from 'app/services/engine.service';
 
 @Component({
-  selector: 'app-search-item',
-  templateUrl: './search-item.component.html',
-  styleUrls: ['./search-item.component.scss'],
+  selector: 'app-shop-info-component',
+  templateUrl: './shop-info-component.component.html',
+  styleUrls: ['./shop-info-component.component.scss']
 })
-export class SearchItemComponent implements OnInit {
+export class ShopInfoComponentComponent implements OnInit {
+
+
   data = [
     { id: 1, name: 'Milk', email: 10 },
     { id: 2, name: 'Milka', email: 5.6 },
@@ -25,20 +27,23 @@ export class SearchItemComponent implements OnInit {
   ];
 
   constructor(
-    public dialog: MatDialog,
+    private config: ConfigService,
     private engine: EngineService,
-    private config: ConfigService
-  ) {}
+    public dialog: MatDialog
 
-  ngOnInit(): void {}
-  openDialog(item: any): void {
+  ) { }
+
+  ngOnInit(): void {
+  }
+
+  openDialog(item : any): void {
     const tempItem: ItemFacade = new ItemFacade();
-    tempItem.name = 'OnePlus 10';
+    tempItem.name = "OnePlus 10";
     tempItem.price = 50;
-    tempItem.info = 'best of all';
+    tempItem.info = "best of all";
     tempItem.ID = 1;
     tempItem.category = Category.cellular;
-    tempItem.keywords = ['cellular', 'oneplus'];
+    tempItem.keywords = ["cellular" , "oneplus"];
     tempItem.rank = 4;
     tempItem.rankers = 10;
 
@@ -51,12 +56,5 @@ export class SearchItemComponent implements OnInit {
       console.log('The dialog was closed');
     });
   }
-  test() {
-    let x = 3;
-    return 4;
-  }
 
-  searchShop() {
-    this.config.isShopInfoClicked = true;
-  }
 }
