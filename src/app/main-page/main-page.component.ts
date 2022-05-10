@@ -29,4 +29,12 @@ export class MainPageComponent implements OnInit {
   isShoppingCartInfoClicked(){
     return this.config.isCartInfoClicked;
   }
+
+  isCheckoutClicked(){
+    return this.config.isCheckOutClicked;
+  }
+
+  isUserSettingClicked(){
+    return this.config.isUserSettingClicked;
+  }
 }

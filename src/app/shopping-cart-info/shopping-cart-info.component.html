@@ -41,7 +41,9 @@
     </div>
 
     <div>
-      <button class="proceedButton">
+      <button class="proceedButton"
+        (click)="checkOutClicked()"
+        [disabled]="canCheckOut()">
         Proceed to Checkout
         <span class="material-icons">attach_money</span>
       </button>

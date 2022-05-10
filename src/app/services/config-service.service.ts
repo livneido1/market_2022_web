@@ -11,6 +11,8 @@ export class ConfigService {
   private _isSearchItemClicked: boolean;
   private _isLoginClicked: boolean;
   private _isCartInfoClicked: boolean;
+  private _isCheckOutClicked: boolean;
+  private _isUserSettingClicked: boolean;
 
   //dynamic settings
   private _marketName: string;
@@ -25,6 +27,8 @@ export class ConfigService {
     this._isSearchItemClicked = true;
     this._isLoginClicked = false;
     this._isCartInfoClicked = false;
+    this._isCheckOutClicked = false;
+    this._isUserSettingClicked = false;
   }
 
   cleanAllComponents() {
@@ -32,8 +36,24 @@ export class ConfigService {
     this._isRegisterClicked = false;
     this._isSearchItemClicked = false;
     this._isCartInfoClicked = false;
+    this._isCheckOutClicked = false;
+    this._isUserSettingClicked = false;
   }
 
+  get isUserSettingClicked(): boolean {
+    return this._isUserSettingClicked;
+  }
+  set isUserSettingClicked(value: boolean) {
+    this.cleanAllComponents();
+    this._isUserSettingClicked = value;
+  }
+  get isCheckOutClicked(): boolean {
+    return this._isCheckOutClicked;
+  }
+  set isCheckOutClicked(value: boolean) {
+    this.cleanAllComponents();
+    this._isCheckOutClicked = value;
+  }
   get isCartInfoClicked(): boolean {
     return this._isCartInfoClicked;
   }

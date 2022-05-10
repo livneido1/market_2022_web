@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { EngineService } from 'app/services/engine.service';
 import { FormControl } from '@angular/forms';
+import { ConfigService } from 'app/services/config-service.service';
 
 @Component({
   selector: 'app-login-component',
@@ -14,7 +15,10 @@ export class LoginComponentComponent implements OnInit {
   password:string;
   validatePassword:string;
   title:string = "Login";
-  constructor(private engine: EngineService) {
+  constructor(
+    private engine: EngineService,
+    private config: ConfigService
+    ) {
     this.name="";
     this.password="";
     this.validatePassword="";
@@ -24,7 +28,14 @@ export class LoginComponentComponent implements OnInit {
   }
 
 
+  submitLogin(){
+    this.config.isSearchItemClicked = true;
+    this.config.isMemberLoggedIn = true;
+    this.config.memberName = "Ayala"
+  }
+
   canSubmit(){
+    return true;
     return this.name !=="" &&
       this.password !=="" &&
       this.validatePassword !=="" &&

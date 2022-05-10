@@ -21,7 +21,8 @@
     </mat-form-field>
   </div>
   <br>
-  <button [disabled]="!canSubmit()">
+  <button [disabled]="!canSubmit()"
+  (click)="submitLogin()">
     Submit!
   </button>
 </div>

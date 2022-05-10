@@ -6,12 +6,26 @@
   text-align: center;
 }
 
+.submitButton{
+  width: 40%;
+  height: 50px;
+  cursor: pointer;
+  background-color: chartreuse;
+}
+
+.submitButton:disabled{
+  width: 40%;
+  height: 50px;
+  cursor: unset;
+  background-color: rgb(186, 86, 86) ;
+}
+
 
 
 .title{
   font-size: xxx-large;
-  margin-top: 15%;
   color: white;
+  margin-top: 5%;
 }
 
 .textInput {

@@ -1,0 +1,67 @@
+<div class="backgroundComp">
+  <div style="height: 60%; ">
+    <div style="width: 50%; float: left;">
+      <p class="title">Address Details</p>
+      <div>
+        <mat-form-field class="textInput" appearance="fill" >
+          <mat-label > City</mat-label>
+          <input  matInput #last>
+        </mat-form-field>
+
+      </div>
+      <div>
+        <mat-form-field class="textInput" appearance="fill">
+          <mat-label >Street </mat-label>
+          <input matInput #last>
+        </mat-form-field>
+
+      </div>
+      <div>
+        <mat-form-field class="textInput" appearance="fill">
+          <mat-label >Bulding Number</mat-label>
+          <input matInput #last>
+        </mat-form-field>
+      </div>
+
+    </div>
+
+    <div style="width: 50%; float: right">
+      <p class="title">Payment Details</p>
+      <div>
+        <mat-form-field class="textInput" appearance="fill" >
+          <mat-label > Cart Number</mat-label>
+          <input  matInput #last>
+        </mat-form-field>
+
+      </div>
+      <div>
+        <mat-form-field class="textInput" appearance="fill">
+          <mat-label > CVV </mat-label>
+          <input matInput #last>
+        </mat-form-field>
+
+      </div>
+      <div>
+        <mat-form-field class="textInput" appearance="fill">
+          <mat-label >Experation Date</mat-label>
+          <input matInput #last >
+        </mat-form-field>
+      </div>
+    </div>
+
+
+
+  </div>
+
+
+
+
+  <div  >
+    <button
+    class="submitButton"
+    [disabled]="canSubmit()" >
+      Submit!
+    </button>
+  </div>
+
+</div>

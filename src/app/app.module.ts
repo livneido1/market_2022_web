@@ -21,6 +21,8 @@ import { FormsModule } from '@angular/forms';
 import { ItemMatDialogComponent } from './item-mat-dialog/item-mat-dialog.component';
 import { LoginComponentComponent } from './login-component/login-component.component';
 import { ShoppingCartInfoComponent } from './shopping-cart-info/shopping-cart-info.component';
+import { CheckOutComponentComponent } from './check-out-component/check-out-component.component';
+import { UserSettingsComponent } from './user-settings/user-settings.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -31,7 +33,9 @@ import { ShoppingCartInfoComponent } from './shopping-cart-info/shopping-cart-in
     SearchItemComponent,
     ItemMatDialogComponent,
     LoginComponentComponent,
-    ShoppingCartInfoComponent
+    ShoppingCartInfoComponent,
+    CheckOutComponentComponent,
+    UserSettingsComponent
   ],
   imports: [
     BrowserModule,

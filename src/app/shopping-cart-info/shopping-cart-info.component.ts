@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Category, ItemFacade } from 'app/http/facadeObjects/ItemFacade';
 import { ItemMatDialogComponent } from 'app/item-mat-dialog/item-mat-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { ConfigService } from 'app/services/config-service.service';
 
 
 @Component({
@@ -26,12 +27,20 @@ export class ShoppingCartInfoComponent implements OnInit {
   ];
 
   totalPrice = 100;
-  constructor(public dialog: MatDialog) {}
+  constructor(
+    public dialog: MatDialog,
+    private config: ConfigService) {}
 
   ngOnInit(): void {
   }
 
+  canCheckOut():boolean{
+    return false;
+  }
 
+  checkOutClicked(){
+    this.config.isCheckOutClicked=true;
+  }
   openDialog(item : any): void {
     const tempItem: ItemFacade = new ItemFacade();
     tempItem.name = "OnePlus 10";
