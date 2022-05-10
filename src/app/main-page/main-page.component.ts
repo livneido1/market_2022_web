@@ -18,4 +18,8 @@ export class MainPageComponent implements OnInit {
   isRegisterClicked(): boolean{
     return this.config.isRegisterClicked;
   }
+
+  isSearchItemClicked() : boolean{
+    return this.config.isSearchItemClicked;
+  }
 }

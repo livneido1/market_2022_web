@@ -4,9 +4,13 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class ConfigService {
-
+  //general settings
   private _isMarketInitialized:boolean = true;
+  //component booleans
   private _isRegisterClicked: boolean ;
+  private _isSearchItemClicked: boolean ;
+
+  //dynamic settings
   private _marketName: string;
   private _memberName: string;
   private _isMemberLoggedIn: boolean;
@@ -17,15 +21,25 @@ export class ConfigService {
     this._memberName = "Shaked";
     this._isMemberLoggedIn = false;
     this._isRegisterClicked = false;
+    this._isSearchItemClicked = true;
   }
 
 
 
   cleanAllComponents(){
     this._isRegisterClicked = false;
-
+    this._isSearchItemClicked = false;
   }
 
+
+
+  get isSearchItemClicked(): boolean{
+    return this._isSearchItemClicked;
+  }
+  set isSearchItemClicked(value :boolean){
+    this.cleanAllComponents();
+    this._isSearchItemClicked=value;
+  }
   get isRegisterClicked(): boolean{
     return this._isRegisterClicked;
   }

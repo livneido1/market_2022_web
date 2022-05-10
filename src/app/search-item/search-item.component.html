@@ -1,0 +1,93 @@
+<div  class="backgroundComp">
+  <div class="leftSideBar">
+    <div>
+      <p class="filterTitle">Filter by Price</p>
+      <mat-form-field style="width: 40%; margin-left: 7.5%;" appearance="fill">
+        <mat-label >min price</mat-label>
+        <input matInput type="number" min="0" #last style="color: white;" placeholder="Ex. 10.4">
+      </mat-form-field>
+      <mat-form-field style="width: 40%;  margin-left: 2.5%;" appearance="fill">
+        <mat-label >max price</mat-label>
+        <input matInput type="number" min="0"  #last style="color: white;" placeholder="Ex. 10.4">
+      </mat-form-field>
+    </div>
+
+    <div >
+      <p class="filterTitle"> Filter By Category</p>
+      <div>
+        <mat-checkbox style="margin-left: 10%;" checked="true">
+          Cellular
+        </mat-checkbox>
+      </div>
+      <div>
+        <mat-checkbox style="margin-left: 10%;" checked="true">
+          electricity
+        </mat-checkbox>
+      </div>
+      <div>
+        <mat-checkbox style="margin-left: 10%;" checked="true">
+          fruit
+        </mat-checkbox>
+      </div>
+      <div>
+        <mat-checkbox style="margin-left: 10%;" checked="true">
+          general
+        </mat-checkbox>
+
+      </div>
+      <div>
+        <mat-checkbox style="margin-left: 10%;" checked="true">
+          meat
+        </mat-checkbox>
+      </div>
+    </div>
+
+    <div>
+      <p class="filterTitle">Search Shop</p>
+      <mat-form-field style="width: 80%; margin-left: 2.5%;" appearance="fill">
+        <mat-label >Search Shop Name</mat-label>
+        <input matInput type="text" min="0" #last style="color: white;">
+      </mat-form-field>
+      <button style="height: 55px;"
+        >
+        <span class='material-icons'>search</span>
+      </button>
+
+    </div>
+  </div>
+
+
+
+  <div *ngIf="data.length>1" class="resultColumn">
+
+    <p class="resultTitle">Search Results</p>
+    <div style="display: block; height:500px; overflow-y: scroll;">
+      <table class="table">
+        <thead>
+          <tr>
+            <th class = "titleTh" >Products</th>
+            <th> </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of data">
+            <td>
+              <p style="font-size:x-large;">{{item.name}}</p>
+              <p>{{item.email}}</p>
+
+            </td>
+            <td>
+              <button>add to cart</button>
+            </td>
+
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div *ngIf="data.length<1">
+    <p class="resultTitle">No Result Found</p>
+  </div>
+
+
+</div>

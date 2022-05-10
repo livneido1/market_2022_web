@@ -54,6 +54,20 @@ export class ToolbarComponent implements OnInit {
     });
   }
 
+  getExample(): string{
+    switch (this.productSearchBy) {
+      case 'Category':
+        return "Cellular";
+        break;
+      case 'Keyword':
+        return "Dairy";
+        break;
+      case 'Product Name':
+        return "Milk"
+        break;
+    }
+    return "";
+  }
   searchBy() {}
 
   register() {
