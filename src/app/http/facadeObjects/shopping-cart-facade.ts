@@ -4,7 +4,7 @@ import { ShoppingBasketFacade } from "./shopping-basket-facade";
 
 export class ShoppingCartFacade  implements Deserializable{
 
-  private cart: Map<ShopFacade, ShoppingBasketFacade>; // <Shop ,basket for the shop>
+  private cart: Map<string, ShoppingBasketFacade>; // <ShopName ,basket for the shop>
   private price:number;
 
   constructor(){
@@ -18,12 +18,11 @@ export class ShoppingCartFacade  implements Deserializable{
       }
       Object.assign(this,value);
       this.cart = new Map();
-      // for (const entry of value.cart.entries()) {
-      // for (const entry of Object.entries(value.cart)) {
-      //   const shop:ShopFacade  = new ShopFacade().deserialize(entry[0]);
-      //   const cart:ShoppingCartFacade  = new ShoppingCartFacade().deserialize(entry[1]);
-      //   this.cart.set(shop, cart);
-      // }
+      for (const entry of value.cart.entries()) {
+        const basket = new ShoppingBasketFacade().deserialize(entry[1]);
+        const shopName = entry[0];
+        this.cart.set(shopName, basket);
+      }
       return this;
   }
 }

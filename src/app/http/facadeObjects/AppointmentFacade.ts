@@ -2,21 +2,41 @@ import { Deserializable } from './deserializable';
 import { MemberFacade } from './MemberFacade';
 import { PermissionFacade } from './PermissionFacade';
 import { ShopFacade } from './shop-facade';
+import { ShopManagerAppointmentFacade } from './shop-manager-appointment-facade';
+import { ShopOwnerAppointmentFacade } from './ShopOwnerAppointmentFacade';
 
-export abstract class AppointmentFacade {
-  appointed: MemberFacade; //  the actual appointed member
-  superVisor: MemberFacade; //  member appointedMe
-  relatedShop: ShopFacade;
+export abstract class AppointmentFacade  {
+  appointed: string; //  the actual appointed member
+  superVisor: string; //  member appointedMe
+  relatedShop: string;
   permissions: PermissionFacade[];
   type: string;
 
+
   constructor() {
 
-    this.appointed = Object();
-    this.superVisor = Object();
-    this.relatedShop = Object();
+    this.appointed = "";
+    this.superVisor = "";
+    this.relatedShop = "";
     this.permissions = [];
-    this.type = '';
+    this.type = "";
 
+  }
+
+
+  deserializeObj(input :any) : AppointmentFacade{
+    if (!input){
+      return new ShopManagerAppointmentFacade();
+    }
+    switch (input.type){
+      case "ShopManagerAppointmentFacade":
+        return new ShopManagerAppointmentFacade().deserialize(input);
+      case "ShopOwnerAppointmentFacade":
+        return new ShopOwnerAppointmentFacade().deserialize(input);
+    } 
+    
+    
+    
+    return new ShopManagerAppointmentFacade();
   }
 }

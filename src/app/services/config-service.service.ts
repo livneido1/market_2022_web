@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { ItemFacade } from 'app/http/facadeObjects/ItemFacade';
 
 @Injectable({
   providedIn: 'root',
@@ -20,20 +21,24 @@ export class ConfigService {
   private _marketName: string;
   private _memberName: string;
   private _isMemberLoggedIn: boolean;
+  itemSearchResult: ItemFacade[];
 
   constructor() {
     this._marketName = 'test';
     this._memberName = 'Shaked';
     this._isMemberLoggedIn = false;
     this._isRegisterClicked = false;
-    // this._isSearchItemClicked = true;
-    this._isSearchItemClicked = false;
+    this._isSearchItemClicked = true;
+    // this._isSearchItemClicked = false;
     this._isLoginClicked = false;
     this._isCartInfoClicked = false;
     this._isCheckOutClicked = false;
     this._isUserSettingClicked = false;
     this._isShopInfoClicked = false;
-    this._isEmployeesinfoClicked = true;
+    this._isEmployeesinfoClicked = false;
+
+    
+    this.itemSearchResult = [];
   }
 
   cleanAllComponents() {

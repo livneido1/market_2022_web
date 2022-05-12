@@ -21,6 +21,11 @@ export class EngineService {
   }
 
   guestLogin():Observable<ResponseT<VisitorFacade>>{
+    
+    
     return this.http.post<ResponseT<VisitorFacade>>(this.serverUrl + "/guestLogin" , httpOptions);
   }
+
+
+  
 }

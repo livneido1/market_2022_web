@@ -41,7 +41,7 @@ export class ShopInfoComponentComponent implements OnInit {
     tempItem.name = "OnePlus 10";
     tempItem.price = 50;
     tempItem.info = "best of all";
-    tempItem.ID = 1;
+    tempItem.id = 1;
     tempItem.category = Category.cellular;
     tempItem.keywords = ["cellular" , "oneplus"];
     tempItem.rank = 4;
