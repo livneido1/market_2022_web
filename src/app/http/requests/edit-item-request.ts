@@ -1,7 +1,7 @@
 import { Deserializable } from "../facadeObjects/deserializable";
-import { ItemFacade } from "../facadeObjects/ShoppingBasketFacade";
+import { ItemFacade } from "../facadeObjects/ItemFacade";
 
-export class EditItemRequest implements Deserializable{
+export class editItemRequest implements Deserializable{
   private  newItem: ItemFacade;
   private id: string ;
 
