@@ -9,7 +9,7 @@ export enum Category {
 }
 export class ItemFacade implements Deserializable {
   info: string;
-  ID: number;
+  id: number;
   name: string;
   price: number;
   category: Category;
@@ -19,7 +19,7 @@ export class ItemFacade implements Deserializable {
 
   constructor() {
     this.info = '';
-    this.ID = 0;
+    this.id = 0;
     this.name = '';
     this.price = 0;
     this.category = Category.general;

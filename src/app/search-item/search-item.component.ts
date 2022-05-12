@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Category, ItemFacade } from 'app/http/facadeObjects/ItemFacade';
 import { ItemMatDialogComponent } from 'app/item-mat-dialog/item-mat-dialog.component';
@@ -11,6 +11,7 @@ import { EngineService } from 'app/services/engine.service';
   styleUrls: ['./search-item.component.scss'],
 })
 export class SearchItemComponent implements OnInit {
+
   data = [
     { id: 1, name: 'Milk', email: 10 },
     { id: 2, name: 'Milka', email: 5.6 },
@@ -24,6 +25,7 @@ export class SearchItemComponent implements OnInit {
     { id: 5, name: 'Pita', email: 14 },
   ];
 
+
   constructor(
     public dialog: MatDialog,
     private engine: EngineService,
@@ -36,7 +38,7 @@ export class SearchItemComponent implements OnInit {
     tempItem.name = 'OnePlus 10';
     tempItem.price = 50;
     tempItem.info = 'best of all';
-    tempItem.ID = 1;
+    tempItem.id = 1;
     tempItem.category = Category.cellular;
     tempItem.keywords = ['cellular', 'oneplus'];
     tempItem.rank = 4;

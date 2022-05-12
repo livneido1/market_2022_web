@@ -23,32 +23,21 @@ export class MemberFacade implements Deserializable {
       return this;
     }
     Object.assign(this,value);
-    this.myCart = new ShoppingCartFacade().deserialize(value);
-    this.appointedByMe = [];
-    for (const appointment of value.appointedByMe){
-      switch (appointment.type){
-        case "ShopManagerAppointmentFacade":
-          let app2 =new ShopManagerAppointmentFacade().deserialize(appointment);
-          this.appointedByMe.push(app2);
-          break;
-        case "ShopOwnerAppointmentFacade":
-          let app = new ShopOwnerAppointmentFacade().deserialize(appointment);
-          this.appointedByMe.push(app);
-          break;
-      }
-      // let app = new ShopManagerAppointmentFacade().deserializeAppointment(appointment);
-      // this.appointedByMe.push(app);
-    }
+    this.myCart = new ShoppingCartFacade().deserialize(value.myCart);
+    const tempApp:AppointmentFacade = new ShopOwnerAppointmentFacade()
     this.myAppointments = [];
-    for (const appointment of value.myAppointments){
-      // let app = new ShopManagerAppointmentFacade().deserializeAppointment(appointment);
-      // this.myAppointments.push(app);
+    for (const app of value.myAppointments){
+      this.myAppointments.push(tempApp.deserializeObj(app));
     }
-    this.purchaseHistory = [];
-    for (const appointment of value.purchaseHistory){
-      this.purchaseHistory.push(new ShoppingCartFacade().deserialize( appointment));
+    this.appointedByMe = [];
+    for (const app of value.appointedByMe){
+      this.appointedByMe.push(tempApp.deserializeObj(app));
     }
-
+    this.purchaseHistory = []
+    for (const history of value.purchaseHistory){
+      const historyCart = new ShoppingCartFacade().deserialize(history);
+      this.purchaseHistory.push(historyCart);
+    }
     return this;
   }
 

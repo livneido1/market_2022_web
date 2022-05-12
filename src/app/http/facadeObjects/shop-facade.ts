@@ -6,8 +6,8 @@ import { ShopOwnerAppointmentFacade } from './ShopOwnerAppointmentFacade';
 
 export class ShopFacade implements Deserializable {
   private shopName: string;
-  private itemMap: Map<number, ItemFacade>; //<ItemID,main.businessLayer.Item>
-  private employees: Map<String,AppointmentFacade>; //<name, appointment>
+  private itemMap: Map<number, ItemFacade>; //<ItemID, actualItem>
+  private employees: Map<string ,AppointmentFacade>; //<name, appointment>
   private itemsCurrentAmount: Map<ItemFacade, number>;
   private closed: boolean;
 
@@ -24,28 +24,25 @@ export class ShopFacade implements Deserializable {
       return this;
     }
     Object.assign(this, value);
+    //deserialzie items 
     this.itemMap = new Map();
     for (const entry of value.itemMap.entries()) {
       this.itemMap.set(entry[0], new ItemFacade().deserialize(entry[1]));
     }
+
+    //deserialize employees
+    const tempApp: AppointmentFacade = new ShopManagerAppointmentFacade();
     this.employees = new Map();
     for (const entry of Object.entries(value.employees)) {
-      const appointmentJson = entry[1] as AppointmentFacade;
-      switch (appointmentJson.type) {
-        case 'ShopOwnerAppointment':
-            let appointment = new ShopOwnerAppointmentFacade().deserialize(appointmentJson);
-            appointment.relatedShop = this;
-            this.employees.set(entry[0], appointment);
-          break;
-        case 'ShopManagerAppointmentFacade':
-          let appointment1 = new ShopManagerAppointmentFacade().deserialize(appointmentJson);
-          this.employees.set(entry[0],appointment1);
-          break;
-      }
+      const appointment: AppointmentFacade = tempApp.deserializeObj( entry[1]);
+      const name = entry[0];
+      this.employees.set(name,appointment);
     }
     this.itemsCurrentAmount = new Map();
     for (const entry of value.itemsCurrentAmount.entries()) {
-      this.itemsCurrentAmount.set(new ItemFacade().deserialize(entry[0]), entry[1]);
+      const item = new ItemFacade().deserialize(entry[0]);
+      const amount = entry[1];
+      this.itemsCurrentAmount.set(item, amount);
     }
     return this;
   }
