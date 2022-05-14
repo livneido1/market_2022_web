@@ -1,24 +1,26 @@
 <div class="toolbar_background">
+  <div>
+    <button class="cartIcon" (click)="shoppingCartInfoClick()">
+      <span class="material-icons">shopping_cart</span>
+    </button>
+    <button class="memberSetttingButton"
+      *ngIf="isMemberLoggedIn()"
+      (click)="openUserSettings()">
+      {{getVisitorName()}}
+  
+    </button>
+    <button class="loginButton" *ngIf="!isMemberLoggedIn()"
+      (click)="loginClicked()">
+      Login
+    </button>
+    <button class="registerButton" *ngIf="!isMemberLoggedIn()"
+      (click)="register()">
+      Register
+  
+    </button>
 
-  <button class="cartIcon" (click)="shoppingCartInfoClick()">
-    <span class="material-icons">shopping_cart</span>
-  </button>
-  <button class="memberSetttingButton"
-    *ngIf="isMemberLoggedIn()"
-    (click)="openUserSettings()">
-    {{getMemberName()}}
-
-  </button>
-  <button class="loginButton" *ngIf="!isMemberLoggedIn()"
-    (click)="loginClicked()">
-    login
-  </button>
-  <button class="registerButton" *ngIf="!isMemberLoggedIn()"
-    (click)="register()">
-    register
-
-  </button>
-  <p style="margin-left: 10px;">{{getMarketName()}}</p>
+  </div>
+  <!-- <p style="margin-left: 10px;">Market Name</p> -->
 
   <div class="searchBarDiv">
     <mat-form-field appearance="fill">

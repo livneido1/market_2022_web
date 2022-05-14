@@ -3,6 +3,7 @@ import { AppointmentFacade } from 'app/http/facadeObjects/AppointmentFacade';
 import { ItemFacade } from 'app/http/facadeObjects/ItemFacade';
 import { ShopManagerAppointmentFacade } from 'app/http/facadeObjects/shop-manager-appointment-facade';
 import { ShopOwnerAppointmentFacade } from 'app/http/facadeObjects/ShopOwnerAppointmentFacade';
+import { VisitorFacade } from 'app/http/facadeObjects/visitor-facade';
 
 @Injectable({
   providedIn: 'root',
@@ -21,14 +22,13 @@ export class ConfigService {
   private _isEmployeesinfoClicked: boolean;
 
   //dynamic settings
-  private _marketName: string;
-  private _memberName: string;
+  private _visitor: VisitorFacade;
   private _isMemberLoggedIn: boolean;
   itemSearchResult: ItemFacade[];
 
   constructor() {
-    this._marketName = 'test';
-    this._memberName = 'Shaked';
+    this._visitor = new VisitorFacade();
+    this._visitor.name = "@defualt";
     this._isMemberLoggedIn = false;
     this._isRegisterClicked = false;
     this._isSearchItemClicked = true;
@@ -131,18 +131,12 @@ export class ConfigService {
     this._isMarketInitialized = value;
   }
 
-  set memberName(value: string) {
-    this._memberName = value;
-  }
-  get memberName(): string {
-    return this._memberName;
-  }
 
-  get marketName() {
-    return this._marketName;
+  get visitor() {
+    return this._visitor;
   }
-  set marketName(value: string) {
-    this._marketName = value;
+  set visitor(value: VisitorFacade) {
+    this._visitor = value;
   }
 
 
