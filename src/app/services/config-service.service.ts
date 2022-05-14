@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core';
+import { AppointmentFacade } from 'app/http/facadeObjects/AppointmentFacade';
 import { ItemFacade } from 'app/http/facadeObjects/ItemFacade';
+import { ShopManagerAppointmentFacade } from 'app/http/facadeObjects/shop-manager-appointment-facade';
+import { ShopOwnerAppointmentFacade } from 'app/http/facadeObjects/ShopOwnerAppointmentFacade';
 
 @Injectable({
   providedIn: 'root',
@@ -141,4 +144,7 @@ export class ConfigService {
   set marketName(value: string) {
     this._marketName = value;
   }
+
+
+ 
 }
