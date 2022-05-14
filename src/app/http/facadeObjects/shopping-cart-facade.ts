@@ -18,7 +18,7 @@ export class ShoppingCartFacade  implements Deserializable{
       }
       Object.assign(this,value);
       this.cart = new Map();
-      for (const entry of value.cart.entries()) {
+      for (const entry of Object.entries(value.cart) ) {
         const basket = new ShoppingBasketFacade().deserialize(entry[1]);
         const shopName = entry[0];
         this.cart.set(shopName, basket);

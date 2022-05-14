@@ -2,20 +2,21 @@
   <p class="title">{{title}}</p>
   <mat-form-field class="searchBar" appearance="fill">
     <mat-label > Name</mat-label>
-    <input class="inputBar" matInput #last>
+    <input class="inputBar" matInput #last [(ngModel)]="name">
   </mat-form-field>
   <br>
   <mat-form-field class="searchBar" appearance="fill">
     <mat-label >Password </mat-label>
-    <input type="password" class="inputBar" matInput #last>
+    <input type="password" class="inputBar" matInput #last [(ngModel)]="password">
   </mat-form-field>
   <br>
   <mat-form-field class="searchBar" appearance="fill">
     <mat-label >Validate Password</mat-label>
-    <input type="password" class="inputBar" matInput #last>
+    <input type="password" class="inputBar" matInput #last [(ngModel)]="validatePassword">
   </mat-form-field>
   <br>
-  <button [disabled]="!canSubmit()">
+  <button [disabled]="!canSubmit()"
+    (click)="submit()">
     Submit!
   </button>
 </div>

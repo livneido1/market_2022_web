@@ -41,9 +41,10 @@ export class ShopFacade implements Deserializable {
       this.employees.set(name,appointment);
     }
     this.itemsCurrentAmount = new Map();
-    for (const entry of value.itemsCurrentAmount.entries()) {
+    for (const entry of Object.entries(value.itemsCurrentAmount)) {
       const item = new ItemFacade().deserialize(entry[0]);
-      const amount = entry[1];
+      let amount : number ; 
+      Object.assign(amount, entry[1]);
       this.itemsCurrentAmount.set(item, amount);
     }
     return this;

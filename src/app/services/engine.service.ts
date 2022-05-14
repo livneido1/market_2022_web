@@ -69,7 +69,7 @@ export class EngineService {
 
   register(request: NamePasswordRequest): Observable<ResponseT<boolean>> {
     return this.http.post<ResponseT<boolean>>(
-      '/register',
+      this.serverUrl +'/register',
       request,
       httpOptions
     );

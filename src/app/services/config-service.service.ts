@@ -28,7 +28,7 @@ export class ConfigService {
 
   constructor() {
     this._visitor = new VisitorFacade();
-    this._visitor.name = "@defualt";
+    // this._visitor.name = "@defualt";
     this._isMemberLoggedIn = false;
     this._isRegisterClicked = false;
     this._isSearchItemClicked = true;

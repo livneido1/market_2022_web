@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { ResponseT } from 'app/http/facadeObjects/response-t';
+import { VisitorFacade } from 'app/http/facadeObjects/visitor-facade';
+import { EngineService } from 'app/services/engine.service';
 import { ConfigService } from '../services/config-service.service';
 
 @Component({
@@ -8,9 +11,22 @@ import { ConfigService } from '../services/config-service.service';
 })
 export class MainPageComponent implements OnInit {
 
-  constructor(private config: ConfigService) { }
+  constructor(
+    private config: ConfigService,
+    private engine: EngineService
+    ) { }
 
   ngOnInit(): void {
+    this.engine.guestLogin().subscribe((responseJson) =>{
+      const response = new ResponseT<VisitorFacade>().deserialize(responseJson);
+      if (response.isErrorOccurred()){
+        console.log(response.getMessage());
+      }
+      else{
+        const visitor = new VisitorFacade().deserialize(response.value);
+        this.config.visitor = visitor;
+      }
+    })
   }
 
 

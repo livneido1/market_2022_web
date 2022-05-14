@@ -1,8 +1,8 @@
 import { Deserializable } from '../facadeObjects/deserializable';
 
 export class NamePasswordRequest implements Deserializable {
-  private name: string;
-  private password: string;
+  name: string;
+  password: string;
   constructor() {
     this.name = '';
     this.password = '';
