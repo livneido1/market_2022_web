@@ -31,7 +31,7 @@ export class LoginComponentComponent implements OnInit {
   submitLogin(){
     this.config.isSearchItemClicked = true;
     this.config.isMemberLoggedIn = true;
-    this.config.memberName = "Ayala"
+    // this.config.visitor = "Ayala";
   }
 
   canSubmit(){

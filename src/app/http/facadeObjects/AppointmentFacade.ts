@@ -23,20 +23,4 @@ export abstract class AppointmentFacade  {
 
   }
 
-
-  deserializeObj(input :any) : AppointmentFacade{
-    if (!input){
-      return new ShopManagerAppointmentFacade();
-    }
-    switch (input.type){
-      case "ShopManagerAppointmentFacade":
-        return new ShopManagerAppointmentFacade().deserialize(input);
-      case "ShopOwnerAppointmentFacade":
-        return new ShopOwnerAppointmentFacade().deserialize(input);
-    } 
-    
-    
-    
-    return new ShopManagerAppointmentFacade();
-  }
 }

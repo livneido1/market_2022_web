@@ -5,8 +5,9 @@ export class Response implements Deserializable {
   constructor() {
     this.errorMessage = '';
   }
-  isErrorOccurred(){
-    return !this.errorMessage && this.errorMessage !== '';
+  isErrorOccurred(): boolean {
+    const b =  this.errorMessage && this.errorMessage !== '';
+    return b;
   }
   deserialize(value: any): this {
     if (!value) {
@@ -14,5 +15,9 @@ export class Response implements Deserializable {
     }
     Object.assign(this, value);
     return this;
+  }
+
+  getMessage() {
+    return this.errorMessage;
   }
 }

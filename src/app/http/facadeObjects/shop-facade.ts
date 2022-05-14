@@ -1,6 +1,7 @@
 import { AppointmentFacade } from './AppointmentFacade';
 import { Deserializable } from './deserializable';
 import { ItemFacade } from './ItemFacade';
+import { ObjectsDeserializer } from './objects-deserializer';
 import { ShopManagerAppointmentFacade } from './shop-manager-appointment-facade';
 import { ShopOwnerAppointmentFacade } from './ShopOwnerAppointmentFacade';
 
@@ -33,15 +34,17 @@ export class ShopFacade implements Deserializable {
     //deserialize employees
     const tempApp: AppointmentFacade = new ShopManagerAppointmentFacade();
     this.employees = new Map();
+    const objDeserializer = new ObjectsDeserializer();
     for (const entry of Object.entries(value.employees)) {
-      const appointment: AppointmentFacade = tempApp.deserializeObj( entry[1]);
+      const appointment: AppointmentFacade = objDeserializer.getAppoitmentFacade(entry[1])
       const name = entry[0];
       this.employees.set(name,appointment);
     }
     this.itemsCurrentAmount = new Map();
-    for (const entry of value.itemsCurrentAmount.entries()) {
+    for (const entry of Object.entries(value.itemsCurrentAmount)) {
       const item = new ItemFacade().deserialize(entry[0]);
-      const amount = entry[1];
+      let amount : number ; 
+      Object.assign(amount, entry[1]);
       this.itemsCurrentAmount.set(item, amount);
     }
     return this;

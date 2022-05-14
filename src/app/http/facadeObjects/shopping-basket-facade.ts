@@ -15,9 +15,9 @@ export class ShoppingBasketFacade implements Deserializable {
     }
     Object.assign(this, value);
     this.items = new Map();
-    for (const entry of value.items.entries()) {
+    for (const entry of Object.entries( value.items)) {
       const item = new ItemFacade().deserialize(entry[0]);
-      const amount = entry[1];
+      const amount = entry[1] as number ;
       this.items.set(item, amount);
     }
     return this;

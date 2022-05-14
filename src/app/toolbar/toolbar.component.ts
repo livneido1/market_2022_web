@@ -57,7 +57,7 @@ export class ToolbarComponent implements OnInit {
         );
 
         const n = visitor.name;
-        this.config.marketName = n;
+        // this.config.marketName = n;
 
     });
   }
@@ -82,12 +82,8 @@ export class ToolbarComponent implements OnInit {
     this.config.isRegisterClicked = true;
   }
 
-  getMarketName() {
-    return this.config.marketName;
-  }
-
-  getMemberName() {
-    return this.config.memberName;
+  getVisitorName():string  {
+    return this.config.visitor.name;
   }
 
   isMemberLoggedIn(): boolean {
