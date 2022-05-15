@@ -1,8 +1,8 @@
 import { Deserializable } from "../facadeObjects/deserializable";
 
 export class OpenNewShopRequest implements Deserializable {
-  private memberName: string;
-  private shopName: string;
+  memberName: string;
+  shopName: string;
   constructor() {
     this.memberName = '';
     this.shopName = '';

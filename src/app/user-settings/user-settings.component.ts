@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Response } from 'app/http/facadeObjects/response';
 import { ResponseT } from 'app/http/facadeObjects/response-t';
 import { VisitorFacade } from 'app/http/facadeObjects/visitor-facade';
 import { AddPersonalQueryRequest } from 'app/http/requests/add-personal-query-request';
+import { OpenNewShopRequest } from 'app/http/requests/open-new-shop-request';
 import { RequestVisitorName } from 'app/http/requests/request-visitor-name';
+import { OpenNewShopDialogComponent } from 'app/open-new-shop-dialog/open-new-shop-dialog.component';
 import { ConfigService } from 'app/services/config-service.service';
 import { EngineService } from 'app/services/engine.service';
 import { MessageService } from 'app/services/message.service';
@@ -18,7 +21,9 @@ export class UserSettingsComponent implements OnInit {
   constructor(
     private engine: EngineService,
     private config: ConfigService,
-    private messageService: MessageService) {}
+    private messageService: MessageService,
+    public dialog: MatDialog
+    ) {}
 
   ngOnInit(): void {
     this.resetQuestion();
@@ -45,6 +50,8 @@ export class UserSettingsComponent implements OnInit {
         this.resetQuestion();
       }
     });
+
+
   }
 
 
@@ -63,6 +70,31 @@ export class UserSettingsComponent implements OnInit {
       this.config.isSearchItemClicked = true;
       this.messageService.validMessage("succesfully logged out!");
     })
+  }
+
+  openNewShop(){
+    const dialogRef = this.dialog.open(OpenNewShopDialogComponent,  {
+      width: '250px',
+      height: '250px'
+    })
+    dialogRef.afterClosed().subscribe((result) => {
+      if(!result){
+        return;
+      }
+      const shopName = result;
+      const request = new OpenNewShopRequest();
+      request.shopName = shopName;
+      request.memberName = this.config.visitor.name;
+      this.engine.openNewShop(request).subscribe(responseJson => {
+        const response = new Response().deserialize(responseJson);
+        if (response.isErrorOccurred()){
+          this.messageService.errorMessage(response.getMessage());
+        }
+        else{
+          this.messageService.validMessage("successfully Opened new Shop! Good Luck");
+        }
+      })
+    });
   }
 
   resetQuestion() {

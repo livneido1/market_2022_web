@@ -15,30 +15,41 @@
       </button>
   </div>
   <div style="height: 10%; text-align: center;">
-    <button class="userSettingButton">Open new Shop</button>
+    <button class="userSettingButton"
+      (click)="openNewShop()">
+      Open new Shop
+    </button>
 
   </div>
 
   <div style="height: 10%; text-align: center;">
-    <button class="userSettingButton">View System Purchase History</button>
+    <button
+      hidden
+      class="userSettingButton">
+      View System Purchase History
+    </button>
 
   </div>
 
   <div style="height: 10%; text-align: center;">
-    <mat-form-field style="width: 30%; margin-left:2.5%;" appearance="fill">
+    <mat-form-field style="width: 30%; margin-left:2.5%;" appearance="fill" hidden>
       <mat-label >Shop Name </mat-label>
       <input matInput  #last style="color: white;" >
     </mat-form-field>
-    <button class="userSettingButton">Get History</button>
+    <button
+      hidden
+      class="userSettingButton">
+      Get History
+    </button>
 
   </div>
 
   <div style="height: 10%; text-align: center;">
-    <mat-form-field style="width: 30%; margin-left:2.5%;" appearance="fill">
+    <mat-form-field style="width: 30%; margin-left:2.5%;" appearance="fill" hidden>
       <mat-label >Member Name </mat-label>
       <input matInput  #last style="color: white;" >
     </mat-form-field>
-    <button class="userSettingButton">Get History</button>
+    <button class="userSettingButton" hidden>Get History</button>
 
   </div>
   <div style="height: 10%; text-align: center;">
