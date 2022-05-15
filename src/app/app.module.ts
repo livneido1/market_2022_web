@@ -26,8 +26,6 @@ import { UserSettingsComponent } from './user-settings/user-settings.component';
 import { ShopInfoComponentComponent } from './shop-info-component/shop-info-component.component';
 import { EmployeesComponentComponent } from './employees-component/employees-component.component';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
-import { ErrorMessageSnackBarComponent } from './messages/error-message-snack-bar/error-message-snack-bar.component';
-import { MessageSnackBarComponent } from './messages/message-snack-bar/message-snack-bar.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -42,9 +40,7 @@ import { MessageSnackBarComponent } from './messages/message-snack-bar/message-s
     CheckOutComponentComponent,
     UserSettingsComponent,
     ShopInfoComponentComponent,
-    EmployeesComponentComponent,
-    ErrorMessageSnackBarComponent,
-    MessageSnackBarComponent
+    EmployeesComponentComponent
   ],
   imports: [
     BrowserModule,
