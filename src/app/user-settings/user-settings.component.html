@@ -2,13 +2,17 @@
   <div style="height: 20%; margin-top:5%; text-align: center;" >
       <mat-form-field style="width: 30%; " appearance="fill">
         <mat-label >Question </mat-label>
-        <input matInput  #last style="color: white;" >
+        <input matInput  #last style="color: white;" [(ngModel)]="currentQuestion" >
       </mat-form-field>
       <mat-form-field style="width: 30%; margin-left:2.5%;" appearance="fill">
         <mat-label >Answer </mat-label>
-        <input matInput  #last style="color: white;" >
+        <input matInput  #last style="color: white;"  [(ngModel)]="currentAnswer">
       </mat-form-field>
-      <button>Add Security Question </button>
+      <button
+        [disabled]="!canAddQuestion()"
+        (click)="addQuestion()">
+        Add Security Question
+      </button>
   </div>
   <div style="height: 10%; text-align: center;">
     <button class="userSettingButton">Open new Shop</button>

@@ -64,18 +64,22 @@ export class EngineService {
   }
 
   exitSystem(request: ExitSystemRequest): Observable<Response> {
-    return this.http.post<Response>('/exitSystem', request, httpOptions);
+    return this.http.post<Response>(this.serverUrl + '/exitSystem', request, httpOptions);
   }
 
   register(request: NamePasswordRequest): Observable<ResponseT<boolean>> {
     return this.http.post<ResponseT<boolean>>(
-      this.serverUrl +'/register',
+      this.serverUrl + '/register',
       request,
       httpOptions
     );
   }
   addPersonalQuery(request: AddPersonalQueryRequest): Observable<Response> {
-    return this.http.post<Response>('/addPersonalQuery', request, httpOptions);
+    return this.http.post<Response>(
+      this.serverUrl + '/addPersonalQuery',
+      request,
+      httpOptions
+    );
   }
 
   searchProductByName(
@@ -238,9 +242,7 @@ export class EngineService {
       httpOptions
     );
   }
-  appointShopOwner(
-    request: AppointmentShopOwnerRequest
-  ): Observable<Response> {
+  appointShopOwner(request: AppointmentShopOwnerRequest): Observable<Response> {
     return this.http.post<Response>(
       this.serverUrl + '/appointShopOwner',
       request,
@@ -276,10 +278,7 @@ export class EngineService {
     );
   }
 
-
-  closeShop(
-    request: CloseShopRequest
-  ): Observable<Response> {
+  closeShop(request: CloseShopRequest): Observable<Response> {
     return this.http.post<Response>(
       this.serverUrl + '/closeShop',
       request,
@@ -295,9 +294,7 @@ export class EngineService {
       httpOptions
     );
   }
-  getShopInfo(
-    request: TwoStringRequest
-  ): Observable<ResponseT<ShopFacade>> {
+  getShopInfo(request: TwoStringRequest): Observable<ResponseT<ShopFacade>> {
     return this.http.post<ResponseT<ShopFacade>>(
       this.serverUrl + '/getShopInfo',
       request,
@@ -322,9 +319,7 @@ export class EngineService {
       httpOptions
     );
   }
-  getHistoryByShop(
-    request: TwoStringRequest
-  ): Observable<ResponseT<string>> {
+  getHistoryByShop(request: TwoStringRequest): Observable<ResponseT<string>> {
     return this.http.post<ResponseT<string>>(
       this.serverUrl + '/getHistoryByShop',
       request,

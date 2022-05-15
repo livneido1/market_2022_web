@@ -47,7 +47,7 @@ export class LoginComponentComponent implements OnInit {
           this.reset();
         } else {
           for (const question of response.value) {
-            // this.questions.push(question);
+            this.questions.push(question);
           }
           if (this.questions.length > 0) {
             this.secondStep = true;
@@ -69,7 +69,6 @@ export class LoginComponentComponent implements OnInit {
       this.currentQuestion = this.questions[this.currentIndex];
     }
     else{
-      this.answers = [];
       this.validateQuestions();
     }
   }
@@ -116,7 +115,6 @@ export class LoginComponentComponent implements OnInit {
     this.secondStep = false;
     this.currentAnswer = '';
     this.answers = [];
-    this.questions = ['whats your dog name?', 'mothers name?', 'best friend'];
     this.currentIndex = 0;
   }
 }
