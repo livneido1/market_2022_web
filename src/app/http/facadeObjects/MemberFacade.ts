@@ -35,9 +35,11 @@ export class MemberFacade implements Deserializable {
       this.appointedByMe.push(objDeserializer.getAppoitmentFacade(app));
     }
     this.purchaseHistory = []
-    for (const history of value.purchaseHistory){
-      const historyCart = new ShoppingCartFacade().deserialize(history);
-      this.purchaseHistory.push(historyCart);
+    if (value.purchaseHistory){
+      for (const history of value.purchaseHistory){
+        const historyCart = new ShoppingCartFacade().deserialize(history);
+        this.purchaseHistory.push(historyCart);
+      }
     }
     return this;
   }
