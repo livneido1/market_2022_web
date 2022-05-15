@@ -26,6 +26,7 @@ import { UserSettingsComponent } from './user-settings/user-settings.component';
 import { ShopInfoComponentComponent } from './shop-info-component/shop-info-component.component';
 import { EmployeesComponentComponent } from './employees-component/employees-component.component';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { OpenNewShopDialogComponent } from './open-new-shop-dialog/open-new-shop-dialog.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -40,7 +41,8 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
     CheckOutComponentComponent,
     UserSettingsComponent,
     ShopInfoComponentComponent,
-    EmployeesComponentComponent
+    EmployeesComponentComponent,
+    OpenNewShopDialogComponent
   ],
   imports: [
     BrowserModule,

@@ -1,7 +1,7 @@
 import { Deserializable } from "../facadeObjects/deserializable";
 
 export class ExitSystemRequest implements Deserializable {
-  private visitorName:string ;
+  visitorName:string ;
 
   constructor(){
     this.visitorName = "";

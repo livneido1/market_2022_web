@@ -148,5 +148,4 @@ export class ConfigService {
     this._member = value;
   }
 
-
 }

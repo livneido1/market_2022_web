@@ -2,9 +2,9 @@ import { Deserializable } from "../facadeObjects/deserializable";
 
 export class AddPersonalQueryRequest implements Deserializable {
 
-  private userAdditionalQueries: string;
-  private userAdditionalAnswers: string;
-  private member: string;
+  userAdditionalQueries: string;
+  userAdditionalAnswers: string;
+  member: string;
 
   constructor(){
     this.userAdditionalQueries="";

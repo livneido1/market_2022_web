@@ -1,7 +1,7 @@
 import { Deserializable } from '../facadeObjects/deserializable';
 
 export class RequestVisitorName implements Deserializable {
-  private name: string;
+  name: string;
   constructor() {
     this.name = '';
   }

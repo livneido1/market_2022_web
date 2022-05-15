@@ -1,0 +1,13 @@
+<div style="height: 60%;">
+  <mat-form-field class="shopNameInput" appearance="fill">
+    <mat-label > Shop Name </mat-label>
+    <input matInput  #last  style="color: white;" [(ngModel)]="shopName">
+  </mat-form-field>
+
+</div>
+<button
+  class="button"
+  [disabled]="!canSubmit()"
+  [mat-dialog-close]="shopName">
+  Open Shop!
+</button>
