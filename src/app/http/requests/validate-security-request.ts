@@ -1,9 +1,9 @@
 import { Deserializable } from "../facadeObjects/deserializable";
 
 export class ValidateSecurityRequest implements Deserializable{
-  private userName: string;
-  private answers: string[];
-  private visitorName: string;
+  userName: string;
+  answers: string[];
+  visitorName: string;
   constructor(){
     this.userName = "";
     this.answers = [];

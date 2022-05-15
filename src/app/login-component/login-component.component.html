@@ -1,28 +1,37 @@
 <div class="backgroundComp">
   <p class="title">Login</p>
-  <div>
+  <div *ngIf="!secondStep">
+    <div>
+      <mat-form-field class="textInput" appearance="fill" [color]="colorControl.value">
+        <mat-label > Name</mat-label>
+        <input style="color: white;"  matInput #last [(ngModel)]="name">
+      </mat-form-field>
+
+    </div>
+    <div>
+      <mat-form-field class="textInput" appearance="fill">
+        <mat-label >Password </mat-label>
+        <input style="color: white;" type="password" matInput #last [(ngModel)]="password">
+      </mat-form-field>
+
+    </div>
+    <br>
+    <button [disabled]="!canSubmit()"
+    (click)="submitLogin()">
+      Submit!
+    </button>
+  </div>
+  <div *ngIf="secondStep">
     <mat-form-field class="textInput" appearance="fill" [color]="colorControl.value">
-      <mat-label > Name</mat-label>
-      <input  matInput #last>
+      <mat-label > {{currentQuestion}}</mat-label>
+      <input style="color: white;"  matInput #last [(ngModel)]="currentAnswer">
     </mat-form-field>
+    <button
+      [disabled]="!canSubmitAnswer()"
+      (click)="submitAnsswer()"
+      >
+      Submit Answer!
+    </button>
+  </div>
 
-  </div>
-  <div>
-    <mat-form-field class="textInput" appearance="fill">
-      <mat-label >Password </mat-label>
-      <input matInput #last>
-    </mat-form-field>
-
-  </div>
-  <div>
-    <mat-form-field class="textInput" appearance="fill">
-      <mat-label >Validate Password</mat-label>
-      <input matInput #last>
-    </mat-form-field>
-  </div>
-  <br>
-  <button [disabled]="!canSubmit()"
-  (click)="submitLogin()">
-    Submit!
-  </button>
 </div>
