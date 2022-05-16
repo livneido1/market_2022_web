@@ -22,9 +22,33 @@ export class MainPageComponent implements OnInit, OnDestroy {
       } else {
         const visitor = new VisitorFacade().deserialize(response.value);
         this.config.visitor = visitor;
+        this.connectToNotifications(visitor.name);
       }
     });
   }
+
+  otify(message: string): void {
+    //todo: show to the client.
+    window.alert(message);
+  }
+  connectToNotifications(name:string): void {
+    console.log("connect to the notifications socket");
+    let socket= new SockJS(this.config.serverUrl+ '/notification')
+    this.config.stompClient=Stomp.over(socket);
+    this.config.stompClient.connect({},function(frame){
+        console.log("connect to server "+frame);
+        this.config.stompClient.subscribe("/topic/messages/"+name, function (response){
+            let data = JSON.parse(response.body);
+            console.log(data);
+            this.notify(data.text);
+        });
+    });
+    this.config.stompClient
+
+}
+
+
+  
 
   isRegisterClicked(): boolean {
     return this.config.isRegisterClicked;
@@ -63,5 +87,6 @@ export class MainPageComponent implements OnInit, OnDestroy {
     this.engine.exitSystem(request).subscribe(responseJson =>{
       const response = new Response().deserialize(responseJson);
     });
+    this.config.stompClient.disconnect();
   }
 }

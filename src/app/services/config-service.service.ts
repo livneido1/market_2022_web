@@ -27,6 +27,9 @@ export class ConfigService {
   private _isMemberLoggedIn: boolean;
   private _member: MemberFacade;
   itemSearchResult: ItemFacade[];
+  serverUrl: string = 'http://localhost:8080';
+  public stompClient;
+  
 
   constructor() {
     this._visitor = new VisitorFacade();
