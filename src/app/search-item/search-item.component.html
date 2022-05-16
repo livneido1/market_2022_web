@@ -42,14 +42,15 @@
       </div>
     </div>
 
-    <div>
+    <div *ngIf="isMemberLoggedin()">
       <p class="filterTitle">Search Shop</p>
       <mat-form-field style="width: 80%; margin-left: 2.5%;" appearance="fill">
         <mat-label >Search Shop Name</mat-label>
-        <input matInput type="text" min="0" #last style="color: white;">
+        <input matInput type="text" min="0" #last style="color: white;" [(ngModel)]="shopName">
       </mat-form-field>
       <button style="height: 55px;"
-        (click)="searchShop()">
+        (click)="searchShop()"
+        [disabled]="!canSearchShopName()">
         <span class='material-icons'>search</span>
       </button>
 

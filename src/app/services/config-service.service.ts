@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { AppointmentFacade } from 'app/http/facadeObjects/AppointmentFacade';
 import { ItemFacade } from 'app/http/facadeObjects/ItemFacade';
 import { MemberFacade } from 'app/http/facadeObjects/MemberFacade';
+import { ShopFacade } from 'app/http/facadeObjects/shop-facade';
 import { ShopManagerAppointmentFacade } from 'app/http/facadeObjects/shop-manager-appointment-facade';
 import { ShopOwnerAppointmentFacade } from 'app/http/facadeObjects/ShopOwnerAppointmentFacade';
 import { VisitorFacade } from 'app/http/facadeObjects/visitor-facade';
@@ -27,7 +28,7 @@ export class ConfigService {
   private _isMemberLoggedIn: boolean;
   private _member: MemberFacade;
   itemSearchResult: ItemFacade[];
-
+  private _selectedShop: ShopFacade;
   constructor() {
     this._visitor = new VisitorFacade();
     this._isMemberLoggedIn = false;
@@ -42,6 +43,7 @@ export class ConfigService {
     this._isEmployeesinfoClicked = false;
     this._member = undefined;
 
+    this.selectedShop = undefined;
     this.itemSearchResult = [];
   }
 
@@ -146,6 +148,12 @@ export class ConfigService {
   }
   set member(value: MemberFacade) {
     this._member = value;
+  }
+  get selectedShop() : ShopFacade {
+    return this._selectedShop;
+  }
+  set selectedShop(value: ShopFacade) {
+    this._selectedShop = value;
   }
 
 }
