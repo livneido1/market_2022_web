@@ -1,7 +1,7 @@
 import { Deserializable } from "./deserializable";
 
 export class PermissionFacade implements Deserializable{
-    private name : string
+    name : string
 
     constructor(){
         this.name=""

@@ -1,11 +1,13 @@
 import { Deserializable } from '../facadeObjects/deserializable';
 
-export class InitMarketRequest implements Deserializable {
-  userName: string;
-  password: string;
+export class RemoveAppointmentRequest implements Deserializable {
+  boss: string;
+  firedAppointed: string;
+  shopName: string;
   constructor() {
-    this.userName = '';
-    this.password = '';
+    this.boss = '';
+    this.firedAppointed = '';
+    this.shopName = '';
   }
 
   deserialize(value: any): this {

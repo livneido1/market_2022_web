@@ -2,9 +2,9 @@ import { Deserializable } from "../facadeObjects/deserializable";
 
 export class GetManagerPermissionRequest implements Deserializable {
 
-  private shopOwnerName:string ;
-  private managerName:string ;
-  private relatedShop:string ;
+  shopOwnerName:string ;
+  managerName:string ;
+  relatedShop:string ;
 
   constructor(){
 

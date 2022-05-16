@@ -2,9 +2,9 @@ import { Deserializable } from "../facadeObjects/deserializable";
 import { ItemFacade } from "../facadeObjects/ItemFacade";
 
 export class RemoveItemFromShopRequest implements Deserializable{
-  private shopOwnerName: string;
-  private item: ItemFacade;
-  private shopName: string;
+  shopOwnerName: string;
+  item: ItemFacade;
+  shopName: string;
   constructor(){
     this.shopOwnerName = "";
     this.item = new ItemFacade();

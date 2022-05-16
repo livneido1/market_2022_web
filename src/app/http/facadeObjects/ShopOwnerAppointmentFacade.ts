@@ -6,7 +6,7 @@ import { ShopFacade } from './shop-facade';
 
 export class ShopOwnerAppointmentFacade extends AppointmentFacade implements Deserializable {
 
-  private isShopFounder:boolean;
+  isShopFounder:boolean;
 
 
   constructor() {

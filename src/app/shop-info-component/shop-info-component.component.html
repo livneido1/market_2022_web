@@ -1,12 +1,8 @@
 <div  class="backgroundComp">
-
-
-
-
-  <div *ngIf="data.length>1" class="resultColumn">
-    <p class="mainTitle"> Kolbo Ram On </p>
+  <div *ngIf="showItems()" class="resultColumn">
+    <p class="mainTitle"> {{shop.shopName}} </p>
     <p class="resultTitle">Items in Shop</p>
-    <div style="display: block; height:300px; overflow-y: scroll;">
+    <div  style="display: block; height:300px; overflow-y: scroll;">
       <table class="table">
         <thead>
           <tr>
@@ -15,28 +11,36 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let item of data">
+          <tr *ngFor="let item of itemList">
 
             <td style="cursor: pointer;" (click)="openDialog(item)">
               <p style="font-size:x-large;">{{item.name}}</p>
-              <p>{{item.email}}</p>
+              <p>{{item.price}}</p>
 
             </td>
-            <td>
+            <!-- <td>
               <button style="cursor: pointer;">add to cart</button>
-            </td>
+            </td> -->
 
           </tr>
         </tbody>
       </table>
     </div>
   </div>
-  <div *ngIf="data.length<1">
-    <p class="resultTitle">No Result Found</p>
+  <div *ngIf="!showItems()" class="resultColumn">
+    <p class="resultTitle">No Items in Shop</p>
   </div>
 
   <div class="SideBar">
     <div style="height: 20%; text-align: center; margin-top: 20%;">
+      <button
+        class="optionalButton"
+        (click)="addItemToShop()"
+        >
+        Add Item To Shop
+      </button>
+    </div>
+    <div class="optionalButtonsDiv">
       <button class="optionalButton"
       >
         Employees

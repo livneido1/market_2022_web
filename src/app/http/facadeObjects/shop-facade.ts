@@ -6,11 +6,11 @@ import { ShopManagerAppointmentFacade } from './shop-manager-appointment-facade'
 import { ShopOwnerAppointmentFacade } from './ShopOwnerAppointmentFacade';
 
 export class ShopFacade implements Deserializable {
-  private shopName: string;
-  private itemMap: Map<number, ItemFacade>; //<ItemID, actualItem>
-  private employees: Map<string, AppointmentFacade>; //<name, appointment>
-  private itemsCurrentAmount: Map<number, number>; // id , amount
-  private closed: boolean;
+  shopName: string;
+  itemMap: Map<number, ItemFacade>; //<ItemID, actualItem>
+  employees: Map<string, AppointmentFacade>; //<name, appointment>
+  itemsCurrentAmount: Map<number, number>; // id , amount
+  closed: boolean;
 
   constructor() {
     this.shopName = '';

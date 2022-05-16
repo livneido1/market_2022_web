@@ -3,10 +3,10 @@ import { ItemFacade } from "../facadeObjects/ItemFacade";
 
 export class SetItemCurrentAmountRequest implements Deserializable{
 
-  private shopOwnerName:string;
-  private item:ItemFacade;
-  private amount: number;
-  private shopName:string;
+  shopOwnerName:string;
+  item:ItemFacade;
+  amount: number;
+  shopName:string;
   constructor(){
     this.shopOwnerName = "";
     this.item = new ItemFacade();

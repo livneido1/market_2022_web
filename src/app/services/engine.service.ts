@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AppointmentFacade } from 'app/http/facadeObjects/AppointmentFacade';
-import { Category } from 'app/http/facadeObjects/ItemFacade';
+import { Category, ItemFacade } from 'app/http/facadeObjects/ItemFacade';
 import { MemberFacade } from 'app/http/facadeObjects/MemberFacade';
 import { Response } from 'app/http/facadeObjects/response';
 import { ResponseT } from 'app/http/facadeObjects/response-t';
@@ -64,7 +64,11 @@ export class EngineService {
   }
 
   exitSystem(request: ExitSystemRequest): Observable<Response> {
-    return this.http.post<Response>(this.serverUrl + '/exitSystem', request, httpOptions);
+    return this.http.post<Response>(
+      this.serverUrl + '/exitSystem',
+      request,
+      httpOptions
+    );
   }
 
   register(request: NamePasswordRequest): Observable<ResponseT<boolean>> {
@@ -84,8 +88,8 @@ export class EngineService {
 
   searchProductByName(
     request: SearchProductByNameRequest
-  ): Observable<ResponseT<VisitorFacade[]>> {
-    return this.http.post<ResponseT<VisitorFacade[]>>(
+  ): Observable<ResponseT<ItemFacade[]>> {
+    return this.http.post<ResponseT<ItemFacade[]>>(
       this.serverUrl + '/searchProductByName',
       request,
       httpOptions
@@ -94,8 +98,8 @@ export class EngineService {
 
   searchProductByCategory(
     request: Category
-  ): Observable<ResponseT<VisitorFacade[]>> {
-    return this.http.post<ResponseT<VisitorFacade[]>>(
+  ): Observable<ResponseT<ItemFacade[]>> {
+    return this.http.post<ResponseT<ItemFacade[]>>(
       this.serverUrl + '/searchProductByCategory',
       request,
       httpOptions
@@ -104,8 +108,8 @@ export class EngineService {
 
   searchProductByKeyword(
     request: SearchProductByNameRequest
-  ): Observable<ResponseT<VisitorFacade[]>> {
-    return this.http.post<ResponseT<VisitorFacade[]>>(
+  ): Observable<ResponseT<ItemFacade[]>> {
+    return this.http.post<ResponseT<ItemFacade[]>>(
       this.serverUrl + '/searchProductByKeyword',
       request,
       httpOptions
@@ -151,8 +155,8 @@ export class EngineService {
     );
   }
 
-  buyShoppingCart(request: BuyShoppingCartRequest): Observable<Response> {
-    return this.http.post<Response>(
+  buyShoppingCart(request: BuyShoppingCartRequest): Observable<ResponseT<ShoppingCartFacade>> {
+    return this.http.post<ResponseT<ShoppingCartFacade>>(
       this.serverUrl + '/buyShoppingCart',
       request,
       httpOptions
@@ -210,8 +214,8 @@ export class EngineService {
     );
   }
 
-  addItemToShop(request: AddItemToShopRequest): Observable<Response> {
-    return this.http.post<Response>(
+  addItemToShop(request: AddItemToShopRequest): Observable<ResponseT<ShopFacade>> {
+    return this.http.post<ResponseT<ItemFacade>>(
       this.serverUrl + '/addItemToShop',
       request,
       httpOptions
