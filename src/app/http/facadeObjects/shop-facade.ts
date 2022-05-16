@@ -9,7 +9,7 @@ export class ShopFacade implements Deserializable {
   private shopName: string;
   private itemMap: Map<number, ItemFacade>; //<ItemID, actualItem>
   private employees: Map<string, AppointmentFacade>; //<name, appointment>
-  private itemsCurrentAmount: Map<ItemFacade, number>;
+  private itemsCurrentAmount: Map<number, number>; // id , amount
   private closed: boolean;
 
   constructor() {
@@ -28,8 +28,8 @@ export class ShopFacade implements Deserializable {
     //deserialzie items
     this.itemMap = new Map();
     for (const entry of Object.entries(value.itemMap)) {
-      const itemId:number  = Number(entry[0]);
-      this.itemMap.set( itemId, new ItemFacade().deserialize(entry[1]));
+      const itemId: number = Number(entry[0]);
+      this.itemMap.set(itemId, new ItemFacade().deserialize(entry[1]));
     }
 
     //deserialize employees
@@ -44,10 +44,9 @@ export class ShopFacade implements Deserializable {
     }
     this.itemsCurrentAmount = new Map();
     for (const entry of Object.entries(value.itemsCurrentAmount)) {
-      const item = new ItemFacade().deserialize(entry[0]);
-      let amount: number;
-      Object.assign(amount, entry[1]);
-      this.itemsCurrentAmount.set(item, amount);
+      const id = Number(entry[0]);
+      const amount = Number(entry[1]);
+      this.itemsCurrentAmount.set(id, amount);
     }
     return this;
   }
