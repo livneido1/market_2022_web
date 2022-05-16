@@ -1,13 +1,13 @@
 import { Deserializable } from "../facadeObjects/deserializable";
 
-export class GetAllSystemPurchaseHistoryRequest implements Deserializable{
-  systemManagerName:string ;
-
+export class GetMarketInfoRequest implements Deserializable{
+  sysManager :string
   constructor(){
-    this.systemManagerName = "";
+
   }
 
-deserialize(value: any): this {
+
+  deserialize(value: any): this {
     if (!value){
       return this;
     }

@@ -1,26 +1,24 @@
-import { Deserializable } from "../facadeObjects/deserializable";
-import { ItemFacade } from "../facadeObjects/ItemFacade";
+import { Deserializable } from '../facadeObjects/deserializable';
+import { ItemFacade } from '../facadeObjects/ItemFacade';
 
-export class UpdateShopItemAmountRequest implements Deserializable{
-  private shopOwnerName:string;
-  private item:ItemFacade;
-  private amount:number;
-  private shopName:string;
-  constructor(){
-    this.shopOwnerName = "";
+export class UpdateShopItemAmountRequest implements Deserializable {
+  shopOwnerName: string;
+  item: ItemFacade;
+  amount: number;
+  shopName: string;
+  constructor() {
+    this.shopOwnerName = '';
     this.item = new ItemFacade();
     this.amount = -1;
-    this.shopName = "";
+    this.shopName = '';
   }
-
-
 
   deserialize(value: any): this {
     if (!value) {
       return this;
     }
     Object.assign(this, value);
-    this.item =  new ItemFacade().deserialize(value.item);
+    this.item = new ItemFacade().deserialize(value.item);
     return this;
   }
 }

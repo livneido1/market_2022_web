@@ -1,9 +1,13 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Category, ItemFacade } from 'app/http/facadeObjects/ItemFacade';
+import { ResponseT } from 'app/http/facadeObjects/response-t';
+import { ShopFacade } from 'app/http/facadeObjects/shop-facade';
+import { TwoStringRequest } from 'app/http/requests/two-string-request';
 import { ItemMatDialogComponent } from 'app/item-mat-dialog/item-mat-dialog.component';
 import { ConfigService } from 'app/services/config-service.service';
 import { EngineService } from 'app/services/engine.service';
+import { MessageService } from 'app/services/message.service';
 
 @Component({
   selector: 'app-search-item',
@@ -26,13 +30,19 @@ export class SearchItemComponent implements OnInit {
   ];
 
 
+
+  shopName: string;
+
   constructor(
     public dialog: MatDialog,
     private engine: EngineService,
-    private config: ConfigService
+    private config: ConfigService,
+    private messageService: MessageService
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.shopName = "";
+  }
   openDialog(item: any): void {
     const tempItem: ItemFacade = new ItemFacade();
     tempItem.name = 'OnePlus 10';
@@ -57,8 +67,28 @@ export class SearchItemComponent implements OnInit {
     let x = 3;
     return 4;
   }
+  canSearchShopName(){
+    return (this.shopName && this.shopName !== "");
+  }
 
   searchShop() {
-    this.config.isShopInfoClicked = true;
+    const request =  new TwoStringRequest();
+    request.name = this.config.visitor.name;
+    request.shopName = this.shopName;
+    this.engine.getShopInfo(request).subscribe(responseJson =>{
+      const response = new ResponseT<ShopFacade>().deserialize(responseJson);
+      if (response.isErrorOccurred()){
+        this.messageService.errorMessage(response.getMessage());
+      }
+      else{
+        const shop =  new ShopFacade().deserialize(response.value);
+        this.config.selectedShop = shop;
+        this.config.isShopInfoClicked = true;
+      }
+    })
+  }
+
+  isMemberLoggedin(){
+    return this.config.isMemberLoggedIn;
   }
 }

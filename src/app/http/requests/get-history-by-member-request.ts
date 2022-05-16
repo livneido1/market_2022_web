@@ -1,8 +1,8 @@
 import { Deserializable } from "../facadeObjects/deserializable";
 
 export class GetHistoryByMemberRequest implements Deserializable {
-  private systemManagerName: string;
-  private memberName: string;
+  systemManagerName: string;
+  memberName: string;
 
   constructor() {
     this.systemManagerName = '';
