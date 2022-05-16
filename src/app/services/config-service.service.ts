@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { AppointmentFacade } from 'app/http/facadeObjects/AppointmentFacade';
-import { ItemFacade } from 'app/http/facadeObjects/ItemFacade';
+import { Category, ItemFacade } from 'app/http/facadeObjects/ItemFacade';
 import { MemberFacade } from 'app/http/facadeObjects/MemberFacade';
+import { ShopFacade } from 'app/http/facadeObjects/shop-facade';
 import { ShopManagerAppointmentFacade } from 'app/http/facadeObjects/shop-manager-appointment-facade';
 import { ShopOwnerAppointmentFacade } from 'app/http/facadeObjects/ShopOwnerAppointmentFacade';
 import { VisitorFacade } from 'app/http/facadeObjects/visitor-facade';
@@ -27,7 +28,7 @@ export class ConfigService {
   private _isMemberLoggedIn: boolean;
   private _member: MemberFacade;
   itemSearchResult: ItemFacade[];
-
+  private _selectedShop: ShopFacade;
   constructor() {
     this._visitor = new VisitorFacade();
     this._isMemberLoggedIn = false;
@@ -42,6 +43,7 @@ export class ConfigService {
     this._isEmployeesinfoClicked = false;
     this._member = undefined;
 
+    this.selectedShop = undefined;
     this.itemSearchResult = [];
   }
 
@@ -54,7 +56,6 @@ export class ConfigService {
     this._isShopInfoClicked = false;
     this._isUserSettingClicked = false;
     this._isEmployeesinfoClicked = false;
-
   }
 
   get isEmployeesinfoClicked(): boolean {
@@ -64,7 +65,6 @@ export class ConfigService {
     this.cleanAllComponents();
     this._isEmployeesinfoClicked = value;
   }
-
 
   get isShopInfoClicked(): boolean {
     return this._isShopInfoClicked;
@@ -132,7 +132,6 @@ export class ConfigService {
     this._isMarketInitialized = value;
   }
 
-
   get visitor() {
     return this._visitor;
   }
@@ -140,12 +139,40 @@ export class ConfigService {
     this._visitor = value;
   }
 
-
-  get member() : MemberFacade {
+  get member(): MemberFacade {
     return this._member;
   }
   set member(value: MemberFacade) {
     this._member = value;
   }
+  get selectedShop(): ShopFacade {
+    return this._selectedShop;
+  }
+  set selectedShop(value: ShopFacade) {
+    this._selectedShop = value;
+  }
+
+  createCategoryFromString(name: string): Category {
+    switch (name) {
+      case 'general':
+        return Category.general;
+      case 'fruit':
+        return Category.fruit;
+      case 'cellular':
+        return Category.cellular;
+      case 'meat':
+        return Category.meat;
+      case 'electricity':
+        return Category.electricity;
+    }
+    return Category.general;
+  }
+
+  getAllCategories():string[]{
+    return [
+      'general','fruit','cellular','meat','electricity'
+    ]
+  }
+
 
 }

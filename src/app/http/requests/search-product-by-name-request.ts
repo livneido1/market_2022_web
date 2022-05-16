@@ -1,7 +1,7 @@
 import { Deserializable } from '../facadeObjects/deserializable';
 
 export class SearchProductByNameRequest implements Deserializable {
-  private productName: string;
+  productName: string;
   constructor() {
     this.productName = '';
   }

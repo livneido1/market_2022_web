@@ -1,8 +1,8 @@
 import { Deserializable } from '../facadeObjects/deserializable';
 
 export class GetShopEmployeesRequest implements Deserializable {
-  private shopManagerName: string;
-  private shopName: string;
+  shopManagerName: string;
+  shopName: string;
   constructor() {
     this.shopManagerName = '';
     this.shopName = '';

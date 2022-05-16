@@ -1,8 +1,8 @@
 import { Deserializable } from '../facadeObjects/deserializable';
 
 export class TwoStringRequest implements Deserializable {
-  private name: string;
-  private shopName: string;
+  name: string;
+  shopName: string;
   constructor() {
     this.name = '';
     this.shopName = '';

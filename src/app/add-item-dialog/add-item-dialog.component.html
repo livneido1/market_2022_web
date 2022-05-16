@@ -1,0 +1,36 @@
+<div style="height: 60%;">
+  <mat-form-field class="input" appearance="fill">
+    <mat-label > Item Name </mat-label>
+    <input matInput  #last  style="color: white;" [(ngModel)]="itemName">
+  </mat-form-field>
+  <mat-form-field class="inputLong" appearance="fill">
+    <mat-label > Info </mat-label>
+    <input matInput  #last  style="color: white;" [(ngModel)]="itemInfo">
+  </mat-form-field>
+  <mat-form-field class="inputLong" appearance="fill" hintLabel="separate keywords with #">
+    <mat-label > Keywords </mat-label>
+    <input matInput  #last  style="color: white;" [(ngModel)]="keywordsString" placeholder="Ex. #tasty #good">
+    <p *ngIf="!isKeywordValid()" style="color:red">keywords must start with #</p>
+  </mat-form-field>
+  <mat-form-field class="input" appearance="fill">
+    <mat-label > price </mat-label>
+    <input matInput  #last  style="color: white;" [(ngModel)]="itemPrice">
+  </mat-form-field>
+  <mat-form-field class="input" appearance="fill">
+    <mat-label>Category</mat-label>
+    <mat-select>
+      <mat-option *ngFor="let category of categoryList"
+      (onSelectionChange)="selectCategory(category)"
+      [value]="categoryString">
+        {{category}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+</div>
+<button
+  class="button"
+  [disabled]="!canSubmit()"
+  [mat-dialog-close]="createData()">
+  Add Item!
+</button>

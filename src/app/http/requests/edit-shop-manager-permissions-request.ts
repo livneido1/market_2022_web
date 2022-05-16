@@ -3,10 +3,10 @@ import { ShopManagerAppointmentFacade } from "../facadeObjects/shop-manager-appo
 
 export class EditShopManagerPermissionsRequest implements Deserializable{
 
-  private shopOwnerName:string;
-  private managerName:string;
-  private relatedShop:string;
-  private updatedAppointment:ShopManagerAppointmentFacade;
+  shopOwnerName:string;
+  managerName:string;
+  relatedShop:string;
+  updatedAppointment:ShopManagerAppointmentFacade;
 
   constructor(){
     this.shopOwnerName = "";

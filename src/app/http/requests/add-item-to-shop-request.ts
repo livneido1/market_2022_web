@@ -2,14 +2,14 @@ import { Deserializable } from '../facadeObjects/deserializable';
 import { Category } from '../facadeObjects/ItemFacade';
 
 export class AddItemToShopRequest implements Deserializable {
-  private shopOwnerName: string;
-  private name: string;
-  private price: number;
-  private category: Category;
-  private info: string;
-  private keywords: string[];
-  private amount: number;
-  private shopName: string;
+  shopOwnerName: string;
+  name: string;
+  price: number;
+  category: Category;
+  info: string;
+  keywords: string[];
+  amount: number;
+  shopName: string;
 
   constructor() {
     this.shopOwnerName = '';
