@@ -5,6 +5,10 @@ import { VisitorFacade } from 'app/http/facadeObjects/visitor-facade';
 import { ExitSystemRequest } from 'app/http/requests/exit-system-request';
 import { EngineService } from 'app/services/engine.service';
 import { ConfigService } from '../services/config-service.service';
+import { getMatFormFieldDuplicatedHintError } from '@angular/material/form-field';
+import * as SockJS from 'sockjs-client';
+import * as Stomp from 'stompjs';
+
 
 @Component({
   selector: 'app-main-page',
@@ -22,9 +26,8 @@ export class MainPageComponent implements OnInit, OnDestroy {
       } else {
         const visitor = new VisitorFacade().deserialize(response.value);
         this.config.visitor = visitor;
-        
-  console.log("returned from guest login");
-  this.connectToNotifications(visitor.name);
+        console.log("returned from guest login");
+        this.connectToNotifications(visitor.name);
 
       }
     });
