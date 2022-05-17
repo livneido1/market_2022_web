@@ -1,14 +1,24 @@
 <div  class="backgroundComp">
-  <div class="SideBar">
+  <div class="column left">
+    <!-- <div class="SideBar"> -->
     <div>
       <p class="filterTitle">Filter by Price</p>
       <mat-form-field style="width: 40%; margin-left: 7.5%;" appearance="fill">
         <mat-label >min price</mat-label>
-        <input matInput type="number" min="0" #last style="color: white;" placeholder="Ex. 10.4">
+        <input matInput type="number" min="0"
+         #last style="color: white;"
+         placeholder="Ex. 10.4"
+         [(ngModel)]="minPrice">
       </mat-form-field>
       <mat-form-field style="width: 40%;  margin-left: 2.5%;" appearance="fill">
         <mat-label >max price</mat-label>
-        <input matInput type="number" min="0"  #last style="color: white;" placeholder="Ex. 10.4">
+        <input matInput
+        type="number"
+        min="0"
+        #last style="color: white;"
+        placeholder="Ex. 10.4"
+        [(ngModel)]="maxPrice">
+
       </mat-form-field>
     </div>
 
@@ -19,28 +29,7 @@
           {{category}}
         </mat-checkbox>
       </div>
-      <!-- <div>
-        <mat-checkbox style="margin-left: 10%;" checked="true">
-          electricity
-        </mat-checkbox>
-      </div>
-      <div>
-        <mat-checkbox style="margin-left: 10%;" checked="true">
-          fruit
-        </mat-checkbox>
-      </div>
-      <div>
-        <mat-checkbox style="margin-left: 10%;" checked="true">
-          general
-        </mat-checkbox>
-
-      </div>
-      <div>
-        <mat-checkbox style="margin-left: 10%;" checked="true">
-          meat
-        </mat-checkbox>
-      </div>
-    </div> -->
+    </div>
 
     <div *ngIf="isMemberLoggedin()">
       <p class="filterTitle">Search Shop</p>
@@ -53,46 +42,50 @@
         [disabled]="!canSearchShopName()">
         <span class='material-icons'>search</span>
       </button>
-
     </div>
   </div>
 
 
 
-  <div *ngIf="isItemsFound()" class="resultColumn">
+  <div class="column right">
+    <!-- <div class="resultColumn"> -->
+    <div *ngIf="isItemsFound()">
+      <p class="resultTitle">Search Results</p>
+      <div style="display: block; height:300px; overflow-y: scroll;">
+        <table class="table">
+          <thead>
+            <tr>
+              <th class = "titleTh" >Products</th>
+              <th> </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of getFilteredItems()">
 
-    <p class="resultTitle">Search Results</p>
-    <div style="display: block; height:300px; overflow-y: scroll;">
-      <table class="table">
-        <thead>
-          <tr>
-            <th class = "titleTh" >Products</th>
-            <th> </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let item of getFilteredItems()">
+              <td style="cursor: pointer;" (click)="openDialog(item)">
+                <p style="font-size:x-large;">{{item.name}}</p>
+                <p>{{item.price}}</p>
 
-            <td style="cursor: pointer;" (click)="openDialog(item)">
-              <p style="font-size:x-large;">{{item.name}}</p>
-              <p>{{item.price}}</p>
+              </td>
+              <td>
+                <button style="cursor: pointer;"
+                  (click)="addToCart(item)">
+                  add to cart
+                </button>
+              </td>
 
-            </td>
-            <td>
-              <button style="cursor: pointer;"
-                (click)="addToCart(item)">
-                add to cart
-              </button>
-            </td>
-
-          </tr>
-        </tbody>
-      </table>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div *ngIf="!isItemsFound()">
+      <p class="resultTitle">{{getNoFoundTitle()}}</p>
     </div>
   </div>
-  <div *ngIf="!isItemsFound()">
-    <p class="resultTitle">{{getNoFoundTitle()}}</p>
-  </div>
+
+
+
 
 
 </div>

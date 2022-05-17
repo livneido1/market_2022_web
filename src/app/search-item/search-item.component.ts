@@ -26,6 +26,8 @@ export class SearchItemComponent implements OnInit {
   filteredItems: ItemFacade[];
   shopName: string;
   categoryFilters:string[];
+  minPrice: number;
+  maxPrice: number;
 
   constructor(
     public dialog: MatDialog,
@@ -38,6 +40,10 @@ export class SearchItemComponent implements OnInit {
     this.shopName = "";
     this.items =  this.config.itemsSearched;
     this.filteredItems = this.items;
+    this.categoryFilters = [];
+    // this.minPrice = -1;
+    // this.maxPrice = -1;
+
   }
   openDialog(item: ItemFacade): void {
 
@@ -62,7 +68,8 @@ export class SearchItemComponent implements OnInit {
     if(this.config.itemsSearched){
       let filtered = this.config.itemsSearched;
       filtered = this.filterByCategory(filtered);
-      return this.config.itemsSearched;
+      filtered = this.filterByPrice(filtered);
+      return filtered;
     }
     return undefined;
   }
@@ -127,8 +134,31 @@ export class SearchItemComponent implements OnInit {
     return this.config.isMemberLoggedIn;
   }
 
-  filterByCategory(filtered: ItemFacade[]){
+  filterByPrice(unfiltered: ItemFacade[]){
+    let filtered = unfiltered;
+    if (this.minPrice && this.minPrice > 0){
+       filtered = filtered.filter(item => item.price > this.minPrice);
+    }
+    if (this.maxPrice && this.maxPrice > 0){
+      filtered = filtered.filter(item => item.price < this.maxPrice);
+   }
+   return filtered;
+  }
+
+
+  filterByCategory(unfiltered: ItemFacade[]){
+    if (!this.categoryFilters || this.categoryFilters.length === 0){
+      return unfiltered;
+    }
+    const filtered = [];
+    for (const item of unfiltered){
+      const categoryString = item.getCategoryString();
+      if (!this.categoryFilters.includes(categoryString)){
+        filtered.push(item);
+      }
+    }
     return filtered;
+    // return unfiltered.filter((item) => !this.categoryFilters.includes(item.getCategoryString())   )
 
   }
 
@@ -138,10 +168,19 @@ export class SearchItemComponent implements OnInit {
   }
 
   changeFilter(checked , category: string){
-    if(checked){
+    if(!checked){
      if (!this.categoryFilters.includes(category)){
-        this.categoryFilters.push()
-     } 
+        this.categoryFilters.push( category);
+     }
+    }
+    // marked
+    else{
+      const index = this.categoryFilters.indexOf(category, 0);
+      if (index > -1) {
+        this.categoryFilters.splice(index, 1);
+      }
     }
   }
+
+
 }
