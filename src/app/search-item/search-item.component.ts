@@ -25,6 +25,7 @@ export class SearchItemComponent implements OnInit {
   items: ItemFacade[];
   filteredItems: ItemFacade[];
   shopName: string;
+  categoryFilters:string[];
 
   constructor(
     public dialog: MatDialog,
@@ -59,6 +60,8 @@ export class SearchItemComponent implements OnInit {
 
   getFilteredItems(){
     if(this.config.itemsSearched){
+      let filtered = this.config.itemsSearched;
+      filtered = this.filterByCategory(filtered);
       return this.config.itemsSearched;
     }
     return undefined;
@@ -122,5 +125,23 @@ export class SearchItemComponent implements OnInit {
 
   isMemberLoggedin(){
     return this.config.isMemberLoggedIn;
+  }
+
+  filterByCategory(filtered: ItemFacade[]){
+    return filtered;
+
+  }
+
+
+  getAllCategories(){
+    return this.config.getAllCategories();
+  }
+
+  changeFilter(checked , category: string){
+    if(checked){
+     if (!this.categoryFilters.includes(category)){
+        this.categoryFilters.push()
+     } 
+    }
   }
 }

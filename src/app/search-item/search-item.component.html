@@ -14,12 +14,12 @@
 
     <div >
       <p class="filterTitle"> Filter By Category</p>
-      <div>
-        <mat-checkbox style="margin-left: 10%;" checked="true">
-          Cellular
+      <div *ngFor="let category of getAllCategories()">
+        <mat-checkbox style="margin-left: 10%;" checked="true" (change)="changeFilter($event.checked,category)">
+          {{category}}
         </mat-checkbox>
       </div>
-      <div>
+      <!-- <div>
         <mat-checkbox style="margin-left: 10%;" checked="true">
           electricity
         </mat-checkbox>
@@ -40,7 +40,7 @@
           meat
         </mat-checkbox>
       </div>
-    </div>
+    </div> -->
 
     <div *ngIf="isMemberLoggedin()">
       <p class="filterTitle">Search Shop</p>
