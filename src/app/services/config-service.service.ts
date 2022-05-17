@@ -27,8 +27,8 @@ export class ConfigService {
   private _visitor: VisitorFacade;
   private _isMemberLoggedIn: boolean;
   private _member: MemberFacade;
-  itemSearchResult: ItemFacade[];
   private _selectedShop: ShopFacade;
+  private _itemsSearched: ItemFacade[];
   constructor() {
     this._visitor = new VisitorFacade();
     this._isMemberLoggedIn = false;
@@ -42,9 +42,8 @@ export class ConfigService {
     this._isShopInfoClicked = false;
     this._isEmployeesinfoClicked = false;
     this._member = undefined;
-
+    this._itemsSearched = undefined;
     this.selectedShop = undefined;
-    this.itemSearchResult = [];
   }
 
   cleanAllComponents() {
@@ -56,8 +55,15 @@ export class ConfigService {
     this._isShopInfoClicked = false;
     this._isUserSettingClicked = false;
     this._isEmployeesinfoClicked = false;
+    this._itemsSearched = undefined;
   }
 
+
+  applySearch(items: ItemFacade[]){
+    this.cleanAllComponents();
+    this._itemsSearched = items;
+    this._isSearchItemClicked = true;
+  }
   get isEmployeesinfoClicked(): boolean {
     return this._isEmployeesinfoClicked;
   }
@@ -125,6 +131,12 @@ export class ConfigService {
     this._isMemberLoggedIn = value;
   }
 
+  get itemsSearched() {
+    return this._itemsSearched;
+  }
+  set itemsSearched(value: ItemFacade[]) {
+    this._itemsSearched = value;
+  }
   get isMarketInitialized() {
     return this._isMarketInitialized;
   }

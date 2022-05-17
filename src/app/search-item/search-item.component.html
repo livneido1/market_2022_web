@@ -59,7 +59,7 @@
 
 
 
-  <div *ngIf="data.length>1" class="resultColumn">
+  <div *ngIf="isItemsFound()" class="resultColumn">
 
     <p class="resultTitle">Search Results</p>
     <div style="display: block; height:300px; overflow-y: scroll;">
@@ -71,15 +71,18 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let item of data">
+          <tr *ngFor="let item of getFilteredItems()">
 
             <td style="cursor: pointer;" (click)="openDialog(item)">
               <p style="font-size:x-large;">{{item.name}}</p>
-              <p>{{item.email}}</p>
+              <p>{{item.price}}</p>
 
             </td>
             <td>
-              <button style="cursor: pointer;">add to cart</button>
+              <button style="cursor: pointer;"
+                (click)="addToCart(item)">
+                add to cart
+              </button>
             </td>
 
           </tr>
@@ -87,8 +90,8 @@
       </table>
     </div>
   </div>
-  <div *ngIf="data.length<1">
-    <p class="resultTitle">No Result Found</p>
+  <div *ngIf="!isItemsFound()">
+    <p class="resultTitle">{{getNoFoundTitle()}}</p>
   </div>
 
 

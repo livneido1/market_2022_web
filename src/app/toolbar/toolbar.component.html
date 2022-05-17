@@ -7,7 +7,7 @@
       *ngIf="isMemberLoggedIn()"
       (click)="openUserSettings()">
       {{getVisitorName()}}
-  
+
     </button>
     <button class="loginButton" *ngIf="!isMemberLoggedIn()"
       (click)="loginClicked()">
@@ -16,7 +16,7 @@
     <button class="registerButton" *ngIf="!isMemberLoggedIn()"
       (click)="register()">
       Register
-  
+
     </button>
 
   </div>
@@ -25,7 +25,7 @@
   <div class="searchBarDiv">
     <mat-form-field appearance="fill">
       <mat-label>Search By</mat-label>
-      <mat-select #fontSize [(value)]="productSearchBy" >
+      <mat-select #fontSize [(value)]="productSearchBy" (valueChange)="typeChanged()" >
         <mat-option value="Category">Category</mat-option>
         <mat-option value="Keyword">Keyword</mat-option>
         <mat-option value="Product Name">Product Name</mat-option>
@@ -33,10 +33,23 @@
       </mat-select>
     </mat-form-field>
 
-    <mat-form-field class="searchBar" appearance="fill">
+    <mat-form-field class="searchBar" appearance="fill" *ngIf="!searchByCategoryOn()">
       <mat-label >Search by {{productSearchBy}}</mat-label>
-      <input matInput #last style="color: white;" placeholder="Ex. {{getExample()}}"  >
+      <input matInput #last style="color: white;" placeholder="Ex. {{getExample()}}"
+            [(ngModel)]="searchText" >
     </mat-form-field>
+    <mat-form-field class="searchBar" appearance="fill" *ngIf="searchByCategoryOn()">
+      <mat-label >Search by {{productSearchBy}}</mat-label>
+      <mat-select>
+        <mat-option *ngFor="let category of getAllCategories()"
+        (onSelectionChange)="selectCategory(category)"
+        [value]="searchText">
+          {{category}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+
     <button class="searchButton"
       (click)="searchItem()">
       <span class='material-icons'>search</span>
