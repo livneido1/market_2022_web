@@ -32,20 +32,11 @@ export class ShopInfoComponentComponent implements OnInit {
     this.reset();
   }
 
-  openDialog(item: any): void {
-    const tempItem: ItemFacade = new ItemFacade();
-    tempItem.name = 'OnePlus 10';
-    tempItem.price = 50;
-    tempItem.info = 'best of all';
-    tempItem.id = 1;
-    tempItem.category = Category.cellular;
-    tempItem.keywords = ['cellular', 'oneplus'];
-    tempItem.rank = 4;
-    tempItem.rankers = 10;
-
+  openDialog(item: ItemFacade): void {
+    const amount = this.shop.itemsCurrentAmount.get(item.id);
     const dialogRef = this.dialog.open(ItemMatDialogComponent, {
       width: '250px',
-      data: { relatedItem: tempItem },
+      data: { relatedItem: item , amount: amount},
     });
 
     dialogRef.afterClosed().subscribe((result) => {
@@ -81,6 +72,7 @@ export class ShopInfoComponentComponent implements OnInit {
           const newShop = new ShopFacade().deserialize(response.value);
           this.config.selectedShop = newShop;
           this.config.isShopInfoClicked = true;
+          this.reset();
           this.messageService.validMessage('Item Succesfully Added');
         });
       }
