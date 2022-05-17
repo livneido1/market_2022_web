@@ -27,6 +27,7 @@ export class ConfigService {
   private _visitor: VisitorFacade;
   private _isMemberLoggedIn: boolean;
   private _member: MemberFacade;
+  itemSearchResult: ItemFacade[];
   private _selectedShop: ShopFacade;
   private _itemsSearched: ItemFacade[];
   constructor() {

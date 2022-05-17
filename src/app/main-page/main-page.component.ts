@@ -26,6 +26,9 @@ export class MainPageComponent implements OnInit, OnDestroy {
     });
   }
 
+
+  
+
   isRegisterClicked(): boolean {
     return this.config.isRegisterClicked;
   }
