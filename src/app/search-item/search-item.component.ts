@@ -18,14 +18,10 @@ import { MessageService } from 'app/services/message.service';
   styleUrls: ['./search-item.component.scss'],
 })
 export class SearchItemComponent implements OnInit {
-
-
-
-
   items: ItemFacade[];
   filteredItems: ItemFacade[];
   shopName: string;
-  categoryFilters:string[];
+  categoryFilters: string[];
   minPrice: number;
   maxPrice: number;
 
@@ -37,16 +33,14 @@ export class SearchItemComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.shopName = "";
-    this.items =  this.config.itemsSearched;
+    this.shopName = '';
+    this.items = this.config.itemsSearched;
     this.filteredItems = this.items;
     this.categoryFilters = [];
     // this.minPrice = -1;
     // this.maxPrice = -1;
-
   }
   openDialog(item: ItemFacade): void {
-
     const dialogRef = this.dialog.open(ItemMatDialogComponent, {
       width: '250px',
       data: { relatedItem: item },
@@ -60,12 +54,12 @@ export class SearchItemComponent implements OnInit {
     let x = 3;
     return 4;
   }
-  canSearchShopName(){
-    return (this.shopName && this.shopName !== "");
+  canSearchShopName() {
+    return this.shopName && this.shopName !== '';
   }
 
-  getFilteredItems(){
-    if(this.config.itemsSearched){
+  getFilteredItems() {
+    if (this.config.itemsSearched) {
       let filtered = this.config.itemsSearched;
       filtered = this.filterByCategory(filtered);
       filtered = this.filterByPrice(filtered);
@@ -74,33 +68,31 @@ export class SearchItemComponent implements OnInit {
     return undefined;
   }
 
-  isItemsFound(){
+  isItemsFound() {
     const items = this.getFilteredItems();
-    return items && (items.length > 0);
-
+    return items && items.length > 0;
   }
 
   searchShop() {
-    const request =  new TwoStringRequest();
+    const request = new TwoStringRequest();
     request.name = this.config.visitor.name;
     request.shopName = this.shopName;
-    this.engine.getShopInfo(request).subscribe(responseJson =>{
+    this.engine.getShopInfo(request).subscribe((responseJson) => {
       const response = new ResponseT<ShopFacade>().deserialize(responseJson);
-      if (response.isErrorOccurred()){
+      if (response.isErrorOccurred()) {
         this.messageService.errorMessage(response.getMessage());
-      }
-      else{
-        const shop =  new ShopFacade().deserialize(response.value);
+      } else {
+        const shop = new ShopFacade().deserialize(response.value);
         this.config.selectedShop = shop;
         this.config.isShopInfoClicked = true;
       }
-    })
+    });
   }
 
-  addToCart(item:ItemFacade){
+  addToCart(item: ItemFacade) {
     const dialogRef = this.dialog.open(AddItemToCartDialogComponent, {
       width: '300px',
-      data: { },
+      data: {},
     });
 
     dialogRef.afterClosed().subscribe((amount) => {
@@ -108,79 +100,71 @@ export class SearchItemComponent implements OnInit {
       request.amount = amount;
       request.itemToInsert = item;
       request.visitorName = this.config.visitor.name;
-      this.engine.addItemToShoppingCart(request).subscribe(responseJson => {
+      this.engine.addItemToShoppingCart(request).subscribe((responseJson) => {
         const response = new Response().deserialize(responseJson);
-        if (response.isErrorOccurred()){
+        if (response.isErrorOccurred()) {
           this.messageService.errorMessage(response.getMessage());
+        } else {
+          this.messageService.validMessage('Item Successfully added');
         }
-        else{
-          this.messageService.validMessage("Item Successfully added");
-        }
-      })
+      });
     });
-
   }
 
-  getNoFoundTitle(){
-    if (!this.getFilteredItems()){
-      return ""
-    }
-    else{
-      return "No Results Found";
+  getNoFoundTitle() {
+    if (!this.getFilteredItems()) {
+      return '';
+    } else {
+      return 'No Results Found';
     }
   }
 
-  isMemberLoggedin(){
+  isMemberLoggedin() {
     return this.config.isMemberLoggedIn;
   }
 
-  filterByPrice(unfiltered: ItemFacade[]){
+  filterByPrice(unfiltered: ItemFacade[]) {
     let filtered = unfiltered;
-    if (this.minPrice && this.minPrice > 0){
-       filtered = filtered.filter(item => item.price > this.minPrice);
+    if (this.minPrice && this.minPrice > 0) {
+      filtered = filtered.filter((item) => item.price > this.minPrice);
     }
-    if (this.maxPrice && this.maxPrice > 0){
-      filtered = filtered.filter(item => item.price < this.maxPrice);
-   }
-   return filtered;
+    if (this.maxPrice && this.maxPrice > 0) {
+      filtered = filtered.filter((item) => item.price < this.maxPrice);
+    }
+    return filtered;
   }
 
-
-  filterByCategory(unfiltered: ItemFacade[]){
-    if (!this.categoryFilters || this.categoryFilters.length === 0){
+  filterByCategory(unfiltered: ItemFacade[]) {
+    if (!this.categoryFilters || this.categoryFilters.length === 0) {
       return unfiltered;
     }
     const filtered = [];
-    for (const item of unfiltered){
+    for (const item of unfiltered) {
       const categoryString = item.getCategoryString();
-      if (!this.categoryFilters.includes(categoryString)){
+      if (!this.categoryFilters.includes(categoryString)) {
         filtered.push(item);
       }
     }
     return filtered;
     // return unfiltered.filter((item) => !this.categoryFilters.includes(item.getCategoryString())   )
-
   }
 
-
-  getAllCategories(){
+  getAllCategories() {
     return this.config.getAllCategories();
   }
 
-  changeFilter(checked , category: string){
-    if(!checked){
-     if (!this.categoryFilters.includes(category)){
-        this.categoryFilters.push( category);
-     }
+  changeFilter(checked, category: string) {
+    if (!checked) {
+      if (!this.categoryFilters.includes(category)) {
+        this.categoryFilters.push(category);
+      }
     }
     // marked
-    else{
+    else {
       const index = this.categoryFilters.indexOf(category, 0);
       if (index > -1) {
         this.categoryFilters.splice(index, 1);
       }
     }
   }
-
-
 }

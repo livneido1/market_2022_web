@@ -64,13 +64,14 @@ export class ToolbarComponent implements OnInit {
       const response = new ResponseT().deserialize(responseJson);
       if (response.isErrorOccurred()) {
         this.messageService.errorMessage(response.getMessage());
+      } else {
+        const items: ItemFacade[] = [];
+        for (const item of response.value) {
+          items.push(new ItemFacade().deserialize(item));
+        }
+        this.config.applySearch(items);
+        this.messageService.validMessage('result from search returned');
       }
-      const items: ItemFacade[] = [];
-      for (const item of response.value) {
-        items.push(new ItemFacade().deserialize(item));
-      }
-      this.config.applySearch(items);
-      this.messageService.validMessage("result from search returned");
     });
   }
   searchByKeyword() {
@@ -80,43 +81,45 @@ export class ToolbarComponent implements OnInit {
       const response = new ResponseT().deserialize(responseJson);
       if (response.isErrorOccurred()) {
         this.messageService.errorMessage(response.getMessage());
+      } else {
+        const items: ItemFacade[] = [];
+        for (const item of response.value) {
+          items.push(new ItemFacade().deserialize(item));
+        }
+        this.config.applySearch(items);
+        this.messageService.validMessage('result from search returned');
       }
-      const items: ItemFacade[] = [];
-      for (const item of response.value) {
-        items.push(new ItemFacade().deserialize(item));
-      }
-      this.config.applySearch(items);
-      this.messageService.validMessage("result from search returned");
     });
   }
   searchByCategory() {
-    const request  = this.config.createCategoryFromString(this.searchText);
+    const request = this.config.createCategoryFromString(this.searchText);
     this.engine.searchProductByCategory(request).subscribe((responseJson) => {
       const response = new ResponseT().deserialize(responseJson);
       if (response.isErrorOccurred()) {
         this.messageService.errorMessage(response.getMessage());
+      } else {
+        const items: ItemFacade[] = [];
+        for (const item of response.value) {
+          items.push(new ItemFacade().deserialize(item));
+        }
+        this.config.applySearch(items);
+        this.messageService.validMessage('result from search returned');
       }
-      const items: ItemFacade[] = [];
-      for (const item of response.value) {
-        items.push(new ItemFacade().deserialize(item));
-      }
-      this.config.applySearch(items);
-      this.messageService.validMessage("result from search returned");
     });
   }
-  typeChanged(){
-    this.searchText = "";
+  typeChanged() {
+    this.searchText = '';
   }
 
-  getAllCategories(){
+  getAllCategories() {
     return this.config.getAllCategories();
   }
 
-  searchByCategoryOn(){
-    return this.productSearchBy === "Category";
+  searchByCategoryOn() {
+    return this.productSearchBy === 'Category';
   }
 
-  selectCategory(category){
+  selectCategory(category) {
     this.searchText = category;
   }
 

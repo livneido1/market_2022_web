@@ -36,7 +36,7 @@ export class ShopInfoComponentComponent implements OnInit {
     const amount = this.shop.itemsCurrentAmount.get(item.id);
     const dialogRef = this.dialog.open(ItemMatDialogComponent, {
       width: '250px',
-      data: { relatedItem: item , amount: amount},
+      data: { relatedItem: item, amount: amount },
     });
 
     dialogRef.afterClosed().subscribe((result) => {
@@ -68,12 +68,13 @@ export class ShopInfoComponentComponent implements OnInit {
           const response = new ResponseT().deserialize(responseJson);
           if (response.isErrorOccurred()) {
             this.messageService.errorMessage(response.getMessage());
+          } else {
+            const newShop = new ShopFacade().deserialize(response.value);
+            this.config.selectedShop = newShop;
+            this.config.isShopInfoClicked = true;
+            this.reset();
+            this.messageService.validMessage('Item Succesfully Added');
           }
-          const newShop = new ShopFacade().deserialize(response.value);
-          this.config.selectedShop = newShop;
-          this.config.isShopInfoClicked = true;
-          this.reset();
-          this.messageService.validMessage('Item Succesfully Added');
         });
       }
     });
