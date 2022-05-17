@@ -5,11 +5,20 @@
       <p class="filterTitle">Filter by Price</p>
       <mat-form-field style="width: 40%; margin-left: 7.5%;" appearance="fill">
         <mat-label >min price</mat-label>
-        <input matInput type="number" min="0" #last style="color: white;" placeholder="Ex. 10.4">
+        <input matInput type="number" min="0"
+         #last style="color: white;"
+         placeholder="Ex. 10.4"
+         [(ngModel)]="minPrice">
       </mat-form-field>
       <mat-form-field style="width: 40%;  margin-left: 2.5%;" appearance="fill">
         <mat-label >max price</mat-label>
-        <input matInput type="number" min="0"  #last style="color: white;" placeholder="Ex. 10.4">
+        <input matInput 
+        type="number" 
+        min="0" 
+        #last style="color: white;"
+        placeholder="Ex. 10.4"
+        [(ngModel)]="maxPrice">
+        >
       </mat-form-field>
     </div>
 

@@ -26,6 +26,8 @@ export class SearchItemComponent implements OnInit {
   filteredItems: ItemFacade[];
   shopName: string;
   categoryFilters:string[];
+  minPrice: number;
+  maxPrice: number;
 
   constructor(
     public dialog: MatDialog,
@@ -39,6 +41,8 @@ export class SearchItemComponent implements OnInit {
     this.items =  this.config.itemsSearched;
     this.filteredItems = this.items;
     this.categoryFilters = [];
+    // this.minPrice = -1;
+    // this.maxPrice = -1;
 
   }
   openDialog(item: ItemFacade): void {
@@ -64,6 +68,7 @@ export class SearchItemComponent implements OnInit {
     if(this.config.itemsSearched){
       let filtered = this.config.itemsSearched;
       filtered = this.filterByCategory(filtered);
+      filtered = this.filterByPrice(filtered);
       return filtered;
     }
     return undefined;
@@ -129,6 +134,18 @@ export class SearchItemComponent implements OnInit {
     return this.config.isMemberLoggedIn;
   }
 
+  filterByPrice(unfiltered: ItemFacade[]){
+    let filtered = unfiltered;
+    if (this.minPrice && this.minPrice > 0){
+       filtered = filtered.filter(item => item.price > this.minPrice);
+    }
+    if (this.maxPrice && this.maxPrice > 0){
+      filtered = filtered.filter(item => item.price < this.maxPrice);
+   }
+   return filtered;
+  }
+
+
   filterByCategory(unfiltered: ItemFacade[]){
     if (!this.categoryFilters || this.categoryFilters.length === 0){
       return unfiltered;
@@ -164,4 +181,6 @@ export class SearchItemComponent implements OnInit {
       }
     }
   }
+
+
 }
