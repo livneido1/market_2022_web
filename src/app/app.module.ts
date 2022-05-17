@@ -29,6 +29,7 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { OpenNewShopDialogComponent } from './open-new-shop-dialog/open-new-shop-dialog.component';
 import { AddItemDialogComponent } from './add-item-dialog/add-item-dialog.component';
 import { AddItemToCartDialogComponent } from './add-item-to-cart-dialog/add-item-to-cart-dialog.component';
+import {MatDatepickerModule} from '@angular/material/datepicker';
 
 @NgModule({
   declarations: [
@@ -65,6 +66,7 @@ import { AddItemToCartDialogComponent } from './add-item-to-cart-dialog/add-item
     MatCheckboxModule,
     MatDialogModule,
     MatSnackBarModule,
+    MatDatepickerModule,
 
 
   ],

@@ -31,8 +31,11 @@ export class ShoppingCartInfoComponent implements OnInit {
   }
 
   isItemInCart(){
-    const len  = this.itemsInCart.length;
-    return len >0;
+    if (this.itemsInCart){
+      const len  = this.itemsInCart.length;
+      return len >0;
+    }
+    return false;
   }
   resetShoppingCart() {
     const request = new RequestVisitorName();

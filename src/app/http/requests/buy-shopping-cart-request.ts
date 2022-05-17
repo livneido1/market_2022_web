@@ -5,10 +5,10 @@ import { PaymentMethod } from "../facadeObjects/payment-method";
 
 export class BuyShoppingCartRequest implements Deserializable{
 
-  private visitorName: string;
-  private expectedPrice: number;
-  private paymentMethod: PaymentMethod;
-  private address: Address;
+  visitorName: string;
+  expectedPrice: number;
+  paymentMethod: PaymentMethod;
+  address: Address;
 
   constructor(){
     this.visitorName = "";

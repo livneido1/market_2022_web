@@ -5,21 +5,21 @@
       <div>
         <mat-form-field class="textInput" appearance="fill" >
           <mat-label > City</mat-label>
-          <input  matInput #last>
+          <input  matInput #last style="color:white" [(ngModel)]="city">
         </mat-form-field>
 
       </div>
       <div>
         <mat-form-field class="textInput" appearance="fill">
           <mat-label >Street </mat-label>
-          <input matInput #last>
+          <input matInput #last style="color:white" [(ngModel)]="street">
         </mat-form-field>
 
       </div>
       <div>
         <mat-form-field class="textInput" appearance="fill">
           <mat-label >Bulding Number</mat-label>
-          <input matInput #last>
+          <input matInput #last style="color:white" [(ngModel)]="buildingNum">
         </mat-form-field>
       </div>
 
@@ -29,22 +29,22 @@
       <p class="title">Payment Details</p>
       <div>
         <mat-form-field class="textInput" appearance="fill" >
-          <mat-label > Cart Number</mat-label>
-          <input  matInput #last>
+          <mat-label > Card Number</mat-label>
+          <input  matInput #last style="color:white" [(ngModel)]="cardNum">
         </mat-form-field>
 
       </div>
       <div>
         <mat-form-field class="textInput" appearance="fill">
           <mat-label > CVV </mat-label>
-          <input matInput #last>
+          <input matInput #last style="color:white" [(ngModel)]="CVV">
         </mat-form-field>
 
       </div>
       <div>
         <mat-form-field class="textInput" appearance="fill">
           <mat-label >Experation Date</mat-label>
-          <input matInput #last >
+          <input matInput #last type="month" style="color:white" [(ngModel)]="expirationDate">
         </mat-form-field>
       </div>
     </div>
@@ -59,7 +59,8 @@
   <div  >
     <button
     class="submitButton"
-    [disabled]="canSubmit()" >
+    [disabled]="!canSubmit()"
+    (click)="submitCheckOut()" >
       Submit!
     </button>
   </div>
