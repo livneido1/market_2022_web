@@ -42,15 +42,19 @@ export class MainPageComponent implements OnInit, OnDestroy {
     }
     connectToNotifications(name:string): void {
     console.log('connect to the notifications socket');
+    //create the cocket using the enpoint configurations.
     let socket= new SockJS(this.config.serverUrl+ '/notification')
+    //creating the stomp protocol for the ws connectiong
     this.config.stompClient=Stomp.over(socket);
+    //connect the server via ws and subscribe for notifications.
     this.config.stompClient.connect({},function(frame){
     console.log('connect to server '+frame);
-    this.config.stompClient.subscribe('/topic/messages/'+name, function (response){
-    let data = JSON.parse(response.body);
+    this.config.stompClient.subscribe('/user/notification/'+name, function (response){
+    let data = JSON.parse(response.body).text;
     console.log(data);
     this.notify(data.text);
     });
+    this.config.stompClient.send("/swns/start", {});
     });
 
     }
@@ -92,6 +96,9 @@ export class MainPageComponent implements OnInit, OnDestroy {
     request.visitorName = this.config.visitor.name;
     this.engine.exitSystem(request).subscribe(responseJson =>{
       const response = new Response().deserialize(responseJson);
+      //remove visitor from the server listeners
+      this.config.stompClient.publish({destination: '/swns/stop'});
+      //disconnect from the ws connection.
       this.config.stompClient.disconnect();
     });
   }
