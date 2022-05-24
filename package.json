@@ -25,6 +25,7 @@
     "rxjs": "~7.5.0",
     "sockjs": "^0.3.24",
     "sockjs-client": "^1.6.0",
+    "stomp": "^0.1.1",
     "stompjs": "^2.3.3",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"

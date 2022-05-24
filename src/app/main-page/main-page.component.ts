@@ -26,11 +26,12 @@ export class MainPageComponent implements OnInit, OnDestroy {
       } else {
         const visitor = new VisitorFacade().deserialize(response.value);
         this.config.visitor = visitor;
-        console.log('returned from guest login');
+        
         
 
       }
     });
+    console.log('returned from guest login');
     this.connectToNotifications('visitor.name');
   }
 
@@ -46,7 +47,7 @@ export class MainPageComponent implements OnInit, OnDestroy {
     let socket= new SockJS(this.config.serverUrl+ '/notification')
     //creating the stomp protocol for the ws connectiong
     this.config.stompClient=Stomp.over(socket);
-    //connect the server via ws and subscribe for notifications.
+    //connect the Rserver via ws and subscribe for notifications.
     this.config.stompClient.connect({},function(frame){
     console.log('connect to server '+frame);
     this.config.stompClient.subscribe('/user/notification/'+name, function (response){
