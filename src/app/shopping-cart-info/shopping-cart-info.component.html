@@ -18,10 +18,25 @@
                 <p style="font-size:x-large;">{{itemDic.item.name}}</p>
                 <p>Price per Item: {{itemDic.item.price}}</p>
                 <p>Amount in Cart: {{itemDic.amount}}</p>
+                <p>Shop: {{itemDic.shopName}}</p>
 
               </td>
-              <td>
-                <button style="cursor: pointer;">add to cart</button>
+              <td style="vertical-align:text-top">
+
+                <button
+                  title="Remove Item From Cart"
+                  style="float:right; cursor: pointer;"
+                  (click)="removeItem(itemDic.item, itemDic.shopName)">
+                  <span class='material-icons'>delete</span>
+                </button>
+
+                <div>
+                  <button
+                    style="cursor: pointer; width: 100%;margin-top: 10px;"
+                    (click)="setItemAmountByDemand(itemDic.item, itemDic.shopName)">
+                    Change Item Amount
+                  </button>
+                </div>
               </td>
 
             </tr>

@@ -9,6 +9,8 @@ import { RequestVisitorName } from 'app/http/requests/request-visitor-name';
 import { EngineService } from 'app/services/engine.service';
 import { ResponseT } from 'app/http/facadeObjects/response-t';
 import { MessageService } from 'app/services/message.service';
+import { EditItemFromShoppingCartRequest } from 'app/http/requests/edit-item-from-shopping-cart-request';
+import { GetValueDialogComponent, GetValueDialogData } from 'app/get-value-dialog/get-value-dialog.component';
 
 @Component({
   selector: 'app-shopping-cart-info',
@@ -18,7 +20,7 @@ import { MessageService } from 'app/services/message.service';
 export class ShoppingCartInfoComponent implements OnInit {
   totalPrice: number;
   cart: ShoppingCartFacade;
-  itemsInCart: { item: ItemFacade; amount: number }[];
+  itemsInCart: { item: ItemFacade; amount: number; shopName: string }[];
   constructor(
     public dialog: MatDialog,
     private config: ConfigService,
@@ -30,10 +32,10 @@ export class ShoppingCartInfoComponent implements OnInit {
     this.resetShoppingCart();
   }
 
-  isItemInCart(){
-    if (this.itemsInCart){
-      const len  = this.itemsInCart.length;
-      return len >0;
+  isItemInCart() {
+    if (this.itemsInCart) {
+      const len = this.itemsInCart.length;
+      return len > 0;
     }
     return false;
   }
@@ -53,15 +55,20 @@ export class ShoppingCartInfoComponent implements OnInit {
         this.cart = this.config.visitor.cart;
         this.totalPrice = this.cart.price;
         this.itemsInCart = this.getItems();
-        this.messageService.validMessage("successfully loaded cart");
+        this.messageService.validMessage('successfully loaded cart');
       }
     });
   }
 
-  getItems(): { item: ItemFacade; amount: number }[] {
-    const baskets: ShoppingBasketFacade[] = Array.from(this.cart.cart.values());
-    const itemsAndAmount: { item: ItemFacade; amount: number }[] = [];
-    for (const basket of baskets) {
+  getItems(): { item: ItemFacade; amount: number; shopName: string }[] {
+    const itemsAndAmount: {
+      item: ItemFacade;
+      amount: number;
+      shopName: string;
+    }[] = [];
+    for (const entrie of this.cart.cart.entries()) {
+      const basket = entrie[1];
+      const shopName = entrie[0];
       for (const entry of basket.itemMap.entries()) {
         const id = entry[0];
         const item = entry[1];
@@ -69,6 +76,7 @@ export class ShoppingCartInfoComponent implements OnInit {
         const itemAndAmount = {
           item: item,
           amount: amount,
+          shopName: shopName,
         };
         itemsAndAmount.push(itemAndAmount);
       }
@@ -79,6 +87,55 @@ export class ShoppingCartInfoComponent implements OnInit {
 
   canCheckOut(): boolean {
     return false;
+  }
+
+  removeItem(item: ItemFacade, shopName: string) {
+    const request = new EditItemFromShoppingCartRequest(
+      0,
+      item,
+      shopName,
+      this.config.visitor.name
+    );
+    this.setItemAmount(request);
+  }
+  setItemAmountByDemand(item: ItemFacade, shopName: string) {
+    const data: GetValueDialogData = {
+      title: 'Choose new Amount',
+      buttonText: 'Set new Amount!',
+    };
+    const dialogRef = this.dialog.open(GetValueDialogComponent, {
+      width: '250px',
+      data: data,
+    });
+    dialogRef.afterClosed().subscribe((amount) => {
+      if (!amount) {
+        return;
+      } else {
+        const request = new EditItemFromShoppingCartRequest(
+          amount,
+          item,
+          shopName,
+          this.config.visitor.name
+        );
+        this.setItemAmount(request);
+      }
+    });
+  }
+
+  private setItemAmount(request: EditItemFromShoppingCartRequest) {
+    this.engine.editItemFromShoppingCart(request).subscribe((responseJson) => {
+      const response = new ResponseT<ShoppingCartFacade>().deserialize(
+        responseJson
+      );
+      if (response.isErrorOccurred) {
+        this.messageService.errorMessage(response.getMessage());
+      } else {
+        const newCart = new ShoppingCartFacade().deserialize(response.value);
+        this.config.visitor.cart = newCart;
+        this.resetShoppingCart();
+        this.messageService.validMessage('shopping cart succefully updated!');
+      }
+    });
   }
 
   checkOutClicked() {

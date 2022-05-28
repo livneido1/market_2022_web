@@ -26,7 +26,7 @@ export class ItemMatDialogComponent implements OnInit {
   }
 
   getKeywords(){
-    if(this.item.keywords){
+    if(this.item.keywords && this.item.keywords.length > 0){
 
       return this.item.keywords.reduce((str1,str2) => str1.concat(", ", str2));
     }

@@ -7,20 +7,64 @@
         <thead>
           <tr>
             <th class = "titleTh" >Products</th>
-            <th> </th>
+            <th>
+              <div style="width: 50%;
+                          float: left;
+                          font-size: smaller;">
+                <p>
+                  last update: {{this.lastUpdate}}
+                </p>
+
+              </div>
+              <div style="width: 40%;
+                          float: right;">
+                <button
+                  title="refresh shop info"
+                  (click)="resetShop()">
+                  <span class='material-icons'>refresh</span>
+                </button>
+              </div>
+            </th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let item of itemList">
 
-            <td style="cursor: pointer;" (click)="openDialog(item)">
+            <td style="cursor: pointer; width: 80%;"
+              (click)="openDialog(item)">
               <p style="font-size:x-large;">{{item.name}}</p>
-              <p>{{item.price}}</p>
+              <p>price per Unit: {{item.price}}</p>
+              <p>Amount in Shop: {{getItemCurrentAmount(item)}}</p>
 
             </td>
-            <!-- <td>
-              <button style="cursor: pointer;">add to cart</button>
-            </td> -->
+            <td>
+              <div>
+
+                <button
+                  title="Remove Item From Cart"
+                  style="float:right; cursor: pointer;"
+                  (click)="removeItem(item)">
+                  <span class='material-icons'>delete</span>
+                </button>
+
+                <button
+                  title="set item info"
+                  style="cursor: pointer;"
+
+                  (click)="setItemInfo(item)">
+                  <span class="material-icons">settings</span>
+                </button>
+
+              </div>
+
+              <div>
+                <button
+                  style="cursor: pointer; width: 100%;margin-top: 10px;"
+                  (click)="setItemAmount(item)">
+                  Change Item Amount in Shop
+                </button>
+              </div>
+            </td>
 
           </tr>
         </tbody>

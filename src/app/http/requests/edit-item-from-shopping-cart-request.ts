@@ -3,16 +3,16 @@ import { ItemFacade } from "../facadeObjects/ItemFacade";
 
 export class EditItemFromShoppingCartRequest implements Deserializable {
 
-  private amount: number;
-  private itemFacade: ItemFacade;
-  private shopName: string;
-  private visitorName: string;
+  amount: number;
+  itemFacade: ItemFacade;
+  shopName: string;
+  visitorName: string;
 
-  constructor(){
-    this.amount = 0;
-    this.itemFacade = new ItemFacade();
-    this.shopName = "";
-    this.visitorName = "";
+  constructor(amount?: number, itemFacade?: ItemFacade, shopName?:string , visitorName?:string){
+    this.amount = amount? amount : 0;
+    this.itemFacade = itemFacade? itemFacade: new ItemFacade();
+    this.shopName = shopName?shopName : "";
+    this.visitorName = visitorName? visitorName : "";
 
   }
 
