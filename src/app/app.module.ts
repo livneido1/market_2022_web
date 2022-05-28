@@ -30,6 +30,8 @@ import { OpenNewShopDialogComponent } from './open-new-shop-dialog/open-new-shop
 import { AddItemDialogComponent } from './add-item-dialog/add-item-dialog.component';
 import { AddItemToCartDialogComponent } from './add-item-to-cart-dialog/add-item-to-cart-dialog.component';
 import {MatDatepickerModule} from '@angular/material/datepicker';
+import { GetValueDialogComponent } from './get-value-dialog/get-value-dialog.component';
+import { GetStringValueComponent } from './get-string-value/get-string-value.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +50,9 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
     EmployeesComponentComponent,
     OpenNewShopDialogComponent,
     AddItemDialogComponent,
-    AddItemToCartDialogComponent
+    AddItemToCartDialogComponent,
+    GetValueDialogComponent,
+    GetStringValueComponent
   ],
   imports: [
     BrowserModule,

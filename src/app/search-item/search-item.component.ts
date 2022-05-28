@@ -96,6 +96,9 @@ export class SearchItemComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((amount) => {
+      if (!amount){
+        return;
+      }
       const request = new AddItemToShoppingCartRequest();
       request.amount = amount;
       request.itemToInsert = item;
