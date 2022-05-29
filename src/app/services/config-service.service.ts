@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { AppointmentFacade } from 'app/http/facadeObjects/AppointmentFacade';
 import { Category, ItemFacade } from 'app/http/facadeObjects/ItemFacade';
 import { MemberFacade } from 'app/http/facadeObjects/MemberFacade';
+import { PermissionFacade } from 'app/http/facadeObjects/PermissionFacade';
 import { ShopFacade } from 'app/http/facadeObjects/shop-facade';
 import { ShopManagerAppointmentFacade } from 'app/http/facadeObjects/shop-manager-appointment-facade';
 import { ShopOwnerAppointmentFacade } from 'app/http/facadeObjects/ShopOwnerAppointmentFacade';
@@ -59,8 +60,7 @@ export class ConfigService {
     this._itemsSearched = undefined;
   }
 
-
-  applySearch(items: ItemFacade[]){
+  applySearch(items: ItemFacade[]) {
     this.cleanAllComponents();
     this._itemsSearched = items;
     this._isSearchItemClicked = true;
@@ -165,6 +165,40 @@ export class ConfigService {
     this._selectedShop = value;
   }
 
+  getAllPermissions(): string[] {
+    return ['Employees edit', 'See History'];
+  }
+  getPermissionsFromText(text: string): PermissionFacade {
+    const permit = new PermissionFacade();
+    switch (text) {
+      case 'Employees edit':
+        permit.name = 'EmployeesPermission';
+        return permit;
+      case 'See History':
+        permit.name = 'PurchaseHistoryPermission';
+        return permit;
+    }
+    return undefined;
+  }
+
+  getAllAppointmentTypes(): string[] {
+    return ['Manager', 'Owner'];
+  }
+
+  getAppointmentTextToObject(appointment: string): AppointmentFacade {
+    switch (appointment) {
+      case 'Owner':
+        const owner = new ShopOwnerAppointmentFacade();
+        owner.type = 'ShopOwnerAppointmentFacade';
+        return owner;
+      case 'Manager':
+        const manager = new ShopManagerAppointmentFacade();
+        manager.type = 'ShopManagerAppointmentFacade';
+        return manager;
+    }
+    return undefined;
+  }
+
   createCategoryFromString(name: string): Category {
     switch (name) {
       case 'general':
@@ -181,11 +215,7 @@ export class ConfigService {
     return Category.general;
   }
 
-  getAllCategories():string[]{
-    return [
-      'general','fruit','cellular','meat','electricity'
-    ]
+  getAllCategories(): string[] {
+    return ['general', 'fruit', 'cellular', 'meat', 'electricity'];
   }
-
-
 }

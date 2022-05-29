@@ -173,6 +173,10 @@ export class ShopInfoComponentComponent implements OnInit {
     });
   }
 
+  onEmployeesClick(){
+    this.config.isEmployeesinfoClicked = true;
+  }
+
   reset() {
     this.shop = this.config.selectedShop;
     this.itemList = [];
