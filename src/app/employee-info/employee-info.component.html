@@ -5,21 +5,22 @@
      Employee Info
   </p>
   <div>
-    <mat-form-field class="input" appearance="fill">
+    <mat-form-field class="input"
+      appearance="fill" >
       <label for="supervisor">Supervisor:</label>
-      <input  matInput  #last id="supervisor" name="supervisor" style="color: white;" [(ngModel)]="supervisor">
+      <input [disabled]="!isEditable" matInput  #last id="supervisor" name="supervisor" style="color: white;" [(ngModel)]="supervisor">
     </mat-form-field>
   </div>
   <div>
     <mat-form-field class="input" appearance="fill">
       <label for="appointed">Appointed Name:</label>
-      <input matInput  #last id="appointed" name="appointed" style="color: white;" [(ngModel)]="appointed">
+      <input [disabled]="!isEditable" matInput  #last id="appointed" name="appointed" style="color: white;" [(ngModel)]="appointed">
     </mat-form-field>
   </div>
   <div>
     <mat-form-field class="input" appearance="fill">
       <label for="shop">Shop:</label>
-      <input  matInput  #last id="shop" name="shop" style="color: white;" [(ngModel)]="shopName">
+      <input [disabled]="!isEditable" matInput  #last id="shop" name="shop" style="color: white;" [(ngModel)]="shopName">
     </mat-form-field>
   </div>
 
@@ -27,6 +28,7 @@
     <mat-form-field class="input" appearance="fill">
       <mat-label>Category</mat-label>
       <mat-select [(value)]="type"
+        [disabled]="!isEditable"
         (selectionChange)="testHere($event)">
         <mat-option *ngFor="let selectType of types"
           value="{{selectType}}"
@@ -39,9 +41,11 @@
 
   <div style="margin-bottom: 50px">
     <label>Permissions:</label>
-    <section *ngFor="let permit of permissions">
+    <section
+      *ngFor="let permit of permissions"
+      >
       <mat-checkbox
-
+        [disabled]="!isEditable"
         (ngModelChange)="updatePermits()">
         {{permit}}
 
