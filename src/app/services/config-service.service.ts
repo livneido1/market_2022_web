@@ -165,39 +165,8 @@ export class ConfigService {
     this._selectedShop = value;
   }
 
-  getAllPermissions(): string[] {
-    return ['Employees edit', 'See History'];
-  }
-  getPermissionsFromText(text: string): PermissionFacade {
-    const permit = new PermissionFacade();
-    switch (text) {
-      case 'Employees edit':
-        permit.name = 'EmployeesPermission';
-        return permit;
-      case 'See History':
-        permit.name = 'PurchaseHistoryPermission';
-        return permit;
-    }
-    return undefined;
-  }
 
-  getAllAppointmentTypes(): string[] {
-    return ['Manager', 'Owner'];
-  }
 
-  getAppointmentTextToObject(appointment: string): AppointmentFacade {
-    switch (appointment) {
-      case 'Owner':
-        const owner = new ShopOwnerAppointmentFacade();
-        owner.type = 'ShopOwnerAppointmentFacade';
-        return owner;
-      case 'Manager':
-        const manager = new ShopManagerAppointmentFacade();
-        manager.type = 'ShopManagerAppointmentFacade';
-        return manager;
-    }
-    return undefined;
-  }
 
   createCategoryFromString(name: string): Category {
     switch (name) {

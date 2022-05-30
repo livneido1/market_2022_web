@@ -13,6 +13,7 @@ import { GetShopEmployeesRequest } from 'app/http/requests/get-shop-employees-re
 import { ConfigService } from 'app/services/config-service.service';
 import { EngineService } from 'app/services/engine.service';
 import { MessageService } from 'app/services/message.service';
+import { ModelAdapterService } from 'app/services/model-adapter.service';
 
 @Component({
   selector: 'app-employees-component',
@@ -28,7 +29,8 @@ export class EmployeesComponentComponent implements OnInit {
     private config: ConfigService,
     private engine: EngineService,
     private messageService: MessageService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private modelAdapter: ModelAdapterService,
   ) {
     this.appointments = [];
     this.resetComponent();
@@ -38,14 +40,7 @@ export class EmployeesComponentComponent implements OnInit {
   ngOnInit(): void {}
 
   getTypeName(type: string): string {
-    switch (type) {
-      case 'ShopOwnerAppointmentFacade':
-        return 'Owner';
-      case 'ShopManagerAppointmentFacade':
-        return 'Manager';
-      default:
-        return 'Unknown Appointment';
-    }
+    return this.modelAdapter.getTypeName(type);
   }
 
   openAppointmentInfo(appointment: AppointmentFacade) {
@@ -53,6 +48,7 @@ export class EmployeesComponentComponent implements OnInit {
       isEditable: false,
       appointment: appointment,
       butoonText: '',
+      isNewAppointment: false
     };
     const dialogRef = this.dialog.open(EmployeeInfoComponent, {
       width: '500px',

@@ -5,22 +5,19 @@ import { ShopFacade } from './shop-facade';
 import { ShopManagerAppointmentFacade } from './shop-manager-appointment-facade';
 import { ShopOwnerAppointmentFacade } from './ShopOwnerAppointmentFacade';
 
-export abstract class AppointmentFacade  {
+export abstract class AppointmentFacade {
   appointed: string; //  the actual appointed member
   superVisor: string; //  member appointedMe
   relatedShop: string;
   permissions: PermissionFacade[];
   type: string;
 
-
   constructor() {
-
-    this.appointed = "";
-    this.superVisor = "";
-    this.relatedShop = "";
+    this.appointed = '';
+    this.superVisor = '';
+    this.relatedShop = '';
     this.permissions = [];
-    this.type = "";
-
+    this.type = '';
   }
 
 }
