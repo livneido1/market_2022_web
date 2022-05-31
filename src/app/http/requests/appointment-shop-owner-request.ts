@@ -1,25 +1,25 @@
-import { Deserializable } from "../facadeObjects/deserializable";
+import { Deserializable } from '../facadeObjects/deserializable';
 
-export class AppointmentShopOwnerRequest implements Deserializable{
+export class AppointmentShopOwnerRequest implements Deserializable {
+  shopOwnerName: string;
+  appointedShopOwner: string;
+  shopName: string;
 
-  private shopOwnerName: string;
-  private appointedShopOwner: string;
-  private shopName: string;
-
-  constructor(){
-     this.shopOwnerName = "";
-     this.appointedShopOwner = "";
-     this.shopName = "";
-
+  constructor(
+    shopOwnerName?: string,
+    appointedShopOwner?: string,
+    shopName?: string
+  ) {
+    this.shopOwnerName = shopOwnerName ? shopOwnerName : '';
+    this.appointedShopOwner = appointedShopOwner ? appointedShopOwner : '';
+    this.shopName = shopName ? shopName : '';
   }
-
 
   deserialize(value: any): this {
-    if (!value){
-     return this;
+    if (!value) {
+      return this;
     }
-    Object.assign(this,value);
+    Object.assign(this, value);
     return this;
   }
-
 }

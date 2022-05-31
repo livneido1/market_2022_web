@@ -17,7 +17,7 @@ export class ModelAdapterService {
   getAllPermissions(): string[] {
     return ['Employees edit', 'See History'];
   }
-  getPermissionsFromText(text: string): PermissionFacade {
+  getPermissionFromText(text: string): PermissionFacade {
     const permit = new PermissionFacade();
     switch (text) {
       case 'Employees edit':
@@ -49,7 +49,7 @@ export class ModelAdapterService {
       case 'ShopManagerAppointmentFacade':
         return 'Manager';
       default:
-        return 'Unknown Appointment';
+        return undefined;
     }
   }
 

@@ -8,18 +8,16 @@ import { MessageService } from 'app/services/message.service';
 import { ModelAdapterService } from 'app/services/model-adapter.service';
 
 export interface EmployeeInfoData {
-  isEditable: boolean;
+  isPermissionsEditable: boolean;
   appointment: AppointmentFacade;
-  butoonText: string;
+  buttonText: string;
   isNewAppointment: boolean;
 }
 
 export interface EmployeeInfoReturnData {
   appointed: string;
-  supervisor: string;
   type: string;
-  permissions: string[];
-  shopName: string;
+  permissions: PermissionFacade[];
 }
 
 @Component({
@@ -32,11 +30,12 @@ export class EmployeeInfoComponent implements OnInit {
   appointed: string;
   supervisor: string; // supervisor
   buttonText: string;
-  isEditable: boolean;
+  isPermissionsEditable: boolean;
   shopName: string;
   availablePermits: string[];
   type: string;
-  currentPermits:Map<string, boolean>;  //permitName, value
+  currentPermits: Map<string, boolean>; //permitName, value
+  isNewAppointment: boolean;
 
   constructor(
     public dialogRef: MatDialogRef<EmployeeInfoComponent>,
@@ -48,29 +47,51 @@ export class EmployeeInfoComponent implements OnInit {
     this.availablePermits = this.modelAdapter.getAllPermissions();
     this.types = this.modelAdapter.getAllAppointmentTypes();
     this.appointed = data.appointment.appointed;
-    this.buttonText = data.butoonText;
-    this.isEditable = data.isEditable;
+    this.buttonText = data.buttonText;
+    this.isPermissionsEditable = data.isPermissionsEditable;
+    this.isNewAppointment = data.isNewAppointment;
     this.shopName = data.appointment.relatedShop
       ? data.appointment.relatedShop
       : '';
     this.supervisor = data.appointment.superVisor
       ? data.appointment.superVisor
       : '';
-    this.type = this.modelAdapter.getTypeName(data.appointment.type);
+    const currType = this.modelAdapter.getTypeName(data.appointment.type);
+    this.type = currType ? currType : '';
     this.setUpPermitMap(data.appointment.permissions);
-
-
-
   }
 
-  ngOnInit(): void {
+  ngOnInit(): void {}
+
+  canSubmit():boolean {
+    if (!this.isNewAppointment) {
+      return true;
+    } else {
+      return  this.type && this.types.includes(this.type) &&
+              this.appointed && this.appointed !== '' ;
+    }
+  }
+
+  createData(){
+    const permissions:PermissionFacade[] = [];
+    for (const entry of this.currentPermits.entries()){
+      if (entry[1]){
+        const permit = this.modelAdapter.getPermissionFromText(entry[0]);
+        permissions.push(permit);
+      }
+    }
+    const data: EmployeeInfoReturnData = {
+      appointed: this.appointed,
+      type: this.type,
+      permissions: permissions
+    }
+    return data;
+  }
+  updatePermits(permit: string, checked: boolean) {
+    this.currentPermits.set(permit, checked);
   }
 
 
-  updatePermits(permit:string ,checked:boolean) {
-    const s = permit;
-    const t = checked;
-  }
 
   setUpPermitMap(initPermits: PermissionFacade[]) {
     this.currentPermits = new Map();
@@ -79,7 +100,7 @@ export class EmployeeInfoComponent implements OnInit {
       this.currentPermits.set(permission, false);
     }
     //enteres the true values
-    if (initPermits){
+    if (initPermits) {
       for (const permission of initPermits) {
         const permitName = this.modelAdapter.permissionToText(permission.name);
         this.currentPermits.set(permitName, true);
@@ -87,9 +108,20 @@ export class EmployeeInfoComponent implements OnInit {
     }
   }
 
-  testHere(event: any) {
-    const selectType = event.value;
-    this.type = selectType;
-    return 3;
+  chooseType(event: any) {
+    this.type = event.value;
+    if (this.type == "Owner"){
+      for (const permit of this.currentPermits.keys()){
+        this.currentPermits.set(permit, true);
+      }
+      this.isPermissionsEditable = false;
+    }
+    else{
+      this.isPermissionsEditable = true;
+    }
+  }
+
+  onNoClick(): void {
+    this.dialogRef.close();
   }
 }

@@ -48,6 +48,7 @@
                   </button>
 
                   <button
+                    [hidden]="true"
                     title="set appointed permissions"
                     style="cursor: pointer;"
 
@@ -68,7 +69,8 @@
 
       </div>
       <div class="ButtonDiv">
-        <button class="ButtonEmployees">
+        <button class="ButtonEmployees"
+          (click)="addNewEmployee()">
           Add new Employee
         </button>
       </div>
