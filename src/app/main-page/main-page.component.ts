@@ -64,7 +64,6 @@ export class MainPageComponent implements OnInit, OnDestroy {
   }
   startClient(name:string) {
     if (this.config.stompClient && this.config.stompClient.connected) {
-      console.log('send atart connection request: '+'/rec/start');
       this.config.stompClient.publish({destination: '/rec/start/'+name});
     }
     console.log('start request sended');
@@ -73,11 +72,11 @@ export class MainPageComponent implements OnInit, OnDestroy {
     this.config.stompClient.watch('/user/notification/item')
     .pipe(
       map((response) => {
-        const text: string = JSON.parse(response.body).text;
+        const text: string = response.body;
         console.log('Got ' + text);
         return text;
       }))
-    .subscribe((notification: string) => new window.Notification(notification));}
+    .subscribe((notification: string) => alert(notification));}
 
 
   isRegisterClicked(): boolean {
@@ -123,7 +122,6 @@ export class MainPageComponent implements OnInit, OnDestroy {
   }
   stopClient(name:string) {
     if (this.config.stompClient && this.config.stompClient.connected) {
-      console.log('send atart connection request: '+'/rec/stop/'+name);
       this.config.stompClient.publish({destination: '/rec/stop/'+name});
       this.config.stompClient.deactivate();
       this.config.stompClient=null;
