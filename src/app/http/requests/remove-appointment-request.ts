@@ -4,10 +4,14 @@ export class RemoveAppointmentRequest implements Deserializable {
   boss: string;
   firedAppointed: string;
   shopName: string;
-  constructor() {
-    this.boss = '';
-    this.firedAppointed = '';
-    this.shopName = '';
+  constructor(
+    boss?: string,
+    firedAppointed?: string,
+    shopName?: string
+  ) {
+    this.boss = boss ? boss :'';
+    this.firedAppointed = firedAppointed ? firedAppointed :'';
+    this.shopName = shopName ? shopName :'';
   }
 
   deserialize(value: any): this {
