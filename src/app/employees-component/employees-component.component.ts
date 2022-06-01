@@ -17,6 +17,7 @@ import { AppointmentShopManagerRequest } from 'app/http/requests/appointment-sho
 import { AppointmentShopOwnerRequest } from 'app/http/requests/appointment-shop-owner-request';
 import { EditShopManagerPermissionsRequest } from 'app/http/requests/edit-shop-manager-permissions-request';
 import { GetShopEmployeesRequest } from 'app/http/requests/get-shop-employees-request';
+import { RemoveAppointmentRequest } from 'app/http/requests/remove-appointment-request';
 import { ConfigService } from 'app/services/config-service.service';
 import { EngineService } from 'app/services/engine.service';
 import { MessageService } from 'app/services/message.service';
@@ -71,8 +72,37 @@ export class EmployeesComponentComponent implements OnInit {
       isNewAppointment: false,
     };
     const dialogRef = this.openEmployeeForm(data);
-    dialogRef.afterClosed().subscribe((data: EmployeeInfoReturnData) => {});
+    dialogRef.afterClosed().subscribe((data: EmployeeInfoReturnData) => {
+        this.updateAppointment(data, "successfully updated!");
+    });
   }
+  private updateAppointment(data: EmployeeInfoReturnData, succMessage: string) {
+    const appoint = new ShopManagerAppointmentFacade(
+      data.appointed,
+      this.config.visitor.name,
+      this.shop.shopName,
+      data.permissions,
+      data.type
+    );
+    const permitRequest = new EditShopManagerPermissionsRequest(
+      this.config.visitor.name,
+      data.appointed,
+      this.shop.shopName,
+      appoint
+    );
+    this.engine.editShopManagerPermissions(permitRequest).subscribe(responseJson2 => {
+      const res = new Response().deserialize(responseJson2);
+      if (res.isErrorOccurred()) {
+        this.messageService.errorMessage(res.getMessage());
+        return;
+      }
+      else {
+        this.messageService.validMessage(succMessage);
+      }
+      this.resetComponent();
+    });
+  }
+
   addNewEmployee() {
     // this is only temporary appointment and will be changed as expected after window closed
     const appointment = new ShopManagerAppointmentFacade();
@@ -94,7 +124,9 @@ export class EmployeesComponentComponent implements OnInit {
     });
   }
 
-  removeAppointment(appointment: AppointmentFacade) {}
+  removeAppointment(appointment: AppointmentFacade) {
+    const request = new RemoveAppointmentRequest(appointment.superVisor,appointment.appointed,appointment.relatedShop);
+  }
 
   private createNewAppointmentByType(data: EmployeeInfoReturnData) {
     const type = data.type;
@@ -135,30 +167,7 @@ export class EmployeesComponentComponent implements OnInit {
       if (response.isErrorOccurred()) {
         this.messageService.errorMessage(response.getMessage());
       } else {
-        const appoint = new ShopManagerAppointmentFacade(
-          request.appointedShopManager,
-          this.config.visitor.name,
-          this.shop.shopName,
-          data.permissions,
-          data.type
-        );
-        const permitRequest = new EditShopManagerPermissionsRequest(
-          this.config.visitor.name,
-          request.appointedShopManager,
-          this.shop.shopName,
-          appoint
-        );
-        this.engine.editShopManagerPermissions(permitRequest).subscribe(responseJson2=>{
-          const res = new Response().deserialize(responseJson2);
-          if (res.isErrorOccurred()){
-            this.messageService.errorMessage(res.getMessage());
-            return;
-          }
-          else{
-            this.messageService.validMessage("successfully appointed!");
-          }
-          this.resetComponent();
-        })
+        this.updateAppointment(data, "successfully appointed!")
       }
     });
   }
