@@ -155,7 +155,9 @@ export class EngineService {
     );
   }
 
-  buyShoppingCart(request: BuyShoppingCartRequest): Observable<ResponseT<ShoppingCartFacade>> {
+  buyShoppingCart(
+    request: BuyShoppingCartRequest
+  ): Observable<ResponseT<ShoppingCartFacade>> {
     return this.http.post<ResponseT<ShoppingCartFacade>>(
       this.serverUrl + '/buyShoppingCart',
       request,
@@ -214,7 +216,9 @@ export class EngineService {
     );
   }
 
-  addItemToShop(request: AddItemToShopRequest): Observable<ResponseT<ShopFacade>> {
+  addItemToShop(
+    request: AddItemToShopRequest
+  ): Observable<ResponseT<ShopFacade>> {
     return this.http.post<ResponseT<ItemFacade>>(
       this.serverUrl + '/addItemToShop',
       request,
@@ -337,6 +341,13 @@ export class EngineService {
     return this.http.post<ResponseT<string>>(
       this.serverUrl + '/getHistoryByMember',
       request,
+      httpOptions
+    );
+  }
+
+  isServerInit(): Observable<ResponseT<string>> {
+    return this.http.post<ResponseT<string>>(
+      this.serverUrl + '/isServerInit',
       httpOptions
     );
   }

@@ -13,7 +13,7 @@ import { VisitorFacade } from 'app/http/facadeObjects/visitor-facade';
 })
 export class ConfigService {
   //general settings
-  private _isMarketInitialized: boolean = true;
+  private _isMarketInitialized: boolean;
   //component booleans
   private _isRegisterClicked: boolean;
   private _isSearchItemClicked: boolean;
@@ -32,6 +32,7 @@ export class ConfigService {
   private _selectedShop: ShopFacade;
   private _itemsSearched: ItemFacade[];
   constructor() {
+    this._isMarketInitialized = false;
     this._visitor = new VisitorFacade();
     this._isMemberLoggedIn = false;
     this._isRegisterClicked = false;

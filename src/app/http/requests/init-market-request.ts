@@ -3,9 +3,9 @@ import { Deserializable } from '../facadeObjects/deserializable';
 export class InitMarketRequest implements Deserializable {
   userName: string;
   password: string;
-  constructor() {
-    this.userName = '';
-    this.password = '';
+  constructor(userName?: string, password?: string) {
+    this.userName = userName ? userName : '';
+    this.password = password ? password : '';
   }
 
   deserialize(value: any): this {
