@@ -45,12 +45,14 @@ export class CheckOutComponentComponent implements OnInit {
     this.engine.buyShoppingCart(request).subscribe((responseJson) => {
       const response = new ResponseT().deserialize(responseJson);
       if (response.isErrorOccurred()) {
-        this.messageService.errorMessage(response.getMessage());
-        if (response.value) {
-          this.config.visitor.cart = new ShoppingCartFacade().deserialize(
-            response.value
-          );
-        }
+        this.messageService.errorMessage(response.getMessage(), "Got it!" ,4000 );
+        this.config.isCartInfoClicked = true;
+        // if error is
+        // if (response.value) {
+        //   this.config.visitor.cart = new ShoppingCartFacade().deserialize(
+        //     response.value
+        //   );
+        // }
       } else {
         this.messageService.validMessage("bought successfully");
         this.config.visitor.cart = new ShoppingCartFacade().deserialize(
