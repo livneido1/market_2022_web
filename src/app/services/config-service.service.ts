@@ -23,6 +23,7 @@ export class ConfigService {
   private _isUserSettingClicked: boolean;
   private _isShopInfoClicked: boolean;
   private _isEmployeesinfoClicked: boolean;
+  private _isMainDiscountClicked: boolean;
 
   //dynamic settings
   private _visitor: VisitorFacade;
@@ -43,6 +44,7 @@ export class ConfigService {
     this._isCheckOutClicked = false;
     this._isUserSettingClicked = false;
     this._isShopInfoClicked = false;
+    this._isMainDiscountClicked = false;
     this._isEmployeesinfoClicked = false;
     this._member = undefined;
     this._itemsSearched = undefined;
@@ -58,6 +60,7 @@ export class ConfigService {
     this._isShopInfoClicked = false;
     this._isUserSettingClicked = false;
     this._isEmployeesinfoClicked = false;
+    this._isMainDiscountClicked = false;
     this._itemsSearched = undefined;
   }
 
@@ -72,6 +75,14 @@ export class ConfigService {
   set isEmployeesinfoClicked(value: boolean) {
     this.cleanAllComponents();
     this._isEmployeesinfoClicked = value;
+  }
+
+  get isMainDiscountClicked(): boolean {
+    return this._isMainDiscountClicked;
+  }
+  set isMainDiscountClicked(value: boolean) {
+    this.cleanAllComponents();
+    this._isMainDiscountClicked = value;
   }
 
   get isShopInfoClicked(): boolean {

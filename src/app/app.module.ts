@@ -33,6 +33,7 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import { GetValueDialogComponent } from './get-value-dialog/get-value-dialog.component';
 import { GetStringValueComponent } from './get-string-value/get-string-value.component';
 import { EmployeeInfoComponent } from './employee-info/employee-info.component';
+import { DiscountMainComponent } from './discount-main/discount-main.component';
 
 @NgModule({
   declarations: [
@@ -54,7 +55,8 @@ import { EmployeeInfoComponent } from './employee-info/employee-info.component';
     AddItemToCartDialogComponent,
     GetValueDialogComponent,
     GetStringValueComponent,
-    EmployeeInfoComponent
+    EmployeeInfoComponent,
+    DiscountMainComponent
   ],
   imports: [
     BrowserModule,

@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AppointmentFacade } from 'app/http/facadeObjects/AppointmentFacade';
+import { DiscountTypeFacade } from 'app/http/facadeObjects/Discounts/discount-type-facade';
 import { Category, ItemFacade } from 'app/http/facadeObjects/ItemFacade';
 import { MemberFacade } from 'app/http/facadeObjects/MemberFacade';
 import { Response } from 'app/http/facadeObjects/response';
@@ -345,12 +346,22 @@ export class EngineService {
     );
   }
 
-  isServerInit(): Observable<ResponseT<string>> {
-    return this.http.post<ResponseT<string>>(
+  isServerInit(): Observable<Response> {
+    return this.http.post<Response>(
       this.serverUrl + '/isServerInit',
       httpOptions
     );
   }
+
+
+  getDiscountTest(): Observable<ResponseT<DiscountTypeFacade>> {
+    return this.http.post<ResponseT<DiscountTypeFacade>>(
+      this.serverUrl + '/getDiscountTest',
+      httpOptions
+    );
+  }
+
+
   // removeShopOwnerAppointment(
   //   request: removeAppointmentRequest
   // ): Observable<ResponseT<string>> {

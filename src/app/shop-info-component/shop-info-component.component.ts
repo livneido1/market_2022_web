@@ -135,7 +135,9 @@ export class ShopInfoComponentComponent implements OnInit {
       });
     });
   }
-
+  showDiscounts(){
+    this.config.isMainDiscountClicked = true;
+  }
   getItemCurrentAmount(item: ItemFacade) {
     const amount = this.shop.itemsCurrentAmount.get(item.id);
     return amount;

@@ -1,7 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AddItemToCartDialogComponent } from 'app/add-item-to-cart-dialog/add-item-to-cart-dialog.component';
+import { DiscountTypeFacade } from 'app/http/facadeObjects/Discounts/discount-type-facade';
 import { Category, ItemFacade } from 'app/http/facadeObjects/ItemFacade';
+import { ObjectsDeserializer } from 'app/http/facadeObjects/objects-deserializer';
 import { Response } from 'app/http/facadeObjects/response';
 import { ResponseT } from 'app/http/facadeObjects/response-t';
 import { ShopFacade } from 'app/http/facadeObjects/shop-facade';
@@ -51,7 +53,11 @@ export class SearchItemComponent implements OnInit {
     });
   }
   test() {
-    let x = 3;
+    this.engine.getDiscountTest().subscribe(res =>{
+      const response =  new ResponseT<DiscountTypeFacade>().deserialize(res);
+      const disc = new ObjectsDeserializer().getDiscountType(response.value);
+      let x = 3;
+    })
     return 4;
   }
   canSearchShopName() {
