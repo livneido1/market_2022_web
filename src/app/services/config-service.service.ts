@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { RxStomp } from '@stomp/rx-stomp';
 import { AppointmentFacade } from 'app/http/facadeObjects/AppointmentFacade';
 import { Category, ItemFacade } from 'app/http/facadeObjects/ItemFacade';
 import { MemberFacade } from 'app/http/facadeObjects/MemberFacade';
@@ -29,6 +30,10 @@ export class ConfigService {
   private _isMemberLoggedIn: boolean;
   private _member: MemberFacade;
   itemSearchResult: ItemFacade[];
+
+public serverUrl: string = 'http://localhost:8080';
+public stompClient:RxStomp;
+
   private _selectedShop: ShopFacade;
   private _itemsSearched: ItemFacade[];
   constructor() {

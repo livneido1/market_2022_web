@@ -5,6 +5,12 @@ import { VisitorFacade } from 'app/http/facadeObjects/visitor-facade';
 import { ExitSystemRequest } from 'app/http/requests/exit-system-request';
 import { EngineService } from 'app/services/engine.service';
 import { ConfigService } from '../services/config-service.service';
+import { getMatFormFieldDuplicatedHintError } from '@angular/material/form-field';
+import * as SockJS from 'sockjs-client';
+import * as Stomp from 'stompjs';
+import { RxStomp } from '@stomp/rx-stomp';
+import { map } from 'rxjs';
+
 
 @Component({
   selector: 'app-main-page',
@@ -21,13 +27,57 @@ export class MainPageComponent implements OnInit, OnDestroy {
         console.log(response.getMessage());
       } else {
         const visitor = new VisitorFacade().deserialize(response.value);
-        this.config.visitor = visitor;
+        this.config.visitor = visitor; 
+        console.log('returned from guest login');
+        if(this.config.visitor){
+      if(this.config.visitor.name.length==0){
+        this.config.visitor.name="BarTestName";
+      }
+    this.connectToNotifications(this.config.visitor.name);
+    }
       }
     });
+   
+    
+   
   }
 
 
-  
+  connectToNotifications(name:string): void {
+    console.log('connect to the notifications socket');
+    //create the cocket using the enpoint configurations.
+    console.log(this.config.serverUrl+ '/notifications');
+    //creating the stomp protocol for the ws connectiong
+    this.config.stompClient=new RxStomp();
+    this.config.stompClient.configure(
+      {
+        webSocketFactory:() => new SockJS(this.config.serverUrl+ '/notifications'),
+        debug: (msg: string) => console.log(msg)
+      }
+    );
+    this.config.stompClient.activate();
+    this.watchForNotifications();
+    this.startClient(name);
+    console.log('connected');
+    //connect the Rserver via ws and subscribe for notifications.
+
+  }
+  startClient(name:string) {
+    if (this.config.stompClient && this.config.stompClient.connected) {
+      this.config.stompClient.publish({destination: '/rec/start/'+name});
+    }
+    console.log('start request sended');
+  }
+  watchForNotifications() {
+    this.config.stompClient.watch('/user/notification/item')
+    .pipe(
+      map((response) => {
+        const text: string = response.body;
+        console.log('Got ' + text);
+        return text;
+      }))
+    .subscribe((notification: string) => alert(notification));}
+
 
   isRegisterClicked(): boolean {
     return this.config.isRegisterClicked;
@@ -65,6 +115,17 @@ export class MainPageComponent implements OnInit, OnDestroy {
     request.visitorName = this.config.visitor.name;
     this.engine.exitSystem(request).subscribe(responseJson =>{
       const response = new Response().deserialize(responseJson);
+      //remove visitor from the server listeners
+      //disconnect from the ws connection.
+      this.stopClient(this.config.visitor.name);
     });
+  }
+  stopClient(name:string) {
+    if (this.config.stompClient && this.config.stompClient.connected) {
+      this.config.stompClient.publish({destination: '/rec/stop/'+name});
+      this.config.stompClient.deactivate();
+      this.config.stompClient=null;
+      console.log('closed web socket connection');
+    }
   }
 }
