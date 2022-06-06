@@ -1,16 +1,23 @@
-
 import { AppointmentFacade } from './AppointmentFacade';
 import { Deserializable } from './deserializable';
 import { MemberFacade } from './MemberFacade';
+import { PermissionFacade } from './PermissionFacade';
 import { ShopFacade } from './shop-facade';
 
-export class ShopOwnerAppointmentFacade extends AppointmentFacade implements Deserializable {
+export class ShopOwnerAppointmentFacade
+  extends AppointmentFacade
+  implements Deserializable
+{
+  isShopFounder: boolean;
 
-  isShopFounder:boolean;
-
-
-  constructor() {
-    super();
+  constructor(
+    appointed?: string,
+    superVisor?: string,
+    relatedShop?: string,
+    permissions?: PermissionFacade[],
+    type?: string
+  ) {
+    super(appointed, superVisor, relatedShop, permissions, type);
     this.isShopFounder = false;
   }
 
@@ -23,5 +30,4 @@ export class ShopOwnerAppointmentFacade extends AppointmentFacade implements Des
 
     return this;
   }
-
 }

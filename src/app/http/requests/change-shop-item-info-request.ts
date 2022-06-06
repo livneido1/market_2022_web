@@ -2,16 +2,21 @@ import { Deserializable } from '../facadeObjects/deserializable';
 import { ItemFacade } from '../facadeObjects/ItemFacade';
 
 export class ChangeShopItemInfoRequest implements Deserializable {
-  private shopOwnerName: string;
-  private updatedItem: string; //info
-  private oldItem: ItemFacade;
-  private shopName: string;
+  shopOwnerName: string;
+  updatedItem: string; //info
+  oldItem: ItemFacade;
+  shopName: string;
 
-  constructor() {
-    this.shopOwnerName = '';
-    this.updatedItem = '';
-    this.oldItem = new ItemFacade();
-    this.shopName = '';
+  constructor(
+    shopOwnerName: string,
+    updatedItem: string,
+    oldItem: ItemFacade,
+    shopName: string
+  ) {
+    this.shopOwnerName = shopOwnerName ? shopOwnerName : '';
+    this.updatedItem = updatedItem ? updatedItem : '';
+    this.oldItem = oldItem ? oldItem : new ItemFacade();
+    this.shopName = shopName ? shopName : '';
   }
 
   deserialize(value: any): this {

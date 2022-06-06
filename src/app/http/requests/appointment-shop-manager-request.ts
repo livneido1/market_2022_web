@@ -1,14 +1,20 @@
 import { Deserializable } from '../facadeObjects/deserializable';
 
 export class AppointmentShopManagerRequest implements Deserializable {
-  private shopOwnerName: string;
-  private appointedShopManager: string;
-  private shopName: string;
+  shopOwnerName: string;
+  appointedShopManager: string;
+  shopName: string;
 
-  constructor() {
-    this.shopOwnerName = '';
-    this.appointedShopManager = '';
-    this.shopName = '';
+  constructor(
+    shopOwnerName?: string,
+    appointedShopManager?: string,
+    shopName?: string
+  ) {
+    this.shopOwnerName = shopOwnerName ? shopOwnerName : '';
+    this.appointedShopManager = appointedShopManager
+      ? appointedShopManager
+      : '';
+    this.shopName = shopName ? shopName : '';
   }
 
   deserialize(value: any): this {

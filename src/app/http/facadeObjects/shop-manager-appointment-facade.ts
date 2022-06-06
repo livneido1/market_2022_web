@@ -1,14 +1,21 @@
 import { AppointmentFacade } from './AppointmentFacade';
 import { Deserializable } from './deserializable';
 import { MemberFacade } from './MemberFacade';
+import { PermissionFacade } from './PermissionFacade';
 import { ShopFacade } from './shop-facade';
 
 export class ShopManagerAppointmentFacade
   extends AppointmentFacade
   implements Deserializable
 {
-  constructor() {
-    super();
+  constructor(
+    appointed?: string,
+    superVisor?: string,
+    relatedShop?: string,
+    permissions?: PermissionFacade[],
+    type?: string
+  ) {
+    super(appointed, superVisor, relatedShop, permissions, type);
   }
 
   deserialize(value: any): this {

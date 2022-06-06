@@ -1,41 +1,55 @@
 <div  class="backgroundComp">
+  <div class="column left">
+    <div *ngIf="isItemInCart()" >
 
+      <p class="resultTitle">Items in Cart</p>
+      <div style="display: block; height:300px; overflow-y: scroll;">
+        <table class="table">
+          <thead>
+            <tr>
+              <th class = "titleTh" >Products</th>
+              <th> </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let itemDic of itemsInCart">
 
+              <td style="cursor: pointer;" (click)="openDialog(itemDic.item)">
+                <p style="font-size:x-large;">{{itemDic.item.name}}</p>
+                <p>Price per Item: {{itemDic.item.price}}</p>
+                <p>Amount in Cart: {{itemDic.amount}}</p>
+                <p>Shop: {{itemDic.shopName}}</p>
 
+              </td>
+              <td style="vertical-align:text-top">
 
-  <div *ngIf="data.length>1" class="resultColumn">
+                <button
+                  title="Remove Item From Cart"
+                  style="float:right; cursor: pointer;"
+                  (click)="removeItem(itemDic.item, itemDic.shopName)">
+                  <span class='material-icons'>delete</span>
+                </button>
 
-    <p class="resultTitle">Items in Cart</p>
-    <div style="display: block; height:300px; overflow-y: scroll;">
-      <table class="table">
-        <thead>
-          <tr>
-            <th class = "titleTh" >Products</th>
-            <th> </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let item of data">
+                <div>
+                  <button
+                    style="cursor: pointer; width: 100%;margin-top: 10px;"
+                    (click)="setItemAmountByDemand(itemDic.item, itemDic.shopName)">
+                    Change Item Amount
+                  </button>
+                </div>
+              </td>
 
-            <td style="cursor: pointer;" (click)="openDialog(item)">
-              <p style="font-size:x-large;">{{item.name}}</p>
-              <p>{{item.email}}</p>
-
-            </td>
-            <td>
-              <button style="cursor: pointer;">add to cart</button>
-            </td>
-
-          </tr>
-        </tbody>
-      </table>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div *ngIf="!(isItemInCart())">
+      <p class="resultTitle">No Items In cart</p>
     </div>
   </div>
-  <div *ngIf="data.length<1">
-    <p class="resultTitle">No Result Found</p>
-  </div>
 
-  <div class="SideBar">
+  <div class="column right">
     <div>
       <p class="filterTitle"> Total Price: {{totalPrice}}</p>
     </div>
@@ -48,6 +62,7 @@
         <span class="material-icons">attach_money</span>
       </button>
     </div>
-
   </div>
+
+
 </div>

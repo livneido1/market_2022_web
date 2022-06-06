@@ -3,6 +3,7 @@ import { RxStomp } from '@stomp/rx-stomp';
 import { AppointmentFacade } from 'app/http/facadeObjects/AppointmentFacade';
 import { Category, ItemFacade } from 'app/http/facadeObjects/ItemFacade';
 import { MemberFacade } from 'app/http/facadeObjects/MemberFacade';
+import { PermissionFacade } from 'app/http/facadeObjects/PermissionFacade';
 import { ShopFacade } from 'app/http/facadeObjects/shop-facade';
 import { ShopManagerAppointmentFacade } from 'app/http/facadeObjects/shop-manager-appointment-facade';
 import { ShopOwnerAppointmentFacade } from 'app/http/facadeObjects/ShopOwnerAppointmentFacade';
@@ -13,7 +14,7 @@ import { VisitorFacade } from 'app/http/facadeObjects/visitor-facade';
 })
 export class ConfigService {
   //general settings
-  private _isMarketInitialized: boolean = true;
+  private _isMarketInitialized: boolean;
   //component booleans
   private _isRegisterClicked: boolean;
   private _isSearchItemClicked: boolean;
@@ -29,12 +30,14 @@ export class ConfigService {
   private _isMemberLoggedIn: boolean;
   private _member: MemberFacade;
   itemSearchResult: ItemFacade[];
-  
+
 public serverUrl: string = 'http://localhost:8080';
 public stompClient:RxStomp;
-  
+
   private _selectedShop: ShopFacade;
+  private _itemsSearched: ItemFacade[];
   constructor() {
+    this._isMarketInitialized = false;
     this._visitor = new VisitorFacade();
     this._isMemberLoggedIn = false;
     this._isRegisterClicked = false;
@@ -47,9 +50,8 @@ public stompClient:RxStomp;
     this._isShopInfoClicked = false;
     this._isEmployeesinfoClicked = false;
     this._member = undefined;
-
+    this._itemsSearched = undefined;
     this.selectedShop = undefined;
-    this.itemSearchResult = [];
   }
 
   cleanAllComponents() {
@@ -61,8 +63,14 @@ public stompClient:RxStomp;
     this._isShopInfoClicked = false;
     this._isUserSettingClicked = false;
     this._isEmployeesinfoClicked = false;
+    this._itemsSearched = undefined;
   }
 
+  applySearch(items: ItemFacade[]) {
+    this.cleanAllComponents();
+    this._itemsSearched = items;
+    this._isSearchItemClicked = true;
+  }
   get isEmployeesinfoClicked(): boolean {
     return this._isEmployeesinfoClicked;
   }
@@ -130,6 +138,12 @@ public stompClient:RxStomp;
     this._isMemberLoggedIn = value;
   }
 
+  get itemsSearched() {
+    return this._itemsSearched;
+  }
+  set itemsSearched(value: ItemFacade[]) {
+    this._itemsSearched = value;
+  }
   get isMarketInitialized() {
     return this._isMarketInitialized;
   }
@@ -157,6 +171,9 @@ public stompClient:RxStomp;
     this._selectedShop = value;
   }
 
+
+
+
   createCategoryFromString(name: string): Category {
     switch (name) {
       case 'general':
@@ -173,11 +190,7 @@ public stompClient:RxStomp;
     return Category.general;
   }
 
-  getAllCategories():string[]{
-    return [
-      'general','fruit','cellular','meat','electricity'
-    ]
+  getAllCategories(): string[] {
+    return ['general', 'fruit', 'cellular', 'meat', 'electricity'];
   }
-
-
 }

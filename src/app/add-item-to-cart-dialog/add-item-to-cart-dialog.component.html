@@ -1,0 +1,12 @@
+<div>
+  <mat-form-field class="input" appearance="fill">
+    <mat-label > Choose Amount </mat-label>
+    <input matInput  #last  style="color: white;" [(ngModel)]="amount">
+  </mat-form-field>
+
+  <button
+    class="button"
+    [mat-dialog-close]="amount">
+    Add Item!
+  </button>
+</div>

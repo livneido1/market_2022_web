@@ -28,6 +28,22 @@ export class ItemFacade implements Deserializable {
     this.rankers = 0;
   }
 
+  getCategoryString(): string {
+    switch (this.category) {
+      case Category.general:
+        return 'general';
+      case Category.fruit:
+        return 'fruit';
+      case Category.cellular:
+        return 'cellular';
+      case Category.meat:
+        return 'meat';
+      case Category.electricity:
+        return 'electricity';
+    }
+    return this.category;
+  }
+
   deserialize(value: any): this {
     if (!value) {
       return this;
@@ -40,6 +56,4 @@ export class ItemFacade implements Deserializable {
     }
     return this;
   }
-
-
 }

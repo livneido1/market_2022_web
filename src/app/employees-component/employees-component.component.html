@@ -1,35 +1,85 @@
-<div class="backgroundComp">
+<div  class="backgroundComp">
+  <div *ngIf="isComponentValid" style="height: 100%;">
+    <div class="resultColumn">
+      <p class="mainTitle"> {{shop.shopName}} </p>
+      <p class="resultTitle">Employees in Shop</p>
+      <div  style="display: block; height:300px; overflow-y: scroll;">
+        <table class="table">
+          <thead>
+            <tr>
+              <th class = "titleTh" >Products</th>
+              <th>
+                <div style="width: 50%;
+                            float: left;
+                            font-size: smaller;">
+                  <p>
+                    last update: {{this.lastUpdate}}
+                  </p>
 
-  <div *ngIf="data.length>1" class="resultColumn">
-    <p class="resultTitle">Employees</p>
-    <div style="display: block; height:300px; overflow-y: scroll;">
-      <table class="table">
-        <thead>
-          <tr>
-            <th class = "titleTh" ></th>
-            <th> </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let item of data">
+                </div>
+                <div style="width: 40%;
+                            float: right;">
+                  <button
+                    title="refresh shop info"
+                    (click)="resetComponent()">
+                    <span class='material-icons'>refresh</span>
+                  </button>
+                </div>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let appointment of appointments">
 
-            <td style="cursor: pointer;" >
-              <p style="font-size:x-large;">{{item.name}}</p>
-              <p>{{item.email}}</p>
+              <td style="cursor: pointer; width: 80%;"
+                (click)="openAppointmentInfo(appointment)">
+                <p style="font-size:x-large;">{{appointment.appointed}}</p>
+                <p>Type: {{getTypeName(appointment.type)}}</p>
 
-            </td>
-            <td style="text-align: center; vertical-align: top;">
-              <button class="plusButton" >
-                <span  class="material-icons">remove</span>
-              </button>
-            </td>
+              </td>
+              <td>
+                <div>
 
-          </tr>
-        </tbody>
-      </table>
+                  <button
+                    title="Remove appointed"
+                    style="float:right; cursor: pointer; margin-right: 10px;"
+                    (click)="removeAppointment(appointment)">
+                    <span class='material-icons'>delete</span>
+                  </button>
+
+                  <button
+                    title="set appointed permissions"
+                    style="cursor: pointer;"
+
+                    (click)="setAppointmentPermissions(appointment)">
+                    <span class="material-icons">settings</span>
+                  </button>
+
+                </div>
+              </td>
+
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
+    <div class="SideBar">
+      <div style="height: 10%;">
+
+      </div>
+      <div class="ButtonDiv">
+        <button class="ButtonEmployees"
+          (click)="addNewEmployee()">
+          Add new Employee
+        </button>
+      </div>
+
+    </div>
+
   </div>
   <div>
-    <button style="margin-top:20%; font-size: xx-large; height: 100px ; width: 100px;">+</button>
+
   </div>
+
+
 </div>

@@ -8,11 +8,16 @@ export class EditShopManagerPermissionsRequest implements Deserializable{
   relatedShop:string;
   updatedAppointment:ShopManagerAppointmentFacade;
 
-  constructor(){
-    this.shopOwnerName = "";
-    this.managerName = "";
-    this.relatedShop = "";
-    this.updatedAppointment = new ShopManagerAppointmentFacade();
+  constructor(
+    shopOwnerName?:string,
+    managerName?:string,
+    relatedShop?:string,
+    updatedAppointment?:ShopManagerAppointmentFacade
+  ){
+    this.shopOwnerName = shopOwnerName? shopOwnerName : "";
+    this.managerName = managerName? managerName : "";
+    this.relatedShop = relatedShop? relatedShop : "";
+    this.updatedAppointment = updatedAppointment? updatedAppointment : new ShopManagerAppointmentFacade();
 
   }
 

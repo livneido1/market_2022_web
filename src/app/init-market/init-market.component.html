@@ -1,10 +1,37 @@
 <div class="background">
-  <div>
-    Welome! please initialze the market
-  </div>
-  <button
-  (click)="init()">
-    init
+  <div style="text-align: center;">
+    <p class="mainTitle" >
+      Welome! please initialze the market
 
-  </button>
+    </p>
+  </div>
+  <div style="width: 100%; text-align: center;">
+    <mat-form-field class="searchBar" appearance="fill">
+      <mat-label > Name</mat-label>
+      <input class="inputBar" matInput #last [(ngModel)]="name">
+    </mat-form-field>
+    <br>
+    <mat-form-field class="searchBar" appearance="fill">
+      <mat-label >Password </mat-label>
+      <input type="password" class="inputBar" matInput #last [(ngModel)]="password">
+    </mat-form-field>
+    <br>
+    <mat-form-field class="searchBar" appearance="fill">
+      <mat-label >Validate Password</mat-label>
+      <input type="password" class="inputBar" matInput #last [(ngModel)]="validatePassword">
+    </mat-form-field>
+
+
+  </div>
+  <div style="text-align: center;">
+
+      <button
+        class="button"
+        [disabled]="!canSubmit()"
+        (click)="init()">
+        Initialized The Market!
+
+      </button>
+
+  </div>
 </div>

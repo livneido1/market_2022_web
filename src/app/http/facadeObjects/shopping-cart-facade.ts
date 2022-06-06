@@ -4,12 +4,12 @@ import { ShoppingBasketFacade } from "./shopping-basket-facade";
 
 export class ShoppingCartFacade  implements Deserializable{
 
-  private cart: Map<string, ShoppingBasketFacade>; // <ShopName ,basket for the shop>
-  private price:number;
+  cart: Map<string, ShoppingBasketFacade>; // <ShopName ,basket for the shop>
+  price:number;
 
   constructor(){
       this.cart = new Map();
-      this.price =-2;
+      this.price =0;
   }
 
   deserialize(value: any): this {
