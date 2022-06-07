@@ -26,8 +26,9 @@ export class MainPageComponent implements OnInit, OnDestroy {
     });
   }
 
-
-  
+  isSubDiscountClicked(): boolean {
+    return this.config.isSubDiscountClicked;
+  }
 
   isRegisterClicked(): boolean {
     return this.config.isRegisterClicked;
@@ -59,11 +60,17 @@ export class MainPageComponent implements OnInit, OnDestroy {
   isEmployeesClicked() {
     return this.config.isEmployeesinfoClicked;
   }
+  isDiscountMainClicked() {
+    return this.config.isMainDiscountClicked;
+  }
+  isNewDiscountClicked() {
+    return this.config.isAddNewDiscountClicked;
+  }
 
   ngOnDestroy(): void {
     const request = new ExitSystemRequest();
     request.visitorName = this.config.visitor.name;
-    this.engine.exitSystem(request).subscribe(responseJson =>{
+    this.engine.exitSystem(request).subscribe((responseJson) => {
       const response = new Response().deserialize(responseJson);
     });
   }

@@ -1,0 +1,117 @@
+<div  class="backgroundComp">
+  <div class="rowLevels">
+    <div class="colLeft scrollable">
+      <div *ngIf="currentLevels.length > 0; else noLevels">
+        <p class="tableTitle">Created Levels</p>
+        <table class="levelTable">
+          <thead>
+            <tr style="border-bottom: solid;">
+              <th>
+                <p class="tableHeaderMain"> Levels </p>
+              </th>
+              <th>
+                <!-- this is just to save 2 slots in a row -->
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let level of currentLevels" style="border-bottom: solid;">
+              <div
+                style="cursor: pointer;"
+                >
+                {{getLevelName(level)}}
+              </div>
+
+
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <ng-template #noLevels>
+        <p class="resultTitle">No Discounts in Shop</p>
+      </ng-template>
+    </div>
+    <div class="colRight">
+      <div>
+        <button class="optionalButtonsDiv"
+          (click)="addLevel()">
+          add level
+        </button>
+      </div>
+      <div>
+        <button class="optionalButtonsDiv"
+          (click)="onMergeLevels()">
+          Merge levels
+        </button>
+      </div>
+
+    </div>
+  </div>
+  <div class="rowInputs">
+    <div class="colLeft">
+      <label for="username">Discount Percentage:</label><br>
+      <input type="number"><br>
+    </div>
+    <div class="colRight">
+
+    </div>
+
+  </div>
+  <div class="rowConditions">
+    <div class="colLeft scrollable">
+      <div *ngIf="dataConds.length > 0; else noConditions">
+        <p class="tableTitle">Created Conditions</p>
+        <table class="levelTable">
+          <thead>
+            <tr style="border-bottom: solid;">
+              <th>
+                <p class="tableHeaderMain"> Conditions </p>
+              </th>
+              <th>
+                <!-- this is just to save 2 slots in a row -->
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let cond of dataConds" style="border-bottom: solid;">
+              <div
+                style="cursor: pointer;"
+                >
+                {{cond.name}}
+              </div>
+
+
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <ng-template #noConditions>
+        <p class="resultTitle">No Discounts in Shop</p>
+      </ng-template>
+    </div>
+    <div class="colRight">
+      <div>
+        <button class="optionalButtonsDiv">
+          add Condition
+        </button>
+      </div>
+      <div>
+        <button class="optionalButtonsDiv">
+          Merge Conditions
+        </button>
+      </div>
+
+    </div>
+  </div>
+  <div class="rowSubmit">
+    <div class="colLeft">
+      <button class="optionalButtonsDiv">
+        submit!
+      </button>
+    </div>
+    <div class="colRight">
+
+    </div>
+
+  </div>
+</div>

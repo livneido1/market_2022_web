@@ -20,6 +20,16 @@ export class ShopFacade implements Deserializable {
     this.closed = false;
   }
 
+
+  getItemByName(itemName: string): ItemFacade{
+      for (const item of this.itemMap.values()){
+        if (item.name === itemName){
+          return item;
+        }
+      }
+      return undefined;
+  }
+
   deserialize(value: any): this {
     if (!value) {
       return this;
@@ -31,6 +41,7 @@ export class ShopFacade implements Deserializable {
       const itemId: number = Number(entry[0]);
       this.itemMap.set(itemId, new ItemFacade().deserialize(entry[1]));
     }
+
 
     //deserialize employees
     const tempApp: AppointmentFacade = new ShopManagerAppointmentFacade();

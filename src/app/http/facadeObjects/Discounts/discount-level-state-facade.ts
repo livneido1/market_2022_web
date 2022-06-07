@@ -4,4 +4,5 @@ export class DiscountLevelStateFacade {
   constructor(type?:string){
     this.type = type? type: "";
   }
+
 }

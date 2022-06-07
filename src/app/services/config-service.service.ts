@@ -24,6 +24,8 @@ export class ConfigService {
   private _isShopInfoClicked: boolean;
   private _isEmployeesinfoClicked: boolean;
   private _isMainDiscountClicked: boolean;
+  private _isAddNewDiscountClicked: boolean;
+  private _isSubDiscountClicked: boolean;
 
   //dynamic settings
   private _visitor: VisitorFacade;
@@ -46,6 +48,9 @@ export class ConfigService {
     this._isShopInfoClicked = false;
     this._isMainDiscountClicked = false;
     this._isEmployeesinfoClicked = false;
+    this._isAddNewDiscountClicked = false;
+    this._isSubDiscountClicked = false;
+
     this._member = undefined;
     this._itemsSearched = undefined;
     this.selectedShop = undefined;
@@ -61,6 +66,8 @@ export class ConfigService {
     this._isUserSettingClicked = false;
     this._isEmployeesinfoClicked = false;
     this._isMainDiscountClicked = false;
+    this._isAddNewDiscountClicked = false;
+    this._isSubDiscountClicked = false;
     this._itemsSearched = undefined;
   }
 
@@ -105,6 +112,21 @@ export class ConfigService {
   set isCheckOutClicked(value: boolean) {
     this.cleanAllComponents();
     this._isCheckOutClicked = value;
+  }
+  get isSubDiscountClicked(): boolean {
+    return this._isSubDiscountClicked;
+  }
+  set isSubDiscountClicked(value: boolean) {
+    this.cleanAllComponents();
+    this._isSubDiscountClicked = value;
+  }
+
+  get isAddNewDiscountClicked(): boolean {
+    return this._isAddNewDiscountClicked;
+  }
+  set isAddNewDiscountClicked(value: boolean) {
+    this.cleanAllComponents();
+    this._isAddNewDiscountClicked = value;
   }
   get isCartInfoClicked(): boolean {
     return this._isCartInfoClicked;
@@ -176,9 +198,6 @@ export class ConfigService {
   set selectedShop(value: ShopFacade) {
     this._selectedShop = value;
   }
-
-
-
 
   createCategoryFromString(name: string): Category {
     switch (name) {
