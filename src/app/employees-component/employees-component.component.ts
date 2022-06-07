@@ -189,6 +189,7 @@ export class EmployeesComponentComponent implements OnInit {
       );
       if (response.isErrorOccurred()) {
         this.messageService.errorMessage(response.getMessage());
+        this.config.isShopInfoClicked = true;
       } else {
         this.lastUpdate = new Date().toLocaleString();
         this.shop = this.config.selectedShop;
