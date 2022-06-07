@@ -1,12 +1,21 @@
 <div  class="backgroundComp">
-  <div *ngIf="showItems()" class="resultColumn">
+  <div style="height: 10%; text-align: left;">
+    <button
+      class="backButton"
+      (click)="backToShop()"
+      title="Go back to Shop"
+      >
+      <span class="material-icons">arrow_back</span>
+    </button>
+</div>
+  <div *ngIf="this.currentDiscounts.length > 1" class="resultColumn">
     <p class="mainTitle"> {{shop.shopName}} </p>
-    <p class="resultTitle">Items in Shop</p>
+    <p class="resultTitle">Discounts in Shop</p>
     <div  style="display: block; height:300px; overflow-y: scroll;">
       <table class="table">
         <thead>
           <tr>
-            <th class = "titleTh" >Products</th>
+            <th class = "titleTh" >Discounts</th>
             <th>
               <div style="width: 50%;
                           float: left;
@@ -20,7 +29,7 @@
                           float: right;">
                 <button
                   title="refresh shop info"
-                  (click)="resetShop()">
+                  (click)="reset()">
                   <span class='material-icons'>refresh</span>
                 </button>
               </div>
@@ -28,13 +37,11 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let item of itemList">
+          <tr *ngFor="let discount of currentDiscounts">
 
             <td style="cursor: pointer; width: 80%;"
-              (click)="openDialog(item)">
-              <p style="font-size:x-large;">{{item.name}}</p>
-              <p>price per Unit: {{item.price}}</p>
-              <p>Amount in Shop: {{getItemCurrentAmount(item)}}</p>
+              (click)="openDiscountDialog(discount)">
+              <p style="font-size:x-large;">{{getDiscountName(discount)}}</p>
 
             </td>
             <td>
@@ -43,73 +50,36 @@
                 <button
                   title="Remove Item From Cart"
                   style="float:right; cursor: pointer;"
-                  (click)="removeItem(item)">
+                  (click)="removeDiscount(discount)">
                   <span class='material-icons'>delete</span>
                 </button>
 
-                <button
+                <!-- <button
                   title="set item info"
                   style="cursor: pointer;"
 
                   (click)="setItemInfo(item)">
                   <span class="material-icons">settings</span>
-                </button>
+                </button> -->
 
-              </div>
-
-              <div>
-                <button
-                  style="cursor: pointer; width: 100%;margin-top: 10px;"
-                  (click)="setItemAmount(item)">
-                  Change Item Amount in Shop
-                </button>
               </div>
             </td>
-
           </tr>
         </tbody>
       </table>
     </div>
   </div>
-  <div *ngIf="!showItems()" class="resultColumn">
-    <p class="resultTitle">No Items in Shop</p>
+  <div *ngIf="this.currentDiscounts.length < 1" class="resultColumn">
+    <p class="resultTitle">No Discounts in Shop</p>
   </div>
 
   <div class="SideBar">
     <div style="height: 10%; text-align: center; margin-top: 20%;">
       <button
         class="optionalButton"
-        (click)="addItemToShop()"
+        (click)="addDiscount()"
         >
-        Add Item To Shop
+        Add Discount
       </button>
-    </div>
-    <div class="optionalButtonsDiv">
-      <button class="optionalButton"
-        (click)="onEmployeesClick()"
-      >
-        Employees
-      </button>
-    </div>
-    <div class="optionalButtonsDiv">
-      <button class="optionalButton"
-        (click)="showDiscounts()"
-      >
-        Shop Discounts
-      </button>
-    </div>
-    <div class="optionalButtonsDiv">
-      <button class="optionalButton"
-      >
-        Purchase History
-      </button>
-    </div>
-    <div class="optionalButtonsDiv">
-      <button class="optionalButton"
-      >
-        Close Shop
-      </button>
-    </div>
-
   </div>
 </div>

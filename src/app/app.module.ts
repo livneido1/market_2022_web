@@ -33,6 +33,12 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import { GetValueDialogComponent } from './get-value-dialog/get-value-dialog.component';
 import { GetStringValueComponent } from './get-string-value/get-string-value.component';
 import { EmployeeInfoComponent } from './employee-info/employee-info.component';
+import { DiscountMainComponent } from './discount-main/discount-main.component';
+import { NewDiscountComponent } from './new-discount/new-discount.component';
+import { SubDiscountComponent } from './sub-discount/sub-discount.component';
+import { AddLevelDialogComponent } from './add-level-dialog/add-level-dialog.component';
+import { AddConditionDialogComponent } from './add-condition-dialog/add-condition-dialog.component';
+import { MergeLevelDialogComponent } from './merge-level-dialog/merge-level-dialog.component';
 
 @NgModule({
   declarations: [
@@ -54,7 +60,13 @@ import { EmployeeInfoComponent } from './employee-info/employee-info.component';
     AddItemToCartDialogComponent,
     GetValueDialogComponent,
     GetStringValueComponent,
-    EmployeeInfoComponent
+    EmployeeInfoComponent,
+    DiscountMainComponent,
+    NewDiscountComponent,
+    SubDiscountComponent,
+    AddLevelDialogComponent,
+    AddConditionDialogComponent,
+    MergeLevelDialogComponent
   ],
   imports: [
     BrowserModule,

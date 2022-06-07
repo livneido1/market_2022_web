@@ -24,6 +24,9 @@ export class ConfigService {
   private _isUserSettingClicked: boolean;
   private _isShopInfoClicked: boolean;
   private _isEmployeesinfoClicked: boolean;
+  private _isMainDiscountClicked: boolean;
+  private _isAddNewDiscountClicked: boolean;
+  private _isSubDiscountClicked: boolean;
 
   //dynamic settings
   private _visitor: VisitorFacade;
@@ -48,7 +51,11 @@ public stompClient:RxStomp;
     this._isCheckOutClicked = false;
     this._isUserSettingClicked = false;
     this._isShopInfoClicked = false;
+    this._isMainDiscountClicked = false;
     this._isEmployeesinfoClicked = false;
+    this._isAddNewDiscountClicked = false;
+    this._isSubDiscountClicked = false;
+
     this._member = undefined;
     this._itemsSearched = undefined;
     this.selectedShop = undefined;
@@ -63,6 +70,9 @@ public stompClient:RxStomp;
     this._isShopInfoClicked = false;
     this._isUserSettingClicked = false;
     this._isEmployeesinfoClicked = false;
+    this._isMainDiscountClicked = false;
+    this._isAddNewDiscountClicked = false;
+    this._isSubDiscountClicked = false;
     this._itemsSearched = undefined;
   }
 
@@ -77,6 +87,14 @@ public stompClient:RxStomp;
   set isEmployeesinfoClicked(value: boolean) {
     this.cleanAllComponents();
     this._isEmployeesinfoClicked = value;
+  }
+
+  get isMainDiscountClicked(): boolean {
+    return this._isMainDiscountClicked;
+  }
+  set isMainDiscountClicked(value: boolean) {
+    this.cleanAllComponents();
+    this._isMainDiscountClicked = value;
   }
 
   get isShopInfoClicked(): boolean {
@@ -99,6 +117,21 @@ public stompClient:RxStomp;
   set isCheckOutClicked(value: boolean) {
     this.cleanAllComponents();
     this._isCheckOutClicked = value;
+  }
+  get isSubDiscountClicked(): boolean {
+    return this._isSubDiscountClicked;
+  }
+  set isSubDiscountClicked(value: boolean) {
+    this.cleanAllComponents();
+    this._isSubDiscountClicked = value;
+  }
+
+  get isAddNewDiscountClicked(): boolean {
+    return this._isAddNewDiscountClicked;
+  }
+  set isAddNewDiscountClicked(value: boolean) {
+    this.cleanAllComponents();
+    this._isAddNewDiscountClicked = value;
   }
   get isCartInfoClicked(): boolean {
     return this._isCartInfoClicked;
@@ -170,9 +203,6 @@ public stompClient:RxStomp;
   set selectedShop(value: ShopFacade) {
     this._selectedShop = value;
   }
-
-
-
 
   createCategoryFromString(name: string): Category {
     switch (name) {

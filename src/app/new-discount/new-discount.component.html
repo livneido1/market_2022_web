@@ -1,0 +1,83 @@
+<div  class="backgroundComp">
+  <!-- back to shop -->
+  <div style="height: 10%; text-align: left; width: 100%;">
+    <button
+      class="backButton"
+      (click)="backToShop()"
+      title="Go back to Shop"
+      >
+      <span class="material-icons">arrow_back</span>
+    </button>
+  </div>
+  <!-- main row -->
+  <div *ngIf="!isDiscountsEmpty()" class="resultColumn">
+    <p class="resultTitle">Created Sub Discounts</p>
+    <div  style="display: block; height:300px; overflow-y: scroll;">
+      <table class="table">
+        <thead>
+          <tr>
+            <th class = "titleTh" >Sub Discounts</th>
+            <th>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let discount of currentDiscounts">
+
+            <td style="cursor: pointer; width: 80%;"
+              (click)="openDiscountDialog(discount)">
+              <p style="font-size:x-large;">{{getDiscountName(discount)}}</p>
+
+            </td>
+            <td>
+              <div>
+
+                <button
+                  title="Remove Item From Cart"
+                  style="float:right; cursor: pointer;"
+                  (click)="removeDiscount(discount)">
+                  <span class='material-icons'>delete</span>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div *ngIf="isDiscountsEmpty()" class="resultColumn">
+    <p class="resultTitle">No Sub Discounts Created yet</p>
+  </div>
+
+  <div class="SideBar">
+    <div style="height: 10%; text-align: center; margin-top: 20%;">
+      <button
+        class="optionalButton"
+        (click)="addSubDiscount()"
+        >
+        Add Sub Discount
+      </button>
+    </div>
+
+    <div style="height: 10%; text-align: center; margin-top: 20%;">
+      <button
+        class="optionalButton"
+        (click)="mergeDiscounts()"
+        >
+        Merge Discounts
+      </button>
+    </div>
+
+    <div style="height: 10%; text-align: center; margin-top: 20%;">
+      <button
+        class="optionalButton"
+        (click)="submit()"
+        >
+        Submit
+      </button>
+    </div>
+  </div>
+
+
+
+</div>

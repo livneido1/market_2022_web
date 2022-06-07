@@ -14,7 +14,7 @@ export class MessageService {
 
   errorMessage(message:string , action?:string, duration?:number){
     const act: string  = action? action : "Got It!";
-    const dur: number  = duration? duration : 2000;
+    const dur: number  = duration? duration : 4000;
     this.snackBar.open(message, act , {
       duration : dur,
       panelClass: ['mat-toolbar', 'mat-warn']
@@ -23,7 +23,7 @@ export class MessageService {
 
   validMessage(message:string , action?:string, duration?:number){
     const act: string  = action? action : "Got It!";
-    const dur: number  = duration? duration : 2000;
+    const dur: number  = duration? duration : 4000;
     this.snackBar.open(message, act , {
       duration : dur,
       panelClass: ['mat-toolbar', 'mat-accent']
