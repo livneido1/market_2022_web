@@ -7,7 +7,6 @@ import { EngineService } from 'app/services/engine.service';
 import { ConfigService } from '../services/config-service.service';
 import { getMatFormFieldDuplicatedHintError } from '@angular/material/form-field';
 import * as SockJS from 'sockjs-client';
-import * as Stomp from 'stompjs';
 import { RxStomp } from '@stomp/rx-stomp';
 import { map } from 'rxjs';
 
@@ -30,11 +29,11 @@ export class MainPageComponent implements OnInit, OnDestroy {
         this.config.visitor = visitor; 
         console.log('returned from guest login');
         if(this.config.visitor){
-      if(this.config.visitor.name.length==0){
-        this.config.visitor.name="BarTestName";
-      }
-    this.connectToNotifications(this.config.visitor.name);
-    }
+          if(this.config.visitor.name.length==0){
+            this.config.visitor.name="BarTestName";
+          }
+          this.connectToNotifications(this.config.visitor.name);
+        }
       }
     });
    
