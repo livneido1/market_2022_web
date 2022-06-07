@@ -55,7 +55,7 @@ export class ShoppingCartInfoComponent implements OnInit {
         this.cart = this.config.visitor.cart;
         this.totalPrice = this.cart.price;
         this.itemsInCart = this.getItems();
-        this.messageService.validMessage('successfully loaded cart');
+        // this.messageService.validMessage('successfully loaded cart');
       }
     });
   }
