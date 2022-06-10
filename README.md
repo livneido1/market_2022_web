@@ -8,7 +8,7 @@ make sure you have the next packages:
 2. stompjs if not please run: 
     `npm i sockjs-client --save`
     `npm i stompjs --save`
-    `npm i net**`
+    `npm i net`
 3. This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.3.3.
 
 
