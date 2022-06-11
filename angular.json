@@ -110,5 +110,8 @@
       }
     }
   },
-  "defaultProject": "market_2022_web"
+  "defaultProject": "market_2022_web",
+  "cli": {
+    "analytics": false
+  }
 }
