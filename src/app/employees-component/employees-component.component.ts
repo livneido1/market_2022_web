@@ -174,7 +174,7 @@ export class EmployeesComponentComponent implements OnInit {
 
   private openEmployeeForm(data: EmployeeInfoData) {
     return this.dialog.open(EmployeeInfoComponent, {
-      width: '500px',
+      width: '400px',
       data: data,
     });
   }
