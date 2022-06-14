@@ -26,11 +26,13 @@
       <div style="text-align: center;">
         <button mat-button class="button"
           [disabled]="!canSubmit()"
-          (click)="onMaxXorClick()"
-          [mat-dialog-close]="returnVal">
+          (click)="onMaxXorClick()">
           Max Xor Operator
         </button>
       </div>
+    </div>
+    <div>
+      <button mat-button [mat-dialog-close]="discountLevels"> Submit </button>
     </div>
   </div>
 
