@@ -42,48 +42,44 @@ export class MergeLevelDialogComponent implements OnInit {
     return this.discountService.getDiscountLevelName(level);
   }
 
-  onOperatorClick(operator:string){
+  onOperatorClick(operator: string) {
     const toggledLevels = [];
     const res = [];
-    for (const levelEntry of this.discountMap.entries()){
+    for (const levelEntry of this.discountMap.entries()) {
       const level = levelEntry[0];
       const toggled = levelEntry[1];
-      if (toggled){
+      if (toggled) {
         toggledLevels.push(level);
-      }
-      else{
+      } else {
         res.push(level);
       }
     }
-    if (toggledLevels.length >1){
+    if (toggledLevels.length > 1) {
       const comp = new CompositeLevelStateTest(toggledLevels, operator);
       res.push(comp);
-      this.returnVal = res;
+      this.discountLevels = res;
+    } else {
     }
-    else{
-      this.returnVal =  this.discountLevels;
-    }
-
+    return this.returnVal;
   }
 
-
-  canSubmit(){
+  canSubmit() {
     let counter = 0;
-    for (const val of this.discountMap.values()){
-      if (val){
+    for (const val of this.discountMap.values()) {
+      if (val) {
         counter++;
-        if (counter > 1){
+        if (counter > 1) {
           return true;
         }
       }
     }
     return false;
   }
-  onAndClick(){
-   return this.onOperatorClick("and");
+  onAndClick() {
+    return this.onOperatorClick('and');
   }
-  onMaxXorClick(){
-    return this.onOperatorClick("maxXor");
+  onMaxXorClick() {
+    return this.onOperatorClick('maxXor');
   }
   onNoClick(): void {
     this.dialogRef.close();
