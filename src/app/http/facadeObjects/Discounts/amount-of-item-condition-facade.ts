@@ -6,12 +6,12 @@ export class AmountOfItemConditionFacade
   implements Deserializable
 {
   amount: number;
-  itenID: number;
+  itemID: number;
 
-  constructor(amount?: number, itenID?: number) {
+  constructor(amount?: number, itemID?: number) {
     super("AmountOfItemConditionFacade");
     this.amount = amount ? amount : -1;
-    this.itenID = itenID ? itenID : -1;
+    this.itemID = itemID ? itemID : -1;
   }
   deserialize(value: any): this {
     if (!value){

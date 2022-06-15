@@ -21,7 +21,6 @@ export class AddLevelDialogComponent implements OnInit {
   currentLevelType: string;
   categories: string[];
   currentValue: string;
-  returnVal: DiscountLevelStateFacade;
   constructor(
     public dialogRef: MatDialogRef<AddLevelDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
@@ -88,14 +87,10 @@ export class AddLevelDialogComponent implements OnInit {
     switch (this.currentLevelType) {
       case 'ShopLevelStateFacade':
         return new ShopLevelStateFacade();
-        // this.returnVal = new ShopLevelStateFacade();
-        // return;
       case 'CategoryLevelStateFacade':
         const category = this.config.createCategoryFromString(
           this.currentValue
         );
-        return new CategoryLevelStateFacade(category);
-        // this.returnVal = new CategoryLevelStateFacade(category);
         return new CategoryLevelStateFacade(category);
       case 'ItemLevelStateFacade':
         const itemId = this.config.selectedShop.getItemByName(
@@ -105,22 +100,17 @@ export class AddLevelDialogComponent implements OnInit {
           return new ItemLevelStateFacade(itemId.id);
           // return;
         } else {
-          this.returnVal = undefined;
           return undefined;
         }
     }
     return undefined;
-    this.returnVal = undefined;
   }
-  returnData() {
-    return this.returnVal;
-  }
+
 
 
 
   reset() {
-    this.returnVal = undefined;
-    this.levelTypes = this.discountService.getAllTypesWithNoComposite();
+    this.levelTypes = this.discountService.getAllLevelTypesWithNoComposite();
     this.categories = this.config.getAllCategories();
   }
 
