@@ -6,7 +6,8 @@ import { DiscountLevelStateFacade } from 'app/http/facadeObjects/Discounts/disco
 import { DiscountTypeFacade } from 'app/http/facadeObjects/Discounts/discount-type-facade';
 import { ItemLevelStateFacade } from 'app/http/facadeObjects/Discounts/item-level-state-facade';
 import { ShopLevelStateFacade } from 'app/http/facadeObjects/Discounts/shop-level-state-facade';
-
+import { AmountOfItemConditionFacade } from 'app/http/facadeObjects/Discounts/amount-of-item-condition-facade'
+import { PriceConditionFacade } from 'app/http/facadeObjects/Discounts/price-condition-facade';
 @Injectable({
   providedIn: 'root',
 })
@@ -36,7 +37,7 @@ export class DiscountService {
       'CompositeLevelStateTest',
     ];
   }
-  getAllTypesWithNoComposite():string[]{
+  getAllLevelTypesWithNoComposite():string[]{
     return [
       'ShopLevelStateFacade',
       'CategoryLevelStateFacade',
@@ -77,5 +78,24 @@ export class DiscountService {
   reset() {
     this.createdDiscountList = [];
     this.currentConditionList = [];
+  }
+
+  getAllConditionsTypes(): string[]{
+    return [
+
+    ]
+  }
+
+  conditionTypeStrToObj(type:string): ConditionFacade {
+    switch(type){
+      case "AmountOfItemConditionFacade":
+        return new AmountOfItemConditionFacade();
+      case "PriceConditionFacade":
+        return new PriceConditionFacade();
+      case "OrCompositeConditionFacade":
+        return new OrCompositeConditionFacade();
+
+    }
+    return undefined;
   }
 }

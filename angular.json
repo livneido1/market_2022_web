@@ -7,7 +7,11 @@
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
-          "style": "scss"
+          "style": "scss",
+          "skipTests": true
+        },
+        "@schematics/angular:class": {
+          "skipTests": true
         },
         "@schematics/angular:application": {
           "strict": true
@@ -110,5 +114,8 @@
       }
     }
   },
-  "defaultProject": "market_2022_web"
+  "defaultProject": "market_2022_web",
+  "cli": {
+    "analytics": false
+  }
 }

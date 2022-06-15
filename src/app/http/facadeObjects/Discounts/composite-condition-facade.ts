@@ -2,26 +2,17 @@ import { Deserializable } from '../deserializable';
 import { ObjectsDeserializer } from '../objects-deserializer';
 import { ConditionFacade } from './condition-facade';
 
-export enum CompositeConditionType {
-  or,
-  and,
-}
 
 export class CompositeConditionFacade
   extends ConditionFacade
   implements Deserializable
 {
-  compositeConditionType: CompositeConditionType;
   conditionFacadeList: ConditionFacade[];
 
-  constructor(
-    compositeConditionType?: CompositeConditionType,
+  constructor(type?:string,
     conditionFacadeList?: ConditionFacade[]
   ) {
-    super('CompositeConditionFacade');
-    this.compositeConditionType = compositeConditionType
-      ? compositeConditionType
-      : undefined;
+    super(type);
     this.conditionFacadeList = conditionFacadeList ? conditionFacadeList : [];
   }
   deserialize(value: any): this {
@@ -35,7 +26,6 @@ export class CompositeConditionFacade
       const currCond: ConditionFacade = deserialzer.getConditionFacade(cond);
       this.conditionFacadeList.push(currCond);
     }
-    this.compositeConditionType = value.compositeConditionType;
     this.type = 'CompositeConditionFacade';
     return this;
   }

@@ -9,6 +9,8 @@ import { DiscountLevelStateFacade } from "./Discounts/discount-level-state-facad
 import { DiscountTypeFacade } from "./Discounts/discount-type-facade";
 import { ItemLevelStateFacade } from "./Discounts/item-level-state-facade";
 import { PriceConditionFacade } from "./Discounts/price-condition-facade";
+import { PurchasePolicyLevelStateFacade } from "./Discounts/purchase-policy-level-state-facade";
+import { PurchasePolicyTypeFacade } from "./Discounts/purchase-policy-type-facade";
 import { ShopLevelStateFacade } from "./Discounts/shop-level-state-facade";
 import { SimpleDiscountFacade } from "./Discounts/simple-discount-facade";
 import { ShopManagerAppointmentFacade } from "./shop-manager-appointment-facade";
@@ -81,19 +83,26 @@ export class ObjectsDeserializer {
       return undefined;
     }
 
-    getC(input:any): DiscountTypeFacade{
+    // TODO implement here
+    getPurchasePolicyTypeFacade(input:any): PurchasePolicyTypeFacade{
       if (!input){
         return undefined;
       }
-      if (input.type == "CompositeDiscountFacade" ){
-        return new CompositeDiscountFacade().deserialize(input);
-      }
-      if (input.type == "ConditionalDiscountFacade"  ){
-        return new ConditionalDiscountFacade().deserialize(input);
-      }
-      if (input.type == "SimpleDiscountFacade"  ){
-        return new SimpleDiscountFacade().deserialize(input);
+      switch (input.type){
+
       }
       return undefined;
     }
+
+     // TODO implement here
+     getPurchasePolicyLevelStateFacade(input:any): PurchasePolicyLevelStateFacade{
+      if (!input){
+        return undefined;
+      }
+      switch (input.type){
+
+      }
+      return undefined;
+    }
+
 }
