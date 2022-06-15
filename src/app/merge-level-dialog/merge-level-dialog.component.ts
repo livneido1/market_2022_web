@@ -47,13 +47,12 @@ export class MergeLevelDialogComponent implements OnInit {
   onOperatorClick(levelState:CompositeDiscountLevelStateFacade){
     const toggledLevels = [];
     const res = [];
-    for (const levelEntry of this.discountMap.entries()){
+    for (const levelEntry of this.discountMap.entries()) {
       const level = levelEntry[0];
       const toggled = levelEntry[1];
-      if (toggled){
+      if (toggled) {
         toggledLevels.push(level);
-      }
-      else{
+      } else {
         res.push(level);
       }
     }
@@ -63,26 +62,21 @@ export class MergeLevelDialogComponent implements OnInit {
       res.push(levelState);
       this.returnVal = res;
     }
-    else{
-      this.returnVal =  this.discountLevels;
-    }
-
+    return this.returnVal;
   }
 
-
-  canSubmit(){
+  canSubmit() {
     let counter = 0;
-    for (const val of this.discountMap.values()){
-      if (val){
+    for (const val of this.discountMap.values()) {
+      if (val) {
         counter++;
-        if (counter > 1){
+        if (counter > 1) {
           return true;
         }
       }
     }
     return false;
   }
-
   onNoClick(): void {
     this.dialogRef.close();
   }
