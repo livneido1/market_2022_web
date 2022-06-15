@@ -1,5 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { ConditionFacade } from 'app/http/facadeObjects/Discounts/condition-facade';
 import { ConditionalDiscountFacade } from 'app/http/facadeObjects/Discounts/conditional-discount-facade';
 import { DialogData } from 'app/item-mat-dialog/item-mat-dialog.component';
 import { ConfigService } from 'app/services/config-service.service';
@@ -15,7 +16,7 @@ export class AddConditionDialogComponent implements OnInit {
 
   isCategoryTypeChoosed: boolean;
   isItemTypeChoosed: boolean;
-  conditionTypes: string[];
+  conditionTypes: ConditionFacade[];
   currentConditionType: string;
   categories: string[];
   currentValue: string;
@@ -36,6 +37,6 @@ export class AddConditionDialogComponent implements OnInit {
 
 
   reset(){
-    this.conditionTypes =  this.discountService.getAllConditionsTypes();
+    this.conditionTypes =  this.discountService.getAllSimpleConditionsFacade();
   }
 }

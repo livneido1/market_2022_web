@@ -17,7 +17,7 @@ export class CompositePurchasePolicyLevelStateFacade
       : [];
   }
 
-  deserialize(value: any): this {
+  override deserialize(value: any): this {
     if (!value) {
       return this;
     }

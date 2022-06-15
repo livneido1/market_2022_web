@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { CompositeLevelStateTest } from 'app/http/facadeObjects/Discounts/composite-level-state-test';
+import { CompositeDiscountLevelStateFacade } from 'app/http/facadeObjects/Discounts/composite-discount-level-state-facade';
 import { DiscountLevelStateFacade } from 'app/http/facadeObjects/Discounts/discount-level-state-facade';
 import { ConfigService } from 'app/services/config-service.service';
 import { DiscountService } from 'app/services/discount-service.service';
@@ -18,6 +18,7 @@ export class MergeLevelDialogComponent implements OnInit {
   discountLevels: DiscountLevelStateFacade[];
   discountMap: Map<DiscountLevelStateFacade, boolean>;
   returnVal: DiscountLevelStateFacade[];
+  allCompositeTypes: CompositeDiscountLevelStateFacade[];
   constructor(
     public dialogRef: MatDialogRef<MergeLevelDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: MergeLevelData,
@@ -31,6 +32,7 @@ export class MergeLevelDialogComponent implements OnInit {
       this.discountMap.set(level, false);
     }
     this.returnVal = [];
+    this.allCompositeTypes = this.discountService.getAllDiscountCompositeLevelTypes();
   }
 
   ngOnInit(): void {}
@@ -39,10 +41,10 @@ export class MergeLevelDialogComponent implements OnInit {
   }
 
   getLevelName(level: DiscountLevelStateFacade): string {
-    return this.discountService.getDiscountLevelName(level);
+    return level.title;
   }
 
-  onOperatorClick(operator: string) {
+  onOperatorClick(levelState:CompositeDiscountLevelStateFacade){
     const toggledLevels = [];
     const res = [];
     for (const levelEntry of this.discountMap.entries()) {
@@ -54,11 +56,11 @@ export class MergeLevelDialogComponent implements OnInit {
         res.push(level);
       }
     }
-    if (toggledLevels.length > 1) {
-      const comp = new CompositeLevelStateTest(toggledLevels, operator);
-      res.push(comp);
-      this.discountLevels = res;
-    } else {
+    if (toggledLevels.length >1){
+      levelState.discountLevelStateFacades = [];
+      levelState.discountLevelStateFacades.push(...toggledLevels);
+      res.push(levelState);
+      this.returnVal = res;
     }
     return this.returnVal;
   }
@@ -74,12 +76,6 @@ export class MergeLevelDialogComponent implements OnInit {
       }
     }
     return false;
-  }
-  onAndClick() {
-    return this.onOperatorClick('and');
-  }
-  onMaxXorClick() {
-    return this.onOperatorClick('maxXor');
   }
   onNoClick(): void {
     this.dialogRef.close();

@@ -6,7 +6,7 @@ import { DiscountLevelStateFacade } from "./discount-level-state-facade";
 export class AndCompositeDiscountLevelStateFacade  extends CompositeDiscountLevelStateFacade  implements Deserializable{
 
   constructor(discountLevelStateFacades?: DiscountLevelStateFacade[]){
-    super("AndCompositeDiscountLevelStateFacade" , discountLevelStateFacades);
+    super("AndCompositeDiscountLevelStateFacade" ,"&& of Discounts",  discountLevelStateFacades);
   }
 
 

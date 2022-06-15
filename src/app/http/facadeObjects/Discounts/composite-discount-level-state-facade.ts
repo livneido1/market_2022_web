@@ -9,9 +9,10 @@ export class CompositeDiscountLevelStateFacade
   discountLevelStateFacades: DiscountLevelStateFacade[];
   constructor(
     type?: string,
+    title?:string,
     discountLevelStateFacades?: DiscountLevelStateFacade[]
   ) {
-    super(type);
+    super(type, title);
     this.discountLevelStateFacades = discountLevelStateFacades
       ? discountLevelStateFacades
       : [];

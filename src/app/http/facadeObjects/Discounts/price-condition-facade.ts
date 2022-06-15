@@ -8,7 +8,7 @@ export class PriceConditionFacade
   price: number;
 
   constructor(price?: number) {
-    super('PriceConditionFacade');
+    super('PriceConditionFacade', "Price Condition");
     this.price = price ? price : -1;
   }
 

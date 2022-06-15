@@ -15,21 +15,17 @@
       </ul>
     </div>
     <div class="columnRight">
-      <div style="text-align: center;">
-        <button mat-button class="button"
-          [disabled]="!canSubmit()"
-          (click)="onAndClick()"
-          [mat-dialog-close]="returnVal">
-          And Operator
-        </button>
+      <div style="text-align: center;" *ngFor="let levelState of allCompositeTypes">
+        <div style="text-align: center;">
+          <button mat-button class="button"
+            [disabled]="!canSubmit()"
+            (click)="onOperatorClick(levelState)"
+            [mat-dialog-close]="returnVal">
+            {{getLevelName(levelState)}}
+          </button>
+        </div>
       </div>
-      <div style="text-align: center;">
-        <button mat-button class="button"
-          [disabled]="!canSubmit()"
-          (click)="onMaxXorClick()">
-          Max Xor Operator
-        </button>
-      </div>
+   
     </div>
     <div>
       <button mat-button [mat-dialog-close]="discountLevels"> Submit </button>

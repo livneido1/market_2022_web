@@ -7,8 +7,8 @@ export class AndCompositeConditionFacade
   extends CompositeConditionFacade
   implements Deserializable
 {
-  constructor(conditionFacadeList: ConditionFacade[]) {
-    super('AndCompositeConditionFacade', conditionFacadeList);
+  constructor(conditionFacadeList?: ConditionFacade[]) {
+    super('AndCompositeConditionFacade',"All Of Conditions Needed", conditionFacadeList);
   }
   override deserialize(value: any): this {
     if (!value){

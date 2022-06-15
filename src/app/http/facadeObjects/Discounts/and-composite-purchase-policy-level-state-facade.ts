@@ -7,7 +7,7 @@ export class AndCompositePurchasePolicyLevelStateFacade
   extends CompositePurchasePolicyLevelStateFacade
   implements Deserializable {
 
-    constructor( purchasePolicyLevelStateFacades: PurchasePolicyLevelStateFacade[]){
+    constructor( purchasePolicyLevelStateFacades?: PurchasePolicyLevelStateFacade[]){
       super("AndCompositePurchasePolicyLevelStateFacade",purchasePolicyLevelStateFacades);
 
     }

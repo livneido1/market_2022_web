@@ -9,7 +9,7 @@ export class CategoryPurchasePolicyLevelStateFacade extends PurchasePolicyLevelS
     this.category = category;
   }
 
-  deserialize(value: any): this {
+  override deserialize(value: any): this {
       if (!value){
         return this;
       }

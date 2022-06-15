@@ -1,13 +1,18 @@
 import { Injectable } from '@angular/core';
 import { CategoryLevelStateFacade } from 'app/http/facadeObjects/Discounts/category-level-state-facade';
-import { CompositeLevelStateTest } from 'app/http/facadeObjects/Discounts/composite-level-state-test';
 import { ConditionFacade } from 'app/http/facadeObjects/Discounts/condition-facade';
 import { DiscountLevelStateFacade } from 'app/http/facadeObjects/Discounts/discount-level-state-facade';
 import { DiscountTypeFacade } from 'app/http/facadeObjects/Discounts/discount-type-facade';
 import { ItemLevelStateFacade } from 'app/http/facadeObjects/Discounts/item-level-state-facade';
 import { ShopLevelStateFacade } from 'app/http/facadeObjects/Discounts/shop-level-state-facade';
-import { AmountOfItemConditionFacade } from 'app/http/facadeObjects/Discounts/amount-of-item-condition-facade'
+import { AmountOfItemConditionFacade } from 'app/http/facadeObjects/Discounts/amount-of-item-condition-facade';
 import { PriceConditionFacade } from 'app/http/facadeObjects/Discounts/price-condition-facade';
+import { MaxXorCompositeDiscountLevelStateFacade } from 'app/http/facadeObjects/Discounts/max-xor-composite-discount-level-state-facade';
+import { AndCompositeDiscountLevelStateFacade } from 'app/http/facadeObjects/Discounts/and-composite-discount-level-state-facade';
+import { CompositeDiscountLevelStateFacade } from 'app/http/facadeObjects/Discounts/composite-discount-level-state-facade';
+import { CompositeConditionFacade } from 'app/http/facadeObjects/Discounts/composite-condition-facade';
+import { OrCompositeConditionFacade } from 'app/http/facadeObjects/Discounts/or-composite-condition-facade';
+import { AndCompositeConditionFacade } from 'app/http/facadeObjects/Discounts/and-composite-condition-facade';
 @Injectable({
   providedIn: 'root',
 })
@@ -37,65 +42,65 @@ export class DiscountService {
       'CompositeLevelStateTest',
     ];
   }
-  getAllLevelTypesWithNoComposite():string[]{
+  getAllSimpleLevelTypes(): DiscountLevelStateFacade[] {
     return [
-      'ShopLevelStateFacade',
-      'CategoryLevelStateFacade',
-      'ItemLevelStateFacade',
+      new ShopLevelStateFacade(),
+      new CategoryLevelStateFacade(),
+      new ItemLevelStateFacade(),
+    ];
+  }
+  getAllDiscountCompositeLevelTypes(): CompositeDiscountLevelStateFacade[] {
+    return [
+      new AndCompositeDiscountLevelStateFacade(),
+      new MaxXorCompositeDiscountLevelStateFacade(),
     ];
   }
 
-  getLevelTypeFromText(type: string, input: any){
-    switch (type) {
-      case 'ShopLevelStateFacade':
-        return new ShopLevelStateFacade();
-      case 'CategoryLevelStateFacade':
-        return new CategoryLevelStateFacade(input);
-      case 'ItemLevelStateFacade':
-        return new ItemLevelStateFacade(input);
-        case 'CompositeLevelStateTest':
-          return new CompositeLevelStateTest();
-    }
-    return "unknown type";
-  }
 
-  getLevelTextFromType(type: string): string {
-    switch (type) {
-      case 'ShopLevelStateFacade':
-        return 'Shop Level';
-      case 'CategoryLevelStateFacade':
-        return 'Category Level';
-      case 'ItemLevelStateFacade':
-        return 'Item Level';
-        case 'CompositeLevelStateTest':
-        return 'Composite State';
-    }
-    return "unknown type";
-  }
-  getDiscountLevelName(level: DiscountLevelStateFacade){
-    return this.getLevelTextFromType(level.type);
-  }
+
   reset() {
     this.createdDiscountList = [];
     this.currentConditionList = [];
   }
 
-  getAllConditionsTypes(): string[]{
+  getAllSimpleConditionsFacade(): ConditionFacade[] {
     return [
+      new AmountOfItemConditionFacade(),
+      new PriceConditionFacade()
+    ];
+  }
 
+  getAllCompositeConditionFacade(): CompositeConditionFacade[]{
+    return [
+      new AndCompositeConditionFacade(),
+      new OrCompositeConditionFacade()
     ]
   }
 
-  conditionTypeStrToObj(type:string): ConditionFacade {
-    switch(type){
-      case "AmountOfItemConditionFacade":
-        return new AmountOfItemConditionFacade();
-      case "PriceConditionFacade":
-        return new PriceConditionFacade();
-      case "OrCompositeConditionFacade":
-        return new OrCompositeConditionFacade();
+  // conditionTypeStrToObj(type: string): ConditionFacade {
+  //   switch (type) {
+  //     case 'AmountOfItemConditionFacade':
+  //       return new AmountOfItemConditionFacade();
+  //     case 'PriceConditionFacade':
+  //       return new PriceConditionFacade();
+  //     case 'OrCompositeConditionFacade':
+  //       return new OrCompositeConditionFacade();
+  //   }
+  //   return undefined;
+  // }
 
-    }
-    return undefined;
-  }
+
+    // getLevelTypeFromText(type: string, input: any) {
+  //   switch (type) {
+  //     case 'ShopLevelStateFacade':
+  //       return new ShopLevelStateFacade();
+  //     case 'CategoryLevelStateFacade':
+  //       return new CategoryLevelStateFacade(input);
+  //     case 'ItemLevelStateFacade':
+  //       return new ItemLevelStateFacade(input);
+  //     case 'CompositeLevelStateTest':
+  //       return new CompositeLevelStateTest();
+  //   }
+  //   return 'unknown type';
+  // }
 }
