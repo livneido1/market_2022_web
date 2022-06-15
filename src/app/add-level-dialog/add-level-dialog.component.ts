@@ -17,8 +17,8 @@ import { MessageService } from 'app/services/message.service';
 export class AddLevelDialogComponent implements OnInit {
   isCategoryTypeChoosed: boolean;
   isItemTypeChoosed: boolean;
-  levelTypes: string[];
-  currentLevelType: string;
+  levelTypes: DiscountLevelStateFacade[];
+  currentLevelType: DiscountLevelStateFacade;
   categories: string[];
   currentValue: string;
   constructor(
@@ -31,24 +31,25 @@ export class AddLevelDialogComponent implements OnInit {
 
   ngOnInit(): void {
     this.levelTypes = [];
-    this.currentLevelType = '';
+    this.currentLevelType = undefined;
     this.isCategoryTypeChoosed = false;
     this.isItemTypeChoosed = false;
     this.reset();
   }
 
-  selectLevelType(levelType: string, event: any) {
+  selectLevelType(levelType: DiscountLevelStateFacade, event: any) {
     if (event.isUserInput) {
       this.currentValue = undefined;
       this.currentLevelType = levelType;
       this.isCategoryTypeChoosed =
-        this.currentLevelType == 'CategoryLevelStateFacade';
-      this.isItemTypeChoosed = this.currentLevelType == 'ItemLevelStateFacade';
+        this.currentLevelType.type === new CategoryLevelStateFacade().type;
+      this.isItemTypeChoosed =
+        this.currentLevelType.type === new ItemLevelStateFacade().type;
     }
   }
 
-  getLevelName(levelType: string): string {
-    return this.discountService.getLevelTextFromType(levelType);
+  getLevelName(levelType: DiscountLevelStateFacade): string {
+    return levelType.title;
   }
 
   selectCategory(category: string, event: any) {
@@ -57,16 +58,18 @@ export class AddLevelDialogComponent implements OnInit {
     }
   }
 
-  getCurrentVal(){
+  getCurrentVal() {
     return this.currentValue;
   }
-  isItemError():boolean{
-    if (this.isItemTypeChoosed && this.currentLevelType && this.currentLevelType !== "") {
-      const item = (this.config.selectedShop.getItemByName(this.currentValue));
-      if (item){
+  isItemError(): boolean {
+    if (
+      this.isItemTypeChoosed &&
+      this.currentLevelType 
+    ) {
+      const item = this.config.selectedShop.getItemByName(this.currentValue);
+      if (item) {
         return false;
-      }
-      else{
+      } else {
         return true;
       }
     }
@@ -75,24 +78,23 @@ export class AddLevelDialogComponent implements OnInit {
   canSubmit(): boolean {
     return (
       this.currentLevelType &&
-      this.currentLevelType !== '' &&
       !this.isItemError() &&
       (this.noNeedValue() || (this.currentValue && this.currentValue != ''))
     );
   }
   noNeedValue() {
-    return this.currentLevelType === 'ShopLevelStateFacade';
+    return this.currentLevelType.type === new ShopLevelStateFacade().type;
   }
   createData(): DiscountLevelStateFacade {
-    switch (this.currentLevelType) {
-      case 'ShopLevelStateFacade':
-        return new ShopLevelStateFacade();
-      case 'CategoryLevelStateFacade':
+    switch (this.currentLevelType.type) {
+      case new ShopLevelStateFacade().type:
+        return this.currentLevelType;
+      case new CategoryLevelStateFacade().type:
         const category = this.config.createCategoryFromString(
           this.currentValue
         );
         return new CategoryLevelStateFacade(category);
-      case 'ItemLevelStateFacade':
+      case new ItemLevelStateFacade().type:
         const itemId = this.config.selectedShop.getItemByName(
           this.currentValue
         );
@@ -106,11 +108,8 @@ export class AddLevelDialogComponent implements OnInit {
     return undefined;
   }
 
-
-
-
   reset() {
-    this.levelTypes = this.discountService.getAllLevelTypesWithNoComposite();
+    this.levelTypes = this.discountService.getAllSimpleLevelTypes();
     this.categories = this.config.getAllCategories();
   }
 

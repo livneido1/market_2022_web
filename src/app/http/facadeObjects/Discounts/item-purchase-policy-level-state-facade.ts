@@ -11,11 +11,4 @@ export class ItemPurchasePolicyLevelStateFacade
     }
 
 
-    deserialize(value: any): this {
-        if (!value){
-          return this;
-        }
-        Object.assign(this,value);
-        return this;
-    }
   }

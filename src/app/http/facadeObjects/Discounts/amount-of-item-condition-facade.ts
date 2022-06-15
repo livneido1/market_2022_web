@@ -9,7 +9,7 @@ export class AmountOfItemConditionFacade
   itemID: number;
 
   constructor(amount?: number, itemID?: number) {
-    super("AmountOfItemConditionFacade");
+    super("AmountOfItemConditionFacade","Amount of Item Condition");
     this.amount = amount ? amount : -1;
     this.itemID = itemID ? itemID : -1;
   }

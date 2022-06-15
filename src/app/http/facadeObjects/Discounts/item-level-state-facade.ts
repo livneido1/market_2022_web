@@ -7,7 +7,7 @@ export class ItemLevelStateFacade extends DiscountLevelStateFacade implements De
 
 
   constructor(itemID?:number){
-    super("ItemLevelStateFacade");
+    super("ItemLevelStateFacade", "Item Level");
     this.itemID = itemID? itemID : -1;
   }
   deserialize(value: any): this {

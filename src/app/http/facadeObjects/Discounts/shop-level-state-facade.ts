@@ -3,9 +3,12 @@ import { DiscountLevelStateFacade } from "./discount-level-state-facade";
 
 export class ShopLevelStateFacade extends DiscountLevelStateFacade  implements Deserializable {
 
+
   constructor(){
-    super("ShopLevelStateFacade");
+    super("ShopLevelStateFacade", "Shop Level");
   }
+
+
 
   deserialize(value: any): this {
     if (!value) {

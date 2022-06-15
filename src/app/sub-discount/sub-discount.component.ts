@@ -58,8 +58,7 @@ export class SubDiscountComponent implements OnInit {
     });
   }
   getLevelName(level:DiscountLevelStateFacade){
-    let name = this.discountService.getLevelTextFromType(level.type);
-    return name;
+    return level.title;
   }
 
 

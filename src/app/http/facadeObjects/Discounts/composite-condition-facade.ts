@@ -9,10 +9,10 @@ export class CompositeConditionFacade
 {
   conditionFacadeList: ConditionFacade[];
 
-  constructor(type?:string,
+  constructor(type?:string, title?:string,
     conditionFacadeList?: ConditionFacade[]
   ) {
-    super(type);
+    super(type, title);
     this.conditionFacadeList = conditionFacadeList ? conditionFacadeList : [];
   }
   deserialize(value: any): this {

@@ -8,7 +8,8 @@ export class CategoryLevelStateFacade extends DiscountLevelStateFacade implement
 
 
   constructor(category?:Category){
-    super("CategoryLevelStateFacade");
+    super("CategoryLevelStateFacade", "Category Level");
+
     this.category = category? category : undefined;
   }
 
