@@ -19,8 +19,7 @@
         <div style="text-align: center;">
           <button mat-button class="button"
             [disabled]="!canSubmit()"
-            (click)="onOperatorClick(levelState)"
-            [mat-dialog-close]="returnVal">
+            [mat-dialog-close]="onOperatorClick(levelState)">
             {{getLevelName(levelState)}}
           </button>
         </div>

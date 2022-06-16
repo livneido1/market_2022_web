@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { AddConditionDialogComponent } from 'app/add-condition-dialog/add-condition-dialog.component';
 import { AddLevelDialogComponent } from 'app/add-level-dialog/add-level-dialog.component';
+import { ConditionFacade } from 'app/http/facadeObjects/Discounts/condition-facade';
 import { DiscountLevelStateFacade } from 'app/http/facadeObjects/Discounts/discount-level-state-facade';
 import { MergeLevelData, MergeLevelDialogComponent } from 'app/merge-level-dialog/merge-level-dialog.component';
 import { ConfigService } from 'app/services/config-service.service';
@@ -15,12 +17,9 @@ import { MessageService } from 'app/services/message.service';
 export class SubDiscountComponent implements OnInit {
 
   currentLevels: DiscountLevelStateFacade[];
+  currentConditions : ConditionFacade[];
 
-  dataConds = [
-    {name:"cond 1"},
-    {name:"cond 2"},
-
-  ]
+  
   constructor(
     public dialog: MatDialog,
     private config: ConfigService,
@@ -31,8 +30,19 @@ export class SubDiscountComponent implements OnInit {
 
   ngOnInit(): void {
     this.currentLevels = [];
+    this.currentConditions = [];
   }
 
+  onAddConditionClick(){
+    const dialogRef = this.dialog.open(AddConditionDialogComponent, {
+      width: '500px',
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result){
+        this.currentConditions.push(result);
+      }
+    });
+  }
 
   addLevel(){
     const dialogRef = this.dialog.open(AddLevelDialogComponent, {

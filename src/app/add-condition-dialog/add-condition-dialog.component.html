@@ -1,38 +1,46 @@
-<!-- <div style="height: 60%;">
+<div style="height: 60%;">
+  <!-- selection -->
   <div>
-
     <mat-form-field class="input" appearance="fill">
       <mat-label>Discount Level Type</mat-label>
       <mat-select>
-        <mat-option *ngFor="let levelType of levelTypes"
-          (onSelectionChange)="selectLevelType(levelType, $event)"
-          [value]="currentLevelType">
-          {{getLevelName(levelType)}}
+        <mat-option *ngFor="let simpleCondition of simpleConditionTypes"
+          (onSelectionChange)="selectCondition(simpleCondition, $event)"
+          [value]="simpleCondition">
+          {{simpleCondition.title}}
         </mat-option>
       </mat-select>
     </mat-form-field>
   </div>
-
+  <!-- additional values -->
   <div>
-
-    <mat-form-field *ngIf="isCategoryTypeChoosed" class="input" appearance="fill">
-      <mat-label> Category </mat-label>
-      <mat-select>
-        <mat-option *ngFor="let category of categories"
-          (onSelectionChange)="selectCategory(category, $event)"
-          [value]="getCurrentVal()">
-          {{category}}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-
-    <mat-form-field *ngIf="isItemTypeChoosed" class="inputLong" appearance="fill">
-      <mat-label > Item Name </mat-label>
-      <input matInput  #last  style="color: white;" [(ngModel)]="currentValue" placeholder="Ex. milk">
-      <p style="color: red;" *ngIf="isItemError()">
-        item is not found in shop
-      </p>
-    </mat-form-field>
+    <!-- price condition -->
+    <div *ngIf="isPriceCondition()">
+      <mat-form-field class="inputLong" appearance="fill">
+        <mat-label > Minimum Price </mat-label>
+        <input matInput type="number"  #last   style="color: white;" [(ngModel)]="firstCurrentValue" placeholder="Ex. milk">
+        <p style="color: red;" *ngIf="isPriceError()">
+          Price Cannot be negative!
+        </p>
+      </mat-form-field>
+    </div>
+    <!-- amount of item condition -->
+    <div *ngIf="isAmountOfItemCondition()">
+      <mat-form-field class="inputLong" appearance="fill">
+        <mat-label > Item Name </mat-label>
+        <input matInput  #last   style="color: white;" [(ngModel)]="firstCurrentValue" placeholder="Ex. milk">
+        <p style="color: red;" *ngIf="isItemError()">
+          item is not found in shop
+        </p>
+      </mat-form-field>
+      <mat-form-field class="inputLong" appearance="fill">
+        <mat-label > Amount </mat-label>
+        <input matInput type="number" #last  style="color: white;" [(ngModel)]="numericSecondValue" placeholder="Ex. 3">
+        <p style="color: red;" *ngIf="isAmountError()">
+            amount must not be negative
+        </p>
+      </mat-form-field>
+    </div >
   </div>
 
 
@@ -45,4 +53,4 @@
     [mat-dialog-close]="createData()">
     Add Level!
   </button>
-</div> -->
+</div>
