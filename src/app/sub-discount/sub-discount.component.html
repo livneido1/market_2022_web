@@ -45,16 +45,6 @@
 
     </div>
   </div>
-  <div class="rowInputs">
-    <div class="colLeft">
-      <label for="username">Discount Percentage:</label><br>
-      <input type="number"><br>
-    </div>
-    <div class="colRight">
-
-    </div>
-
-  </div>
   <div class="rowConditions">
     <div class="colLeft scrollable">
       <div *ngIf="currentConditions.length > 0; else noConditions">
@@ -104,11 +94,29 @@
 
     </div>
   </div>
+  
+  <div class="rowInputs">
+    <div class="colLeft">
+      <mat-form-field class="inputLong" appearance="fill">
+        <mat-label > Discount Percentage </mat-label>
+        <input matInput type="number"  #last   style="color: white;" [(ngModel)]="currentPercentage" placeholder="Ex. 10">
+      </mat-form-field>
+
+    </div>
+    <div class="colRight">
+    </div>
+  </div>
   <div class="rowSubmit">
     <div class="colLeft">
-      <button class="optionalButtonsDiv">
+      <button 
+        class="optionalButtonsDiv"
+        [disabled]="!canSubmit()">
         submit!
       </button>
+      <p class="errorMessage" *ngIf="!exactOneLevel()">you must have exactly one level</p>
+      <p class="errorMessage" *ngIf="!exactOneCondition()">you must have exactly one condition</p>
+      <p class="errorMessage" *ngIf="isPercantageError()">percantage must be more then 0</p>
+
     </div>
     <div class="colRight">
 

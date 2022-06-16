@@ -19,19 +19,22 @@ export class SubDiscountComponent implements OnInit {
 
   currentLevels: DiscountLevelStateFacade[];
   currentConditions : ConditionFacade[];
-
+  currentPercentage:number;
   
   constructor(
     public dialog: MatDialog,
     private config: ConfigService,
     private messageService: MessageService,
     private discountService: DiscountService,
+    
+  ) { 
 
-  ) { }
+  }
 
   ngOnInit(): void {
     this.currentLevels = [];
     this.currentConditions = [];
+    this.currentPercentage = 0;
   }
 
   onAddConditionClick(){
@@ -84,7 +87,26 @@ export class SubDiscountComponent implements OnInit {
   }
   getLevelName(level:DiscountLevelStateFacade){
     return level.title;
+  } 
+
+  isPercantageError(){
+    const isError = !this.currentPercentage || this.currentPercentage < 1;
+    return isError;
+  }
+  canSubmit(){
+    return this.exactOneLevel() &&
+    this.exactOneCondition() &&
+    !this.isPercantageError();
+    
   }
 
 
+
+  public exactOneLevel() {
+    return this.currentLevels.length === 1;
+  }
+
+  public exactOneCondition() {
+    return this.currentConditions.length === 1;
+  }
 }
