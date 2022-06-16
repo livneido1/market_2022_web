@@ -59,7 +59,7 @@
   </div>
   <div class="rowConditions">
     <div class="colLeft scrollable">
-      <div *ngIf="dataConds.length > 0; else noConditions">
+      <div *ngIf="currentConditions.length > 0; else noConditions">
         <p class="tableTitle">Created Conditions</p>
         <table class="levelTable">
           <thead>
@@ -73,11 +73,11 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let cond of dataConds" style="border-bottom: solid;">
+            <tr *ngFor="let cond of currentConditions" style="border-bottom: solid;">
               <div
                 style="cursor: pointer;"
                 >
-                {{cond.name}}
+                {{cond.title}}
               </div>
 
 
@@ -91,7 +91,9 @@
     </div>
     <div class="colRight">
       <div>
-        <button class="optionalButtonsDiv">
+        <button 
+          (click)="onAddConditionClick()"
+          class="optionalButtonsDiv">
           add Condition
         </button>
       </div>
