@@ -6,7 +6,7 @@
       <mat-select>
         <mat-option *ngFor="let levelType of levelTypes"
           (onSelectionChange)="selectLevelType(levelType, $event)"
-          [value]="currentLevelType">
+          [value]="levelType">
           {{getLevelName(levelType)}}
         </mat-option>
       </mat-select>
@@ -20,7 +20,7 @@
       <mat-select>
         <mat-option *ngFor="let category of categories"
           (onSelectionChange)="selectCategory(category, $event)"
-          [value]="getCurrentVal()">
+          [value]="category">
           {{category}}
         </mat-option>
       </mat-select>

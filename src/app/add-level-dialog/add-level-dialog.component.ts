@@ -49,7 +49,10 @@ export class AddLevelDialogComponent implements OnInit {
   }
 
   getLevelName(levelType: DiscountLevelStateFacade): string {
-    return levelType.title;
+    if (levelType){
+      return levelType.title;
+    }
+    return "Please Set Level Type";
   }
 
   selectCategory(category: string, event: any) {
@@ -58,9 +61,6 @@ export class AddLevelDialogComponent implements OnInit {
     }
   }
 
-  getCurrentVal() {
-    return this.currentValue;
-  }
   isItemError(): boolean {
     if (
       this.isItemTypeChoosed &&
@@ -86,6 +86,9 @@ export class AddLevelDialogComponent implements OnInit {
     return this.currentLevelType.type === new ShopLevelStateFacade().type;
   }
   createData(): DiscountLevelStateFacade {
+    if (!this.currentLevelType ||  !this.currentLevelType.type){
+      return undefined;
+    }
     switch (this.currentLevelType.type) {
       case new ShopLevelStateFacade().type:
         return this.currentLevelType;
