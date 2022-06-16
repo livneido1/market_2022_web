@@ -4,6 +4,7 @@ import { AddConditionDialogComponent } from 'app/add-condition-dialog/add-condit
 import { AddLevelDialogComponent } from 'app/add-level-dialog/add-level-dialog.component';
 import { ConditionFacade } from 'app/http/facadeObjects/Discounts/condition-facade';
 import { DiscountLevelStateFacade } from 'app/http/facadeObjects/Discounts/discount-level-state-facade';
+import { MergeConditionComponent, MergeConditionData } from 'app/merge-condition/merge-condition.component';
 import { MergeLevelData, MergeLevelDialogComponent } from 'app/merge-level-dialog/merge-level-dialog.component';
 import { ConfigService } from 'app/services/config-service.service';
 import { DiscountService } from 'app/services/discount-service.service';
@@ -51,6 +52,20 @@ export class SubDiscountComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result){
         this.currentLevels.push(result);
+      }
+    });
+  }
+
+  onMergeConditions(){
+    const data: MergeConditionData = {existingConditions : this.currentConditions };
+    const dialogRef = this.dialog.open(MergeConditionComponent, {
+      width: '500px',
+      data:data,
+    });
+
+    dialogRef.afterClosed().subscribe((result: ConditionFacade[]) => {
+      if (result){
+        this.currentConditions = result;
       }
     });
   }

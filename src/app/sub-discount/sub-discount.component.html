@@ -21,14 +21,12 @@
                 >
                 {{getLevelName(level)}}
               </div>
-
-
             </tr>
           </tbody>
         </table>
       </div>
       <ng-template #noLevels>
-        <p class="resultTitle">No Discounts in Shop</p>
+        <p class="resultTitle">Create new sub Discount</p>
       </ng-template>
     </div>
     <div class="colRight">
@@ -98,7 +96,8 @@
         </button>
       </div>
       <div>
-        <button class="optionalButtonsDiv">
+        <button class="optionalButtonsDiv"
+          (click)="onMergeConditions()">
           Merge Conditions
         </button>
       </div>

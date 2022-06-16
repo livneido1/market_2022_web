@@ -18,7 +18,7 @@
     <div *ngIf="isPriceCondition()">
       <mat-form-field class="inputLong" appearance="fill">
         <mat-label > Minimum Price </mat-label>
-        <input matInput type="number"  #last   style="color: white;" [(ngModel)]="firstCurrentValue" placeholder="Ex. milk">
+        <input matInput type="number"  #last   style="color: white;" [(ngModel)]="firstCurrentValue" placeholder="Ex. 10">
         <p style="color: red;" *ngIf="isPriceError()">
           Price Cannot be negative!
         </p>
