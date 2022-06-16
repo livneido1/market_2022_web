@@ -4,6 +4,7 @@ import { AddConditionDialogComponent } from 'app/add-condition-dialog/add-condit
 import { AddLevelDialogComponent } from 'app/add-level-dialog/add-level-dialog.component';
 import { ConditionFacade } from 'app/http/facadeObjects/Discounts/condition-facade';
 import { DiscountLevelStateFacade } from 'app/http/facadeObjects/Discounts/discount-level-state-facade';
+import { MergeConditionComponent, MergeConditionData } from 'app/merge-condition/merge-condition.component';
 import { MergeLevelData, MergeLevelDialogComponent } from 'app/merge-level-dialog/merge-level-dialog.component';
 import { ConfigService } from 'app/services/config-service.service';
 import { DiscountService } from 'app/services/discount-service.service';
@@ -18,19 +19,22 @@ export class SubDiscountComponent implements OnInit {
 
   currentLevels: DiscountLevelStateFacade[];
   currentConditions : ConditionFacade[];
-
+  currentPercentage:number;
   
   constructor(
     public dialog: MatDialog,
     private config: ConfigService,
     private messageService: MessageService,
     private discountService: DiscountService,
+    
+  ) { 
 
-  ) { }
+  }
 
   ngOnInit(): void {
     this.currentLevels = [];
     this.currentConditions = [];
+    this.currentPercentage = 0;
   }
 
   onAddConditionClick(){
@@ -54,6 +58,20 @@ export class SubDiscountComponent implements OnInit {
       }
     });
   }
+
+  onMergeConditions(){
+    const data: MergeConditionData = {existingConditions : this.currentConditions };
+    const dialogRef = this.dialog.open(MergeConditionComponent, {
+      width: '500px',
+      data:data,
+    });
+
+    dialogRef.afterClosed().subscribe((result: ConditionFacade[]) => {
+      if (result){
+        this.currentConditions = result;
+      }
+    });
+  }
   onMergeLevels(){
     const data: MergeLevelData = {discountLevels : this.currentLevels }
     const dialogRef = this.dialog.open(MergeLevelDialogComponent, {
@@ -69,7 +87,26 @@ export class SubDiscountComponent implements OnInit {
   }
   getLevelName(level:DiscountLevelStateFacade){
     return level.title;
+  } 
+
+  isPercantageError(){
+    const isError = !this.currentPercentage || this.currentPercentage < 1;
+    return isError;
+  }
+  canSubmit(){
+    return this.exactOneLevel() &&
+    this.exactOneCondition() &&
+    !this.isPercantageError();
+    
   }
 
 
+
+  public exactOneLevel() {
+    return this.currentLevels.length === 1;
+  }
+
+  public exactOneCondition() {
+    return this.currentConditions.length === 1;
+  }
 }

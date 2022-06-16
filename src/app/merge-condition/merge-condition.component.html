@@ -1,0 +1,33 @@
+
+<div>
+    <div>
+      <p  class="title"></p>
+    </div>
+    <div>
+      <div class="columnLeft">
+        <ul *ngFor="let condition of existingConditions">
+          <li>
+            <mat-checkbox
+              (change)="onUpdateMap(condition, $event.checked)">
+              {{getConditionName(condition)}}
+            </mat-checkbox>
+          </li>
+        </ul>
+      </div>
+      <!-- buttons  - right column -->
+      <div class="columnRight">
+        <div style="text-align: center;" *ngFor="let compositeCondition of allCompositeCondition">
+          <div style="text-align: right;">
+            <button mat-button class="button"
+              [disabled]="!canSubmit()"
+              [mat-dialog-close]="onOperatorClick(compositeCondition)">
+              {{getConditionName(compositeCondition)}}
+            </button>
+          </div>
+        </div>
+     
+      </div>
+    </div>
+  
+  </div>
+  
