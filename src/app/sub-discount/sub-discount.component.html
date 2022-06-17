@@ -110,11 +110,12 @@
     <div class="colLeft">
       <button 
         class="optionalButtonsDiv"
-        [disabled]="!canSubmit()">
+        [disabled]="!canSubmit()"
+        (click)="onSubmitClick()">
         submit!
       </button>
       <p class="errorMessage" *ngIf="!exactOneLevel()">you must have exactly one level</p>
-      <p class="errorMessage" *ngIf="!exactOneCondition()">you must have exactly one condition</p>
+      <p class="errorMessage" *ngIf="!atMostOneCondition()">you must have at most one condition</p>
       <p class="errorMessage" *ngIf="isPercantageError()">percantage must be more then 0</p>
 
     </div>

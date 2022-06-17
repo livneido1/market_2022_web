@@ -1,4 +1,8 @@
 import { Deserializable } from '../../deserializable';
+import { ConditionalDiscountFacade } from '../conditional-discount-facade';
+import { DiscountTypeFacade } from '../discount-type-facade';
+import { MaxCompositeDiscountTypeFacade } from '../max-composite-discount-type-facade';
+import { SimpleDiscountFacade } from '../simple-discount-facade';
 import { ConditionWrapper } from './condition-wrapper';
 import { DiscountLevelStateWrapper } from './discount-level-state-wrapper';
 
@@ -47,4 +51,28 @@ export class DiscountTypeWrapper implements Deserializable {
 
     return this;
   }
-}
+
+
+
+  getDiscountType():DiscountTypeFacade{
+    switch (this.discountTypeWrapperType){
+      case DiscountTypeWrapperType.ConditionalDiscountFacade:
+        return new ConditionalDiscountFacade(this.percentageOfDiscount,
+          this.discountLevelStateWrapper.getDiscountLevelState(),
+          this.conditionWrapper.getCondition());
+      case DiscountTypeWrapperType.SimpleDiscountFacade:
+        return new SimpleDiscountFacade(this.percentageOfDiscount,this.discountLevelStateWrapper.getDiscountLevelState());
+      case DiscountTypeWrapperType.MaxCompositeDiscountTypeFacade:
+        const subDiscountTypes: DiscountTypeFacade[] = this.getSubDiscounts();
+        return new MaxCompositeDiscountTypeFacade(subDiscountTypes);
+    }
+  }
+
+  private getSubDiscounts() {
+    const subDiscountTypes: DiscountTypeFacade[] = [];
+    for (const wrapper of this.discountTypeWrappers) {
+      subDiscountTypes.push(wrapper.getDiscountType());
+    }
+    return subDiscountTypes;
+  }
+} 

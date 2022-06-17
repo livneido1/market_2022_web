@@ -1,5 +1,9 @@
 import { Deserializable } from '../deserializable';
 import { ConditionFacade } from './condition-facade';
+import {
+  ConditionWrapper,
+  ConditionWrapperType,
+} from './Wrappers/condition-wrapper';
 
 export class PriceConditionFacade
   extends ConditionFacade
@@ -8,7 +12,7 @@ export class PriceConditionFacade
   price: number;
 
   constructor(price?: number) {
-    super('PriceConditionFacade', "Price Condition");
+    super('PriceConditionFacade', 'Price Condition');
     this.price = price ? price : -1;
   }
 
@@ -18,5 +22,15 @@ export class PriceConditionFacade
     }
     Object.assign(this, value);
     return this;
+  }
+
+  getWrapper(): ConditionWrapper {
+    return new ConditionWrapper(
+      ConditionWrapperType.PriceConditionFacade,
+      [],
+      -1,
+      -1,
+      this.price
+    );
   }
 }

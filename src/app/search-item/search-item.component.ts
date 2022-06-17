@@ -52,14 +52,7 @@ export class SearchItemComponent implements OnInit {
       console.log('The dialog was closed');
     });
   }
-  test() {
-    this.engine.getDiscountTest().subscribe(res =>{
-      const response =  new ResponseT<DiscountTypeFacade>().deserialize(res);
-      const disc = new ObjectsDeserializer().getDiscountType(response.value);
-      let x = 3;
-    })
-    return 4;
-  }
+ 
   canSearchShopName() {
     return this.shopName && this.shopName !== '';
   }

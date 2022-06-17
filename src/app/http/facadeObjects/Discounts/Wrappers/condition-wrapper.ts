@@ -1,4 +1,9 @@
 import { Deserializable } from '../../deserializable';
+import { AmountOfItemConditionFacade } from '../amount-of-item-condition-facade';
+import { AndCompositeConditionFacade } from '../and-composite-condition-facade';
+import { ConditionFacade } from '../condition-facade';
+import { OrCompositeConditionFacade } from '../or-composite-condition-facade';
+import { PriceConditionFacade } from '../price-condition-facade';
 
 export enum ConditionWrapperType {
   AndCompositeConditionFacade,
@@ -39,5 +44,30 @@ export class ConditionWrapper implements Deserializable {
     }
 
     return this;
+  }
+
+  getCondition():ConditionFacade{
+    switch (this.conditionWrapperType){
+      case ConditionWrapperType.AmountOfItemConditionFacade:
+        return new AmountOfItemConditionFacade(this.amount,this.itemID);
+      case ConditionWrapperType.AndCompositeConditionFacade:
+        const subConds1: ConditionFacade[] = this.getSubConditions();
+        return new AndCompositeConditionFacade(subConds1);
+      case ConditionWrapperType.OrCompositeConditionFacade:
+        const subConds: ConditionFacade[] = this.getSubConditions();
+        return new OrCompositeConditionFacade(subConds);
+      case ConditionWrapperType.PriceConditionFacade:
+        return new PriceConditionFacade(this.price);
+      default:
+        return undefined;
+    }
+  }
+
+  private getSubConditions() {
+    const subConds: ConditionFacade[] = [];
+    for (const wrapper of this.conditionWrappers) {
+      subConds.push(wrapper.getCondition());
+    }
+    return subConds;
   }
 }
