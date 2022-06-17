@@ -1,6 +1,7 @@
+import { DiscountLevelStateWrapper } from "./Wrappers/discount-level-state-wrapper";
 
 
-export class DiscountLevelStateFacade {
+export abstract class DiscountLevelStateFacade {
   type:string;
   title:string;
   constructor(type?:string, title?:string){
@@ -8,4 +9,6 @@ export class DiscountLevelStateFacade {
     this.title = title;
   }
 
+
+  abstract getWrapper(): DiscountLevelStateWrapper;
 }

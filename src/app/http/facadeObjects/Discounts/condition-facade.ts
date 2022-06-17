@@ -1,3 +1,5 @@
+import { ConditionWrapper } from "./Wrappers/condition-wrapper";
+
 export abstract class ConditionFacade {
   type:string;
   title:string
@@ -5,4 +7,6 @@ export abstract class ConditionFacade {
     this.type = type? type: "";
     this.title = title;
   };
+
+  abstract getWrapper():ConditionWrapper;
 }

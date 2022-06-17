@@ -1,5 +1,7 @@
 import { AppointmentFacade } from "./AppointmentFacade";
 import { AmountOfItemConditionFacade } from "./Discounts/amount-of-item-condition-facade";
+import { AndCompositeConditionFacade } from "./Discounts/and-composite-condition-facade";
+import { AndCompositeDiscountLevelStateFacade } from "./Discounts/and-composite-discount-level-state-facade";
 import { AndCompositePurchasePolicyLevelStateFacade } from "./Discounts/and-composite-purchase-policy-level-state-facade";
 import { AtLeastPurchasePolicyTypeFacade } from "./Discounts/at-least-purchase-policy-type-facade";
 import { AtMostPurchasePolicyTypeFacade } from "./Discounts/at-most-purchase-policy-type-facade";
@@ -13,6 +15,8 @@ import { DiscountTypeFacade } from "./Discounts/discount-type-facade";
 import { ItemLevelStateFacade } from "./Discounts/item-level-state-facade";
 import { ItemPurchasePolicyLevelStateFacade } from "./Discounts/item-purchase-policy-level-state-facade";
 import { MaxCompositeDiscountTypeFacade } from "./Discounts/max-composite-discount-type-facade";
+import { MaxXorCompositeDiscountLevelStateFacade } from "./Discounts/max-xor-composite-discount-level-state-facade";
+import { OrCompositeConditionFacade } from "./Discounts/or-composite-condition-facade";
 import { OrCompositePurchasePolicyLevelStateFacade } from "./Discounts/or-composite-purchase-policy-level-state-facade";
 import { OrCompositePurchasePolicyTypeFacade } from "./Discounts/or-composite-purchase-policy-type-facade";
 import { PriceConditionFacade } from "./Discounts/price-condition-facade";
@@ -33,10 +37,10 @@ export class ObjectsDeserializer {
       if (!input){
         return null;
       }
-      if (input.type == "ShopOwnerAppointmentFacade" ){
+      if (input.type === "ShopOwnerAppointmentFacade" ){
         return new ShopOwnerAppointmentFacade().deserialize(input);
       }
-      if (input.type == "ShopManagerAppointmentFacade"  ){
+      if (input.type === "ShopManagerAppointmentFacade"  ){
         return new ShopManagerAppointmentFacade().deserialize(input);
       }
       return null;
@@ -46,13 +50,16 @@ export class ObjectsDeserializer {
       if (!input){
         return null;
       }
-      if (input.type == "AmountOfItemConditionFacade" ){
+      if (input.type === "AmountOfItemConditionFacade" ){
         return new AmountOfItemConditionFacade().deserialize(input);
       }
-      if (input.type == "CompositeConditionFacade"  ){
-        return new CompositeConditionFacade().deserialize(input);
+      if (input.type === "AndCompositeConditionFacade"  ){
+        return new AndCompositeConditionFacade().deserialize(input);
       }
-      if (input.type == "PriceConditionFacade"  ){
+      if (input.type === "OrCompositeConditionFacade"  ){
+        return new OrCompositeConditionFacade().deserialize(input);
+      }
+      if (input.type === "PriceConditionFacade"  ){
         return new PriceConditionFacade().deserialize(input);
       }
       return null;
@@ -63,15 +70,21 @@ export class ObjectsDeserializer {
       if (!input){
         return undefined;
       }
-      if (input.type == "CategoryLevelStateFacade" ){
+      if (input.type === "CategoryLevelStateFacade" ){
         return new CategoryLevelStateFacade().deserialize(input);
       }
-      if (input.type == "ItemLevelStateFacade"  ){
+      if (input.type === "ItemLevelStateFacade"  ){
         return new ItemLevelStateFacade().deserialize(input);
       }
-      if (input.type == "ShopLevelStateFacade"  ){
+      if (input.type === "ShopLevelStateFacade"  ){
         return new ShopLevelStateFacade().deserialize(input);
-      }
+      } 
+      if (input.type === "AndCompositeDiscountLevelStateFacade"  ){
+        return new AndCompositeDiscountLevelStateFacade().deserialize(input);
+      } 
+      if (input.type === "MaxXorCompositeDiscountLevelStateFacade"  ){
+        return new MaxXorCompositeDiscountLevelStateFacade().deserialize(input);
+      } 
       return null;
     }
 
@@ -80,13 +93,13 @@ export class ObjectsDeserializer {
       if (!input){
         return undefined;
       }
-      if (input.type == "MaxCompositeDiscountTypeFacade" ){
+      if (input.type === "MaxCompositeDiscountTypeFacade" ){
         return new MaxCompositeDiscountTypeFacade().deserialize(input);
       }
-      if (input.type == "ConditionalDiscountFacade"  ){
+      if (input.type === "ConditionalDiscountFacade"  ){
         return new ConditionalDiscountFacade().deserialize(input);
       }
-      if (input.type == "SimpleDiscountFacade"  ){
+      if (input.type === "SimpleDiscountFacade"  ){
         return new SimpleDiscountFacade().deserialize(input);
       }
       return undefined;

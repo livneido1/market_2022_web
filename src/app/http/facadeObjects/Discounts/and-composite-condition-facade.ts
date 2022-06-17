@@ -2,6 +2,7 @@ import { Deserializable } from '../deserializable';
 import { ObjectsDeserializer } from '../objects-deserializer';
 import { CompositeConditionFacade } from './composite-condition-facade';
 import { ConditionFacade } from './condition-facade';
+import { ConditionWrapper, ConditionWrapperType } from './Wrappers/condition-wrapper';
 
 export class AndCompositeConditionFacade
   extends CompositeConditionFacade
@@ -21,5 +22,20 @@ export class AndCompositeConditionFacade
       this.conditionFacadeList.push(condObj);
     }
     return this;
+  }
+
+
+  getWrapper(): ConditionWrapper {
+    const subWrappers:ConditionWrapper[] = [];
+    for (const cond of this.conditionFacadeList){
+      subWrappers.push(cond.getWrapper());
+    }
+    return new ConditionWrapper(
+      ConditionWrapperType.AndCompositeConditionFacade,
+      subWrappers,
+      -1,
+      -1,
+      -1
+    );
   }
 }

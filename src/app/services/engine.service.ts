@@ -9,9 +9,11 @@ import { ResponseT } from 'app/http/facadeObjects/response-t';
 import { ShopFacade } from 'app/http/facadeObjects/shop-facade';
 import { ShoppingCartFacade } from 'app/http/facadeObjects/shopping-cart-facade';
 import { VisitorFacade } from 'app/http/facadeObjects/visitor-facade';
+import { AddDiscountToShopRequest } from 'app/http/requests/add-discount-to-shop-request';
 import { AddItemToShopRequest } from 'app/http/requests/add-item-to-shop-request';
 import { AddItemToShoppingCartRequest } from 'app/http/requests/add-item-to-shopping-cart-request';
 import { AddPersonalQueryRequest } from 'app/http/requests/add-personal-query-request';
+import { AddPurchasePolicyToShopRequest } from 'app/http/requests/add-purchase-policy-to-shop-request';
 import { AppointmentShopManagerRequest } from 'app/http/requests/appointment-shop-manager-request';
 import { AppointmentShopOwnerRequest } from 'app/http/requests/appointment-shop-owner-request';
 import { BuyShoppingCartRequest } from 'app/http/requests/buy-shopping-cart-request';
@@ -24,11 +26,14 @@ import { ExitSystemRequest } from 'app/http/requests/exit-system-request';
 import { GetAllSystemPurchaseHistoryRequest } from 'app/http/requests/get-all-system-purchase-history-request';
 import { GetHistoryByMemberRequest } from 'app/http/requests/get-history-by-member-request';
 import { GetManagerPermissionRequest } from 'app/http/requests/get-manager-permission-request';
+import { GetPoliciesRequest } from 'app/http/requests/get-policies-request';
 import { GetShopEmployeesRequest } from 'app/http/requests/get-shop-employees-request';
 import { InitMarketRequest } from 'app/http/requests/init-market-request';
 import { NamePasswordRequest } from 'app/http/requests/name-password-request';
 import { OpenNewShopRequest } from 'app/http/requests/open-new-shop-request';
+import { RemoveDiscountFromShopRequest } from 'app/http/requests/remove-discount-from-shop-request';
 import { RemoveItemFromShopRequest } from 'app/http/requests/remove-item-from-shop-request';
+import { RemovePurchasePolicyFromShopRequest } from 'app/http/requests/remove-purchase-policy-from-shop-request';
 import { RequestVisitorName } from 'app/http/requests/request-visitor-name';
 import { SearchProductByNameRequest } from 'app/http/requests/search-product-by-name-request';
 import { SetItemCurrentAmountRequest } from 'app/http/requests/set-item-current-amount-request';
@@ -346,6 +351,49 @@ export class EngineService {
     );
   }
 
+
+  addDiscountToShop(request :AddDiscountToShopRequest): Observable<Response> {
+    return this.http.post<Response>(
+      this.serverUrl + '/addDiscountToShop',
+      request,
+      httpOptions
+    );
+  }
+  removeDiscountFromShop(request: RemoveDiscountFromShopRequest): Observable<Response> {
+    return this.http.post<Response>(
+      this.serverUrl + '/removeDiscountFromShop',
+      request,
+      httpOptions
+    );
+  }
+  addPurchasePolicyToShop(request: AddPurchasePolicyToShopRequest): Observable<Response> {
+    return this.http.post<Response>(
+      this.serverUrl + '/addPurchasePolicyToShop',
+      request,
+      httpOptions
+    );
+  }
+  removePurchasePolicyFromShop(request: RemovePurchasePolicyFromShopRequest): Observable<Response> {
+    return this.http.post<Response>(
+      this.serverUrl + '/removePurchasePolicyFromShop',
+      request,
+      httpOptions
+    );
+  }
+  getPurchasePoliciesOfShop(request: GetPoliciesRequest): Observable<Response> {
+    return this.http.post<Response>(
+      this.serverUrl + '/getPurchasePoliciesOfShop',
+      request,
+      httpOptions
+    );
+  }
+  getDiscountTypesOfShop(request: GetPoliciesRequest): Observable<Response> {
+    return this.http.post<Response>(
+      this.serverUrl + '/getDiscountTypesOfShop',
+      request,
+      httpOptions
+    );
+  }
   isServerInit(): Observable<Response> {
     return this.http.post<Response>(
       this.serverUrl + '/isServerInit',
@@ -354,12 +402,7 @@ export class EngineService {
   }
 
 
-  getDiscountTest(): Observable<ResponseT<DiscountTypeFacade>> {
-    return this.http.post<ResponseT<DiscountTypeFacade>>(
-      this.serverUrl + '/getDiscountTest',
-      httpOptions
-    );
-  }
+
 
 
   // removeShopOwnerAppointment(

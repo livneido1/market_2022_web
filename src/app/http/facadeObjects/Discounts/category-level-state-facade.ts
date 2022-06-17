@@ -1,6 +1,7 @@
 import { Deserializable } from "../deserializable";
 import { Category } from "../ItemFacade";
 import { DiscountLevelStateFacade } from "./discount-level-state-facade";
+import { DiscountLevelStateWrapper, DiscountLevelStateWrapperType } from "./Wrappers/discount-level-state-wrapper";
 
 export class CategoryLevelStateFacade extends DiscountLevelStateFacade implements Deserializable {
 
@@ -21,4 +22,13 @@ export class CategoryLevelStateFacade extends DiscountLevelStateFacade implement
     this.category = value.category;
     return this;
   }
+
+  getWrapper(): DiscountLevelStateWrapper {
+    return new DiscountLevelStateWrapper(
+      DiscountLevelStateWrapperType.CategoryLevelStateFacade,
+      -1,
+      this.category,
+      []
+    )
+}
 }

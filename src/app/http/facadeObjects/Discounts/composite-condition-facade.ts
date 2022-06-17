@@ -3,7 +3,7 @@ import { ObjectsDeserializer } from '../objects-deserializer';
 import { ConditionFacade } from './condition-facade';
 
 
-export class CompositeConditionFacade
+export abstract class CompositeConditionFacade
   extends ConditionFacade
   implements Deserializable
 {

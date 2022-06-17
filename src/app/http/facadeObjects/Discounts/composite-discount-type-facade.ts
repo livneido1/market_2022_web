@@ -3,7 +3,7 @@ import { ObjectsDeserializer } from '../objects-deserializer';
 import { DiscountLevelStateFacade } from './discount-level-state-facade';
 import { DiscountTypeFacade } from './discount-type-facade';
 
-export class CompositeDiscountTypeFacade
+export abstract class CompositeDiscountTypeFacade
   extends DiscountTypeFacade
   implements Deserializable
 {

@@ -1,4 +1,5 @@
 import { DiscountLevelStateFacade } from './discount-level-state-facade';
+import { DiscountTypeWrapper } from './Wrappers/discount-type-wrapper';
 
 export abstract class DiscountTypeFacade {
   type: string;
@@ -17,4 +18,7 @@ export abstract class DiscountTypeFacade {
       ? discountLevelState
       : undefined;
   }
+
+
+  abstract getWrapper():DiscountTypeWrapper;
 }

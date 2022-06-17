@@ -3,110 +3,173 @@ import { MatDialog } from '@angular/material/dialog';
 import { AddConditionDialogComponent } from 'app/add-condition-dialog/add-condition-dialog.component';
 import { AddLevelDialogComponent } from 'app/add-level-dialog/add-level-dialog.component';
 import { ConditionFacade } from 'app/http/facadeObjects/Discounts/condition-facade';
+import { ConditionalDiscountFacade } from 'app/http/facadeObjects/Discounts/conditional-discount-facade';
 import { DiscountLevelStateFacade } from 'app/http/facadeObjects/Discounts/discount-level-state-facade';
-import { MergeConditionComponent, MergeConditionData } from 'app/merge-condition/merge-condition.component';
-import { MergeLevelData, MergeLevelDialogComponent } from 'app/merge-level-dialog/merge-level-dialog.component';
+import { DiscountTypeFacade } from 'app/http/facadeObjects/Discounts/discount-type-facade';
+import { SimpleDiscountFacade } from 'app/http/facadeObjects/Discounts/simple-discount-facade';
+import { Response } from 'app/http/facadeObjects/response';
+import { AddDiscountToShopRequest } from 'app/http/requests/add-discount-to-shop-request';
+import {
+  MergeConditionComponent,
+  MergeConditionData,
+} from 'app/merge-condition/merge-condition.component';
+import {
+  MergeLevelData,
+  MergeLevelDialogComponent,
+} from 'app/merge-level-dialog/merge-level-dialog.component';
 import { ConfigService } from 'app/services/config-service.service';
 import { DiscountService } from 'app/services/discount-service.service';
+import { EngineService } from 'app/services/engine.service';
 import { MessageService } from 'app/services/message.service';
 
 @Component({
   selector: 'app-sub-discount',
   templateUrl: './sub-discount.component.html',
-  styleUrls: ['./sub-discount.component.scss']
+  styleUrls: ['./sub-discount.component.scss'],
 })
 export class SubDiscountComponent implements OnInit {
-
   currentLevels: DiscountLevelStateFacade[];
-  currentConditions : ConditionFacade[];
-  currentPercentage:number;
-  
+  currentConditions: ConditionFacade[];
+  currentPercentage: number;
+
   constructor(
     public dialog: MatDialog,
     private config: ConfigService,
     private messageService: MessageService,
     private discountService: DiscountService,
-    
-  ) { 
-
-  }
+    private engine: EngineService
+  ) {}
 
   ngOnInit(): void {
     this.currentLevels = [];
     this.currentConditions = [];
     this.currentPercentage = 0;
+    this.discountService.currentSubDiscount = undefined;
   }
 
-  onAddConditionClick(){
+  onAddConditionClick() {
     const dialogRef = this.dialog.open(AddConditionDialogComponent, {
       width: '500px',
     });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result){
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
         this.currentConditions.push(result);
       }
     });
   }
 
-  addLevel(){
+  addLevel() {
     const dialogRef = this.dialog.open(AddLevelDialogComponent, {
       width: '500px',
     });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result){
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
         this.currentLevels.push(result);
       }
     });
   }
 
-  onMergeConditions(){
-    const data: MergeConditionData = {existingConditions : this.currentConditions };
+  onMergeConditions() {
+    const data: MergeConditionData = {
+      existingConditions: this.currentConditions,
+    };
     const dialogRef = this.dialog.open(MergeConditionComponent, {
       width: '500px',
-      data:data,
+      data: data,
     });
 
     dialogRef.afterClosed().subscribe((result: ConditionFacade[]) => {
-      if (result){
+      if (result) {
         this.currentConditions = result;
       }
     });
   }
-  onMergeLevels(){
-    const data: MergeLevelData = {discountLevels : this.currentLevels }
+  onMergeLevels() {
+    const data: MergeLevelData = { discountLevels: this.currentLevels };
     const dialogRef = this.dialog.open(MergeLevelDialogComponent, {
       width: '500px',
-      data:data,
+      data: data,
     });
 
     dialogRef.afterClosed().subscribe((result: DiscountLevelStateFacade[]) => {
-      if (result){
+      if (result) {
         this.currentLevels = result;
       }
     });
   }
-  getLevelName(level:DiscountLevelStateFacade){
+  getLevelName(level: DiscountLevelStateFacade) {
     return level.title;
-  } 
+  }
 
-  isPercantageError(){
+  isPercantageError() {
     const isError = !this.currentPercentage || this.currentPercentage < 1;
     return isError;
   }
-  canSubmit(){
-    return this.exactOneLevel() &&
-    this.exactOneCondition() &&
-    !this.isPercantageError();
-    
+  canSubmit() {
+    return (
+      this.exactOneLevel() &&
+      this.atMostOneCondition() &&
+      !this.isPercantageError()
+    );
   }
 
+  onSubmitClick() {
+    if (!this.exactOneLevel()) {
+      this.messageService.errorMessage(
+        'cannot submit with more or less then 1 level facade, merge or create new level'
+      );
+      return;
+    }
+    if (!this.atMostOneCondition) {
+      this.messageService.errorMessage(
+        'cannot submit with more then one condition, please merge the conditions'
+      );
+      return;
+    }
 
+    const discount: DiscountTypeFacade = this.createDiscountType();
+    const discountWrapper = discount.getWrapper();
+    const request = new AddDiscountToShopRequest(
+      discountWrapper,
+      this.config.selectedShop.shopName,
+      this.config.visitor.name
+    );
+    this.engine.addDiscountToShop(request).subscribe(responseJson =>{
+      const response = new Response().deserialize(responseJson);
+      if (response.isErrorOccurred()){
+        this.messageService.errorMessage(response.getMessage());
+      }
+      else{
+        this.messageService.validMessage("successfully added discount to shop");
+        this.config.isMainDiscountClicked=true;
+      }
+    });
+  }
+
+  private createDiscountType() {
+    let discount: DiscountTypeFacade;
+    const levelState: DiscountLevelStateFacade = this.currentLevels[0];
+    // conditional discount
+    if (this.currentConditions.length > 0) {
+      const condition: ConditionFacade = this.currentConditions[0];
+      discount = new ConditionalDiscountFacade(
+        this.currentPercentage,
+        levelState,
+        condition
+      );
+    }
+    // simple discount
+    else {
+      discount = new SimpleDiscountFacade(this.currentPercentage, levelState);
+    }
+    return discount;
+  }
 
   public exactOneLevel() {
     return this.currentLevels.length === 1;
   }
 
-  public exactOneCondition() {
-    return this.currentConditions.length === 1;
+  public atMostOneCondition() {
+    return this.currentConditions.length <= 1;
   }
 }
