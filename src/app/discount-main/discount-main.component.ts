@@ -3,7 +3,11 @@ import { DiscountLevelStateFacade } from 'app/http/facadeObjects/Discounts/disco
 import { DiscountTypeFacade } from 'app/http/facadeObjects/Discounts/discount-type-facade';
 import { ItemLevelStateFacade } from 'app/http/facadeObjects/Discounts/item-level-state-facade';
 import { SimpleDiscountFacade } from 'app/http/facadeObjects/Discounts/simple-discount-facade';
+import { DiscountTypeWrapper } from 'app/http/facadeObjects/Discounts/Wrappers/discount-type-wrapper';
+import { Response } from 'app/http/facadeObjects/response';
+import { ResponseT } from 'app/http/facadeObjects/response-t';
 import { ShopFacade } from 'app/http/facadeObjects/shop-facade';
+import { GetPoliciesRequest } from 'app/http/requests/get-policies-request';
 import { ConfigService } from 'app/services/config-service.service';
 import { EngineService } from 'app/services/engine.service';
 import { MessageService } from 'app/services/message.service';
@@ -30,9 +34,12 @@ export class DiscountMainComponent implements OnInit {
     this.currentDiscounts = [];
     this.shop = this.config.selectedShop;
     this.lastUpdate = new Date().toLocaleString();
-
+    this.reset();
   }
 
+  onMergeDiscountsClick(){
+    
+  }
 
   openDiscountDialog(discount: DiscountTypeFacade){
 
@@ -47,8 +54,10 @@ export class DiscountMainComponent implements OnInit {
   }
 
 
+
+
   addDiscount(){
-    this.config.isAddNewDiscountClicked = true;
+    this.config.isSubDiscountClicked = true;
   }
 
   backToShop(){
@@ -57,7 +66,23 @@ export class DiscountMainComponent implements OnInit {
 
   reset(){
     this.lastUpdate = new Date().toLocaleString();
+    const request = new GetPoliciesRequest(this.config.visitor.name, this.config.selectedShop.shopName);
+    this.engine.getDiscountTypesOfShop(request).subscribe(responseJson =>{
+      const response = new ResponseT<DiscountTypeWrapper[]>().deserialize(responseJson);
+      if (response.isErrorOccurred()){
+        this.messageService.errorMessage(response.getMessage());
+      }
+      else{
+        if (response.value){
+          this.currentDiscounts = response.value;
+          this.messageService.validMessage("successfully loaded shop's discounts");
+        }
+        else{
+          this.messageService.errorMessage("somthing went wrong. please restart");
+        }
+      }
 
+    })
   }
 
 

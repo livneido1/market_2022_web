@@ -113,6 +113,20 @@ export class SubDiscountComponent implements OnInit {
     );
   }
 
+  removeCondition(condition: ConditionFacade){
+    const index = this.currentConditions.indexOf(condition);
+    if (index >-1){
+      this.currentConditions.splice(index,1);
+    }
+  }
+
+  removeLevel(level:DiscountLevelStateFacade){
+    const index = this.currentLevels.indexOf(level);
+    if (index >-1){
+      this.currentLevels.splice(index,1);
+    }
+  }
+
   onSubmitClick() {
     if (!this.exactOneLevel()) {
       this.messageService.errorMessage(
@@ -146,6 +160,12 @@ export class SubDiscountComponent implements OnInit {
     });
   }
 
+  canMergeConditions(){
+    return this.currentConditions && this.currentConditions.length>0;
+  }
+  canMergeLevels(){
+    return this.currentLevels && this.currentLevels.length>0;
+  }
   private createDiscountType() {
     let discount: DiscountTypeFacade;
     const levelState: DiscountLevelStateFacade = this.currentLevels[0];

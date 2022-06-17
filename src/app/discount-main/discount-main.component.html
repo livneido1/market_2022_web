@@ -28,7 +28,7 @@
               <div style="width: 40%;
                           float: right;">
                 <button
-                  title="refresh shop info"
+                  title="refresh shop discounts"
                   (click)="reset()">
                   <span class='material-icons'>refresh</span>
                 </button>
@@ -48,20 +48,14 @@
               <div>
 
                 <button
-                  title="Remove Item From Cart"
+                  title="Remove Discount from Shop"
                   style="float:right; cursor: pointer;"
                   (click)="removeDiscount(discount)">
                   <span class='material-icons'>delete</span>
                 </button>
 
-                <!-- <button
-                  title="set item info"
-                  style="cursor: pointer;"
 
-                  (click)="setItemInfo(item)">
-                  <span class="material-icons">settings</span>
-                </button> -->
-
+            
               </div>
             </td>
           </tr>
@@ -80,6 +74,12 @@
         (click)="addDiscount()"
         >
         Add Discount
+      </button>
+      
+      <button
+        style="float:right; cursor: pointer;"
+        (click)="onMergeDiscountsClick()">
+        Merge Discounts
       </button>
   </div>
 </div>
