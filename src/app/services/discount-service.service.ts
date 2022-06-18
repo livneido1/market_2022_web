@@ -13,13 +13,13 @@ import { CompositeDiscountLevelStateFacade } from 'app/http/facadeObjects/Discou
 import { CompositeConditionFacade } from 'app/http/facadeObjects/Discounts/composite-condition-facade';
 import { OrCompositeConditionFacade } from 'app/http/facadeObjects/Discounts/or-composite-condition-facade';
 import { AndCompositeConditionFacade } from 'app/http/facadeObjects/Discounts/and-composite-condition-facade';
-import { DiscountTypeWrapper } from 'app/http/facadeObjects/Discounts/Wrappers/discount-type-wrapper';
+import { CompositeDiscountTypeFacade } from 'app/http/facadeObjects/Discounts/composite-discount-type-facade';
+import { MaxCompositeDiscountTypeFacade } from 'app/http/facadeObjects/Discounts/max-composite-discount-type-facade';
 @Injectable({
   providedIn: 'root',
 })
 export class DiscountService {
   createdDiscountList: DiscountTypeFacade[];
-  currentSubDiscount: DiscountTypeFacade;
   currentLevelList: DiscountLevelStateFacade[];
   currentLevel: DiscountLevelStateFacade;
   currentConditionList: ConditionFacade[];
@@ -28,7 +28,6 @@ export class DiscountService {
   constructor() {
     this.createdDiscountList = [];
     this.createdDiscountList = [];
-    this.currentSubDiscount = undefined;
     this.currentLevelList = [];
     this.currentLevel = undefined;
     this.currentConditionList = [];
@@ -66,6 +65,25 @@ export class DiscountService {
       new AndCompositeConditionFacade(),
       new OrCompositeConditionFacade(),
     ];
+  }
+  getAllCompositeDiscountTypes(): CompositeDiscountTypeFacade[] {
+    return [new MaxCompositeDiscountTypeFacade()];
+  }
+
+  getDiscountName(discount: DiscountTypeFacade): string {
+    if (!discount) {
+      return '';
+    }
+    switch (discount.type) {
+        case "MaxCompositeDiscountTypeFacade":
+          return "Max Discount";
+        case "ConditionalDiscountFacade":
+          return "Conditional Discount";
+        case "SimpleDiscountFacade":
+          return "Regular Discount";
+        default:
+          return "unknown type";
+    }
   }
 
   reset() {

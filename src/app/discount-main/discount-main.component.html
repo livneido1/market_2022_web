@@ -8,7 +8,7 @@
       <span class="material-icons">arrow_back</span>
     </button>
 </div>
-  <div *ngIf="this.currentDiscounts.length > 1" class="resultColumn">
+  <div *ngIf="this.currentDiscounts.length > 0" class="resultColumn">
     <p class="mainTitle"> {{shop.shopName}} </p>
     <p class="resultTitle">Discounts in Shop</p>
     <div  style="display: block; height:300px; overflow-y: scroll;">
@@ -28,7 +28,7 @@
               <div style="width: 40%;
                           float: right;">
                 <button
-                  title="refresh shop info"
+                  title="refresh shop discounts"
                   (click)="reset()">
                   <span class='material-icons'>refresh</span>
                 </button>
@@ -48,19 +48,13 @@
               <div>
 
                 <button
-                  title="Remove Item From Cart"
+                  title="Remove Discount from Shop"
                   style="float:right; cursor: pointer;"
                   (click)="removeDiscount(discount)">
                   <span class='material-icons'>delete</span>
                 </button>
 
-                <!-- <button
-                  title="set item info"
-                  style="cursor: pointer;"
 
-                  (click)="setItemInfo(item)">
-                  <span class="material-icons">settings</span>
-                </button> -->
 
               </div>
             </td>
@@ -81,5 +75,5 @@
         >
         Add Discount
       </button>
-  </div>
+    </div>
 </div>

@@ -40,6 +40,7 @@ import { AddLevelDialogComponent } from './add-level-dialog/add-level-dialog.com
 import { AddConditionDialogComponent } from './add-condition-dialog/add-condition-dialog.component';
 import { MergeLevelDialogComponent } from './merge-level-dialog/merge-level-dialog.component';
 import { MergeConditionComponent } from './merge-condition/merge-condition.component';
+import { MergeDiscountsDialogComponent } from './merge-discounts-dialog/merge-discounts-dialog.component';
 
 @NgModule({
   declarations: [
@@ -68,7 +69,8 @@ import { MergeConditionComponent } from './merge-condition/merge-condition.compo
     AddLevelDialogComponent,
     AddConditionDialogComponent,
     MergeLevelDialogComponent,
-    MergeConditionComponent
+    MergeConditionComponent,
+    MergeDiscountsDialogComponent
   ],
   imports: [
     BrowserModule,

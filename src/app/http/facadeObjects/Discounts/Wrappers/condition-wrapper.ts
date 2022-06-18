@@ -35,21 +35,26 @@ export class ConditionWrapper implements Deserializable {
   deserialize(value: any): this {
     if (value) {
       Object.assign(this, value);
+      this.conditionWrapperType = this.getConditionWrapperType(
+        value.conditionWrapperType
+      );
       this.conditionWrappers = [];
-      for (const conditionWrapper of value.conditionWrappers) {
-        this.conditionWrappers.push(
-          new ConditionWrapper().deserialize(conditionWrapper)
-        );
+      if (value.conditionWrappers) {
+        for (const conditionWrapper of value.conditionWrappers) {
+          this.conditionWrappers.push(
+            new ConditionWrapper().deserialize(conditionWrapper)
+          );
+        }
       }
     }
 
     return this;
   }
 
-  getCondition():ConditionFacade{
-    switch (this.conditionWrapperType){
+  getCondition(): ConditionFacade {
+    switch (this.conditionWrapperType) {
       case ConditionWrapperType.AmountOfItemConditionFacade:
-        return new AmountOfItemConditionFacade(this.amount,this.itemID);
+        return new AmountOfItemConditionFacade(this.amount, this.itemID);
       case ConditionWrapperType.AndCompositeConditionFacade:
         const subConds1: ConditionFacade[] = this.getSubConditions();
         return new AndCompositeConditionFacade(subConds1);
@@ -61,6 +66,20 @@ export class ConditionWrapper implements Deserializable {
       default:
         return undefined;
     }
+  }
+
+  getConditionWrapperType(input): ConditionWrapperType {
+    switch (input) {
+      case 'AndCompositeConditionFacade':
+        return ConditionWrapperType.AndCompositeConditionFacade;
+      case 'OrCompositeConditionFacade':
+        return ConditionWrapperType.OrCompositeConditionFacade;
+      case 'AmountOfItemConditionFacade':
+        return ConditionWrapperType.AmountOfItemConditionFacade;
+      case 'PriceConditionFacade':
+        return ConditionWrapperType.PriceConditionFacade;
+    }
+    return undefined;
   }
 
   private getSubConditions() {

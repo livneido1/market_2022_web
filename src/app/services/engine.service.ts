@@ -2,6 +2,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AppointmentFacade } from 'app/http/facadeObjects/AppointmentFacade';
 import { DiscountTypeFacade } from 'app/http/facadeObjects/Discounts/discount-type-facade';
+import { DiscountTypeWrapper } from 'app/http/facadeObjects/Discounts/Wrappers/discount-type-wrapper';
+import { PurchasePolicyTypeWrapper } from 'app/http/facadeObjects/Discounts/Wrappers/purchase-policy-type-wrapper';
 import { Category, ItemFacade } from 'app/http/facadeObjects/ItemFacade';
 import { MemberFacade } from 'app/http/facadeObjects/MemberFacade';
 import { Response } from 'app/http/facadeObjects/response';
@@ -351,6 +353,7 @@ export class EngineService {
     );
   }
 
+  ////////////////////////////////// V2 /////////////////////////////////
 
   addDiscountToShop(request :AddDiscountToShopRequest): Observable<Response> {
     return this.http.post<Response>(
@@ -373,8 +376,8 @@ export class EngineService {
       httpOptions
     );
   }
-  removePurchasePolicyFromShop(request: RemovePurchasePolicyFromShopRequest): Observable<Response> {
-    return this.http.post<Response>(
+  removePurchasePolicyFromShop(request: RemovePurchasePolicyFromShopRequest): Observable<ResponseT<PurchasePolicyTypeWrapper[]>> {
+    return this.http.post<ResponseT<PurchasePolicyTypeWrapper[]>>(
       this.serverUrl + '/removePurchasePolicyFromShop',
       request,
       httpOptions
@@ -387,8 +390,8 @@ export class EngineService {
       httpOptions
     );
   }
-  getDiscountTypesOfShop(request: GetPoliciesRequest): Observable<Response> {
-    return this.http.post<Response>(
+  getDiscountTypesOfShop(request: GetPoliciesRequest): Observable<ResponseT<DiscountTypeWrapper[]>> {
+    return this.http.post<ResponseT<DiscountTypeWrapper[]>>(
       this.serverUrl + '/getDiscountTypesOfShop',
       request,
       httpOptions

@@ -44,7 +44,6 @@ export class SubDiscountComponent implements OnInit {
     this.currentLevels = [];
     this.currentConditions = [];
     this.currentPercentage = 0;
-    this.discountService.currentSubDiscount = undefined;
   }
 
   onAddConditionClick() {
@@ -113,6 +112,20 @@ export class SubDiscountComponent implements OnInit {
     );
   }
 
+  removeCondition(condition: ConditionFacade){
+    const index = this.currentConditions.indexOf(condition);
+    if (index >-1){
+      this.currentConditions.splice(index,1);
+    }
+  }
+
+  removeLevel(level:DiscountLevelStateFacade){
+    const index = this.currentLevels.indexOf(level);
+    if (index >-1){
+      this.currentLevels.splice(index,1);
+    }
+  }
+
   onSubmitClick() {
     if (!this.exactOneLevel()) {
       this.messageService.errorMessage(
@@ -128,24 +141,17 @@ export class SubDiscountComponent implements OnInit {
     }
 
     const discount: DiscountTypeFacade = this.createDiscountType();
-    const discountWrapper = discount.getWrapper();
-    const request = new AddDiscountToShopRequest(
-      discountWrapper,
-      this.config.selectedShop.shopName,
-      this.config.visitor.name
-    );
-    this.engine.addDiscountToShop(request).subscribe(responseJson =>{
-      const response = new Response().deserialize(responseJson);
-      if (response.isErrorOccurred()){
-        this.messageService.errorMessage(response.getMessage());
-      }
-      else{
-        this.messageService.validMessage("successfully added discount to shop");
-        this.config.isMainDiscountClicked=true;
-      }
-    });
+    this.discountService.createdDiscountList.push(discount)
+    this.config.isAddNewDiscountClicked = true;
+
   }
 
+  canMergeConditions(){
+    return this.currentConditions && this.currentConditions.length>0;
+  }
+  canMergeLevels(){
+    return this.currentLevels && this.currentLevels.length>0;
+  }
   private createDiscountType() {
     let discount: DiscountTypeFacade;
     const levelState: DiscountLevelStateFacade = this.currentLevels[0];

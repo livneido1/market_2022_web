@@ -31,14 +31,40 @@ export class PurchasePolicyLevelStateWrapper implements Deserializable {
   deserialize(value: any): this {
     if (value) {
       Object.assign(this, value);
-      this.purchasePolicyLevelStateWrappers = [];
-      for (const dlw of value.purchasePolicyLevelStateWrappers) {
-        this.purchasePolicyLevelStateWrappers.push(
-          new PurchasePolicyLevelStateWrapper().deserialize(dlw)
+      this.purchasePolicyLevelStateWrapperType =
+        this.getPurchasePolicyLevelStateWrapperType(
+          value.purchasePolicyLevelStateWrapperType
         );
+      this.purchasePolicyLevelStateWrappers = [];
+      if (value.purchasePolicyLevelStateWrappers) {
+        for (const dlw of value.purchasePolicyLevelStateWrappers) {
+          this.purchasePolicyLevelStateWrappers.push(
+            new PurchasePolicyLevelStateWrapper().deserialize(dlw)
+          );
+        }
       }
     }
 
     return this;
+  }
+
+  getPurchasePolicyLevelStateWrapperType(
+    input: string
+  ): PurchasePolicyLevelStateWrapperType {
+    switch (input) {
+      case 'AndCompositePurchasePolicyLevelStateFacade':
+        return PurchasePolicyLevelStateWrapperType.AndCompositePurchasePolicyLevelStateFacade;
+      case 'XorCompositePurchasePolicyLevelStateFacade':
+        return PurchasePolicyLevelStateWrapperType.XorCompositePurchasePolicyLevelStateFacade;
+      case 'OrCompositePurchasePolicyLevelStateFacade':
+        return PurchasePolicyLevelStateWrapperType.OrCompositePurchasePolicyLevelStateFacade;
+      case 'CategoryPurchasePolicyLevelStateFacade':
+        return PurchasePolicyLevelStateWrapperType.CategoryPurchasePolicyLevelStateFacade;
+      case 'ItemPurchasePolicyLevelStateFacade':
+        return PurchasePolicyLevelStateWrapperType.ItemPurchasePolicyLevelStateFacade;
+      case 'ShopPurchasePolicyLevelStateFacade':
+        return PurchasePolicyLevelStateWrapperType.ShopPurchasePolicyLevelStateFacade;
+    }
+    return undefined;
   }
 }

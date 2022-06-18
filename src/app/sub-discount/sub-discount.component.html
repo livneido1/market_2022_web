@@ -16,11 +16,21 @@
           </thead>
           <tbody>
             <tr *ngFor="let level of currentLevels" style="border-bottom: solid;">
-              <div
-                style="cursor: pointer;"
-                >
-                {{getLevelName(level)}}
-              </div>
+              <td>
+                <div
+                  style="cursor: pointer;"
+                  >
+                  {{getLevelName(level)}}
+                </div>
+              </td>
+              <td>
+                <button
+                  title="remove"
+                  class="removeButton"
+                  (click)="removeLevel(level)">
+                  <span class='material-icons'>delete</span>
+                </button>
+              </td>
             </tr>
           </tbody>
         </table>
@@ -38,7 +48,8 @@
       </div>
       <div>
         <button class="optionalButtonsDiv"
-          (click)="onMergeLevels()">
+          (click)="onMergeLevels()"
+          [disabled]="!canMergeLevels()">
           Merge levels
         </button>
       </div>
@@ -62,11 +73,22 @@
           </thead>
           <tbody>
             <tr *ngFor="let cond of currentConditions" style="border-bottom: solid;">
-              <div
-                style="cursor: pointer;"
-                >
-                {{cond.title}}
-              </div>
+              <td>
+                <div
+                  style="cursor: pointer;"
+                  >
+                  {{cond.title}}
+                </div>
+              </td>
+              <td>
+                <button
+                  title="remove"
+                  class="removeButton"
+                  (click)="removeCondition(cond)">
+                  <span class='material-icons'>delete</span>
+                </button>
+              </td>
+              
 
 
             </tr>
@@ -74,7 +96,7 @@
         </table>
       </div>
       <ng-template #noConditions>
-        <p class="resultTitle">No Discounts in Shop</p>
+        <p class="resultTitle">No Conditions Created</p>
       </ng-template>
     </div>
     <div class="colRight">
@@ -87,7 +109,8 @@
       </div>
       <div>
         <button class="optionalButtonsDiv"
-          (click)="onMergeConditions()">
+          (click)="onMergeConditions()"
+          [disabled]="!canMergeConditions()">
           Merge Conditions
         </button>
       </div>

@@ -1,6 +1,7 @@
 import { Deserializable } from '../deserializable';
 import { CompositeDiscountTypeFacade } from './composite-discount-type-facade';
 import { DiscountTypeFacade } from './discount-type-facade';
+import { ShopLevelStateFacade } from './shop-level-state-facade';
 import { DiscountTypeWrapper, DiscountTypeWrapperType } from './Wrappers/discount-type-wrapper';
 
 export class MaxCompositeDiscountTypeFacade
@@ -8,7 +9,7 @@ export class MaxCompositeDiscountTypeFacade
   implements Deserializable {
     constructor(discountTypes?:DiscountTypeFacade[]){
       // todo implement full constructor here
-      super("MaxCompositeDiscountTypeFacade",);
+      super("MaxCompositeDiscountTypeFacade",-1,new ShopLevelStateFacade(),discountTypes);
     }
 
     getWrapper(): DiscountTypeWrapper {
