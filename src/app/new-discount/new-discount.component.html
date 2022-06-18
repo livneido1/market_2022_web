@@ -17,7 +17,8 @@
         <thead>
           <tr>
             <th class = "titleTh" >Sub Discounts</th>
-            <th>
+            <th>  
+              <!-- save slot for additional value -->
             </th>
           </tr>
         </thead>
@@ -62,22 +63,26 @@
     <div style="height: 10%; text-align: center; margin-top: 20%;">
       <button
         class="optionalButton"
-        (click)="mergeDiscounts()"
+        (click)="onMergeDiscountsClick()"
+        [disabled]="!currentDiscounts || currentDiscounts.length<=1"
         >
         Merge Discounts
       </button>
     </div>
 
-    <div style="height: 10%; text-align: center; margin-top: 20%;">
-      <button
-        class="optionalButton"
-        (click)="submit()"
-        >
-        Submit
-      </button>
-    </div>
+
   </div>
 
+  <div style="height: 10%; text-align: center; margin-top: 20%;">
+    <button
+      class="optionalButton"
+      [disabled]="!isExactOneDiscout()"
+      (click)="submit()"
+      >
+      Submit
+    </button>
+    <p *ngIf="!isExactOneDiscout()" class="errorMessage">you must have exactly one discount to proceed</p>
+  </div>
 
 
 </div>

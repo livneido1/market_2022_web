@@ -44,7 +44,6 @@ export class SubDiscountComponent implements OnInit {
     this.currentLevels = [];
     this.currentConditions = [];
     this.currentPercentage = 0;
-    this.discountService.currentSubDiscount = undefined;
   }
 
   onAddConditionClick() {
@@ -142,22 +141,9 @@ export class SubDiscountComponent implements OnInit {
     }
 
     const discount: DiscountTypeFacade = this.createDiscountType();
-    const discountWrapper = discount.getWrapper();
-    const request = new AddDiscountToShopRequest(
-      discountWrapper,
-      this.config.selectedShop.shopName,
-      this.config.visitor.name
-    );
-    this.engine.addDiscountToShop(request).subscribe(responseJson =>{
-      const response = new Response().deserialize(responseJson);
-      if (response.isErrorOccurred()){
-        this.messageService.errorMessage(response.getMessage());
-      }
-      else{
-        this.messageService.validMessage("successfully added discount to shop");
-        this.config.isMainDiscountClicked=true;
-      }
-    });
+    this.discountService.createdDiscountList.push(discount)
+    this.config.isAddNewDiscountClicked = true;
+
   }
 
   canMergeConditions(){

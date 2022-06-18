@@ -8,7 +8,7 @@
       <span class="material-icons">arrow_back</span>
     </button>
 </div>
-  <div *ngIf="this.currentDiscounts.length > 1" class="resultColumn">
+  <div *ngIf="this.currentDiscounts.length > 0" class="resultColumn">
     <p class="mainTitle"> {{shop.shopName}} </p>
     <p class="resultTitle">Discounts in Shop</p>
     <div  style="display: block; height:300px; overflow-y: scroll;">
@@ -55,7 +55,7 @@
                 </button>
 
 
-            
+
               </div>
             </td>
           </tr>
@@ -75,11 +75,5 @@
         >
         Add Discount
       </button>
-      
-      <button
-        style="float:right; cursor: pointer;"
-        (click)="onMergeDiscountsClick()">
-        Merge Discounts
-      </button>
-  </div>
+    </div>
 </div>

@@ -1,1 +1,31 @@
-<p>merge-discounts-dialog works!</p>
+
+<div>
+  <div>
+    <p  class="title"></p>
+  </div>
+  <div>
+    <div class="columnLeft">
+      <ul *ngFor="let discount of discounts">
+        <li>
+          <mat-checkbox
+            (change)="onUpdateMap(discount, $event.checked)">
+            {{getDiscountName(discount)}}
+          </mat-checkbox>
+        </li>
+      </ul>
+    </div>
+    <div class="columnRight">
+      <div style="text-align: center;" *ngFor="let compositeDiscount of allCompositeTypes">
+        <div style="text-align: center;">
+          <button mat-button class="button"
+            [disabled]="!canSubmit()"
+            [mat-dialog-close]="onOperatorClick(compositeDiscount)">
+            {{getDiscountName(compositeDiscount)}}
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
