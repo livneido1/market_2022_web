@@ -39,13 +39,13 @@ export class MainShopPurchasePoliciesComponent implements OnInit {
   }
   openPurchasePolicyDialog(purchasePolicy: PurchasePolicyTypeFacade) {}
 
-  getDiscountName(purchasePolicy:PurchasePolicyTypeFacade) {
+  getPurchasePolicyName(purchasePolicy:PurchasePolicyTypeFacade) {
     return this.policiesService.getPurchasePolicyName(purchasePolicy);
   }
   // TODO
-  removeDiscount(purchasePolicy:PurchasePolicyTypeFacade ) {}
+  removePolicy(purchasePolicy:PurchasePolicyTypeFacade ) {}
 
-  addDiscount() {
+  addPolicy() {
     this.policiesService.reset();
     this.config.isAddNewDiscountClicked = true;
   }
@@ -74,7 +74,7 @@ export class MainShopPurchasePoliciesComponent implements OnInit {
             this.currentPolicies.push(purchasePolicy);
           }
           this.messageService.validMessage(
-            "successfully loaded shop's discounts"
+            "successfully loaded shop's policies"
           );
         } else {
           this.messageService.errorMessage(

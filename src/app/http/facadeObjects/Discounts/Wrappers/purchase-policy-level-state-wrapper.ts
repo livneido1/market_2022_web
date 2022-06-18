@@ -87,8 +87,8 @@ export class PurchasePolicyLevelStateWrapper implements Deserializable {
         const subLevels_OrComposite = this.getSubLevelStates();
         return new OrCompositePurchasePolicyLevelStateFacade(subLevels_OrComposite);
       case PurchasePolicyLevelStateWrapperType.XorCompositePurchasePolicyLevelStateFacade:
-        const subLevels_XOrComposite = this.getSubLevelStates();
-        return new XorCompositePurchasePolicyLevelStateFacade(subLevels_XOrComposite);
+        const subLevels_XorComposite = this.getSubLevelStates();
+        return new XorCompositePurchasePolicyLevelStateFacade(subLevels_XorComposite);
       case PurchasePolicyLevelStateWrapperType.AndCompositePurchasePolicyLevelStateFacade:
         const subLevels_AndComposite = this.getSubLevelStates();
         return new AndCompositePurchasePolicyLevelStateFacade(subLevels_AndComposite);

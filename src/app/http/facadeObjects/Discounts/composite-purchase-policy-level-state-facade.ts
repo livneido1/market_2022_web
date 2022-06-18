@@ -2,7 +2,7 @@ import { Deserializable } from '../deserializable';
 import { ObjectsDeserializer } from '../objects-deserializer';
 import { PurchasePolicyLevelStateFacade } from './purchase-policy-level-state-facade';
 
-export class CompositePurchasePolicyLevelStateFacade
+export abstract class CompositePurchasePolicyLevelStateFacade
   extends PurchasePolicyLevelStateFacade
   implements Deserializable
 {
@@ -31,4 +31,5 @@ export class CompositePurchasePolicyLevelStateFacade
     }
     return this;
   }
+
 }
