@@ -1,4 +1,8 @@
 import { Deserializable } from '../../deserializable';
+import { AtLeastPurchasePolicyTypeFacade } from '../at-least-purchase-policy-type-facade';
+import { AtMostPurchasePolicyTypeFacade } from '../at-most-purchase-policy-type-facade';
+import { OrCompositePurchasePolicyTypeFacade } from '../or-composite-purchase-policy-type-facade';
+import { PurchasePolicyTypeFacade } from '../purchase-policy-type-facade';
 import { PurchasePolicyLevelStateWrapper } from './purchase-policy-level-state-wrapper';
 
 export enum PurchasePolicyTypeWrapperType {
@@ -64,4 +68,21 @@ export class PurchasePolicyTypeWrapper implements Deserializable {
     }
     return undefined;
   }
+
+
+
+  getPurchasePolicyType(): PurchasePolicyTypeFacade {
+    switch (this.purchasePolicyTypeWrapperType) {
+      case PurchasePolicyTypeWrapperType.AtLeastPurchasePolicyTypeFacade:
+        const purchasePolicyLevelStateFacade = this.purchasePolicyLevelStateWrapper.getPurchaseLevelState();
+        const levelState = this.purchasePolicyLevelStateWrapper.getPurchaseLevelState();
+        return new AtLeastPurchasePolicyTypeFacade(this.amount,levelState);
+        const levelState2 = this.purchasePolicyLevelStateWrapper.getPurchaseLevelState();
+      case PurchasePolicyTypeWrapperType.AtMostPurchasePolicyTypeFacade:
+        return new AtMostPurchasePolicyTypeFacade(this.amount,levelState2);
+      case PurchasePolicyTypeWrapperType.OrCompositePurchasePolicyTypeFacade:
+        return new OrCompositePurchasePolicyTypeFacade();
+    }
+  }
+
 }

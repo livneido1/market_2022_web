@@ -41,6 +41,7 @@ import { AddConditionDialogComponent } from './add-condition-dialog/add-conditio
 import { MergeLevelDialogComponent } from './merge-level-dialog/merge-level-dialog.component';
 import { MergeConditionComponent } from './merge-condition/merge-condition.component';
 import { MergeDiscountsDialogComponent } from './merge-discounts-dialog/merge-discounts-dialog.component';
+import { MainShopPurchasePoliciesComponent } from './main-shop-purchase-policies/main-shop-purchase-policies.component';
 
 @NgModule({
   declarations: [
@@ -70,7 +71,8 @@ import { MergeDiscountsDialogComponent } from './merge-discounts-dialog/merge-di
     AddConditionDialogComponent,
     MergeLevelDialogComponent,
     MergeConditionComponent,
-    MergeDiscountsDialogComponent
+    MergeDiscountsDialogComponent,
+    MainShopPurchasePoliciesComponent
   ],
   imports: [
     BrowserModule,

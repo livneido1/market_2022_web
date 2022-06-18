@@ -1,6 +1,7 @@
 import { Deserializable } from "../deserializable";
+import { PurchasePolicyLevelStateWrapper } from "./Wrappers/purchase-policy-level-state-wrapper";
 
-export class PurchasePolicyLevelStateFacade implements Deserializable {
+export abstract class PurchasePolicyLevelStateFacade implements Deserializable {
   type:string;
   constructor(type?:string){
     this.type = type ? type : "";
@@ -13,4 +14,7 @@ export class PurchasePolicyLevelStateFacade implements Deserializable {
       Object.assign(this, value);
       return this;
   }
+
+  abstract getWrapper():PurchasePolicyLevelStateWrapper;
+
 }

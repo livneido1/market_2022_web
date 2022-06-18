@@ -8,7 +8,7 @@ import {
   MergeDiscountsDialogComponent,
 } from 'app/merge-discounts-dialog/merge-discounts-dialog.component';
 import { ConfigService } from 'app/services/config-service.service';
-import { DiscountService } from 'app/services/discount-service.service';
+import { PoliciesService } from 'app/services/policies-service.service';
 import { EngineService } from 'app/services/engine.service';
 import { MessageService } from 'app/services/message.service';
 import { ModelAdapterService } from 'app/services/model-adapter.service';
@@ -24,7 +24,7 @@ export class NewDiscountComponent implements OnInit {
     private engine: EngineService,
     private messageService: MessageService,
     private modelAdapter: ModelAdapterService,
-    private discountService: DiscountService,
+    private discountService: PoliciesService,
     private config: ConfigService,
     public dialog: MatDialog
   ) {}

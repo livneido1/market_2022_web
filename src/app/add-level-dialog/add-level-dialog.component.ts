@@ -6,7 +6,7 @@ import { ItemLevelStateFacade } from 'app/http/facadeObjects/Discounts/item-leve
 import { ShopLevelStateFacade } from 'app/http/facadeObjects/Discounts/shop-level-state-facade';
 import { DialogData } from 'app/item-mat-dialog/item-mat-dialog.component';
 import { ConfigService } from 'app/services/config-service.service';
-import { DiscountService } from 'app/services/discount-service.service';
+import { PoliciesService } from 'app/services/policies-service.service';
 import { MessageService } from 'app/services/message.service';
 
 @Component({
@@ -26,7 +26,7 @@ export class AddLevelDialogComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
     private config: ConfigService,
     private messageService: MessageService,
-    private discountService: DiscountService
+    private discountService: PoliciesService
   ) {}
 
   ngOnInit(): void {

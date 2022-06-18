@@ -3,7 +3,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CompositeConditionFacade } from 'app/http/facadeObjects/Discounts/composite-condition-facade';
 import { ConditionFacade } from 'app/http/facadeObjects/Discounts/condition-facade';
 import { ConfigService } from 'app/services/config-service.service';
-import { DiscountService } from 'app/services/discount-service.service';
+import { PoliciesService } from 'app/services/policies-service.service';
 import { MessageService } from 'app/services/message.service';
 
 
@@ -25,7 +25,7 @@ export class MergeConditionComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: MergeConditionData,
     private config: ConfigService,
     private message: MessageService,
-    private discountService: DiscountService
+    private discountService: PoliciesService
   ) { 
     this.existingConditions = data.existingConditions;
     this.conditionMap = new Map();

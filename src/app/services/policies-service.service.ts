@@ -15,10 +15,11 @@ import { OrCompositeConditionFacade } from 'app/http/facadeObjects/Discounts/or-
 import { AndCompositeConditionFacade } from 'app/http/facadeObjects/Discounts/and-composite-condition-facade';
 import { CompositeDiscountTypeFacade } from 'app/http/facadeObjects/Discounts/composite-discount-type-facade';
 import { MaxCompositeDiscountTypeFacade } from 'app/http/facadeObjects/Discounts/max-composite-discount-type-facade';
+import { PurchasePolicyTypeFacade } from 'app/http/facadeObjects/Discounts/purchase-policy-type-facade';
 @Injectable({
   providedIn: 'root',
 })
-export class DiscountService {
+export class PoliciesService {
   createdDiscountList: DiscountTypeFacade[];
   currentLevelList: DiscountLevelStateFacade[];
   currentLevel: DiscountLevelStateFacade;
@@ -86,8 +87,25 @@ export class DiscountService {
     }
   }
 
+  getPurchasePolicyName(purchase: PurchasePolicyTypeFacade){
+    if (!purchase) {
+      return '';
+    }
+    switch (purchase.type) {
+        case "AtMostPurchasePolicyTypeFacade":
+          return "At Most Policy";
+        case "AtLeastPurchasePolicyTypeFacade":
+          return "At least Policy";
+        case "OrCompositePurchasePolicyTypeFacade":
+          return "At least One of Policies";
+        default:
+          return "unknown type";
+    }
+  }
+
   reset() {
     this.createdDiscountList = [];
     this.currentConditionList = [];
   }
+
 }

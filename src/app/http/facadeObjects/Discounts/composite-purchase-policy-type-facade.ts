@@ -3,7 +3,7 @@ import { ObjectsDeserializer } from '../objects-deserializer';
 import { PurchasePolicyLevelStateFacade } from './purchase-policy-level-state-facade';
 import { PurchasePolicyTypeFacade } from './purchase-policy-type-facade';
 
-export class CompositePurchasePolicyTypeFacade
+export abstract class CompositePurchasePolicyTypeFacade
   extends PurchasePolicyTypeFacade
   implements Deserializable
 {
