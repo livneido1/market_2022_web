@@ -1,33 +1,33 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { CategoryLevelStateFacade } from 'app/http/facadeObjects/Discounts/category-level-state-facade';
-import { DiscountLevelStateFacade } from 'app/http/facadeObjects/Discounts/discount-level-state-facade';
-import { ItemLevelStateFacade } from 'app/http/facadeObjects/Discounts/item-level-state-facade';
-import { ShopLevelStateFacade } from 'app/http/facadeObjects/Discounts/shop-level-state-facade';
+import { CategoryPurchasePolicyLevelStateFacade } from 'app/http/facadeObjects/Discounts/category-purchase-policy-level-state-facade';
+import { ItemPurchasePolicyLevelStateFacade } from 'app/http/facadeObjects/Discounts/item-purchase-policy-level-state-facade';
+import { PurchasePolicyLevelStateFacade } from 'app/http/facadeObjects/Discounts/purchase-policy-level-state-facade';
+import { ShopPurchasePolicyLevelStateFacade } from 'app/http/facadeObjects/Discounts/shop-purchase-policy-level-state-facade';
 import { DialogData } from 'app/item-mat-dialog/item-mat-dialog.component';
 import { ConfigService } from 'app/services/config-service.service';
-import { PoliciesService } from 'app/services/policies-service.service';
 import { MessageService } from 'app/services/message.service';
+import { PoliciesService } from 'app/services/policies-service.service';
 
 @Component({
-  selector: 'app-add-level-dialog',
-  templateUrl: './add-level-dialog.component.html',
-  styleUrls: ['./add-level-dialog.component.scss'],
+  selector: 'app-add-purchase-level-dialog',
+  templateUrl: './add-purchase-level-dialog.component.html',
+  styleUrls: ['./add-purchase-level-dialog.component.scss']
 })
-export class AddLevelDialogComponent implements OnInit {
+export class AddPurchaseLevelDialogComponent implements OnInit {
   isCategoryTypeChoosed: boolean;
   isItemTypeChoosed: boolean;
-  levelTypes: DiscountLevelStateFacade[];
-  currentLevelType: DiscountLevelStateFacade;
+  levelTypes: PurchasePolicyLevelStateFacade[];
+  currentLevelType: PurchasePolicyLevelStateFacade;
   categories: string[];
   currentValue: string;
   constructor(
-    public dialogRef: MatDialogRef<AddLevelDialogComponent>,
+    public dialogRef: MatDialogRef<AddPurchaseLevelDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
     private config: ConfigService,
     private messageService: MessageService,
-    private discountService: PoliciesService
-  ) {}
+    private policiesService: PoliciesService
+  ) { }
 
   ngOnInit(): void {
     this.levelTypes = [];
@@ -37,20 +37,21 @@ export class AddLevelDialogComponent implements OnInit {
     this.reset();
   }
 
-  selectLevelType(levelType: DiscountLevelStateFacade, event: any) {
+  
+  selectLevelType(levelType: PurchasePolicyLevelStateFacade, event: any) {
     if (event.isUserInput) {
       this.currentValue = undefined;
       this.currentLevelType = levelType;
       this.isCategoryTypeChoosed =
-        this.currentLevelType.type === new CategoryLevelStateFacade().type;
+        this.currentLevelType.type === new CategoryPurchasePolicyLevelStateFacade().type;
       this.isItemTypeChoosed =
-        this.currentLevelType.type === new ItemLevelStateFacade().type;
+        this.currentLevelType.type === new ItemPurchasePolicyLevelStateFacade().type;
     }
   }
 
-  getLevelName(levelType: DiscountLevelStateFacade): string {
+  getLevelName(levelType: PurchasePolicyLevelStateFacade): string {
     if (levelType){
-      return levelType.title;
+      return this.policiesService.getPurchasePolicyLevelStateName(levelType);
     }
     return "Please Set Level Type";
   }
@@ -83,26 +84,26 @@ export class AddLevelDialogComponent implements OnInit {
     );
   }
   noNeedValue() {
-    return this.currentLevelType.type === new ShopLevelStateFacade().type;
+    return this.currentLevelType.type === new ShopPurchasePolicyLevelStateFacade().type;
   }
-  createData(): DiscountLevelStateFacade {
+  createData(): PurchasePolicyLevelStateFacade {
     if (!this.currentLevelType ||  !this.currentLevelType.type){
       return undefined;
     }
     switch (this.currentLevelType.type) {
-      case new ShopLevelStateFacade().type:
+      case new ShopPurchasePolicyLevelStateFacade().type:
         return this.currentLevelType;
-      case new CategoryLevelStateFacade().type:
+      case new CategoryPurchasePolicyLevelStateFacade().type:
         const category = this.config.createCategoryFromString(
           this.currentValue
         );
-        return new CategoryLevelStateFacade(category);
-      case new ItemLevelStateFacade().type:
+        return new CategoryPurchasePolicyLevelStateFacade(category);
+      case new ItemPurchasePolicyLevelStateFacade().type:
         const itemId = this.config.selectedShop.getItemByName(
           this.currentValue
         );
         if (itemId) {
-          return new ItemLevelStateFacade(itemId.id);
+          return new ItemPurchasePolicyLevelStateFacade(itemId.id);
           // return;
         } else {
           return undefined;
@@ -112,7 +113,7 @@ export class AddLevelDialogComponent implements OnInit {
   }
 
   reset() {
-    this.levelTypes = this.discountService.getAllSimpleLevelTypes();
+    this.levelTypes = this.policiesService.getAllSimplePurchasePolicyLevelStateFacade();
     this.categories = this.config.getAllCategories();
   }
 

@@ -27,7 +27,7 @@ export class MainPageComponent implements OnInit, OnDestroy {
         console.log(response.getMessage());
       } else {
         const visitor = new VisitorFacade().deserialize(response.value);
-        this.config.visitor = visitor; 
+        this.config.visitor = visitor;
         console.log('returned from guest login');
         if(this.config.visitor){
       if(this.config.visitor.name.length==0){
@@ -37,9 +37,9 @@ export class MainPageComponent implements OnInit, OnDestroy {
     }
       }
     });
-   
-    
-   
+
+
+
   }
 
   isSubDiscountClicked(): boolean {
@@ -117,6 +117,15 @@ export class MainPageComponent implements OnInit, OnDestroy {
   }
   isNewDiscountClicked() {
     return this.config.isAddNewDiscountClicked;
+  }
+  isMainPurcahsePolicyClicked() {
+    return this.config.isMainPurcahsePolicyClicked;
+  }
+  isAddNewPurchasePolicyClicked() {
+    return this.config.isAddNewPurchasePolicyClicked;
+  }
+  isSubPurchasePolicyClicked() {
+    return this.config.isSubPurchasePolicyClicked;
   }
 
   ngOnDestroy(): void {

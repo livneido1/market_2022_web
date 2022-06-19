@@ -1,12 +1,8 @@
 import { Injectable } from '@angular/core';
 import { RxStomp } from '@stomp/rx-stomp';
-import { AppointmentFacade } from 'app/http/facadeObjects/AppointmentFacade';
 import { Category, ItemFacade } from 'app/http/facadeObjects/ItemFacade';
 import { MemberFacade } from 'app/http/facadeObjects/MemberFacade';
-import { PermissionFacade } from 'app/http/facadeObjects/PermissionFacade';
 import { ShopFacade } from 'app/http/facadeObjects/shop-facade';
-import { ShopManagerAppointmentFacade } from 'app/http/facadeObjects/shop-manager-appointment-facade';
-import { ShopOwnerAppointmentFacade } from 'app/http/facadeObjects/ShopOwnerAppointmentFacade';
 import { VisitorFacade } from 'app/http/facadeObjects/visitor-facade';
 
 @Injectable({
@@ -27,6 +23,10 @@ export class ConfigService {
   private _isMainDiscountClicked: boolean;
   private _isAddNewDiscountClicked: boolean;
   private _isSubDiscountClicked: boolean;
+  private _isMainPurcahsePolicyClicked: boolean;
+  private _isAddNewPurchasePolicyClicked: boolean;
+  private _isSubPurchasePolicyClicked: boolean;
+
 
   //dynamic settings
   private _visitor: VisitorFacade;
@@ -55,6 +55,9 @@ public stompClient:RxStomp;
     this._isEmployeesinfoClicked = false;
     this._isAddNewDiscountClicked = false;
     this._isSubDiscountClicked = false;
+    this._isMainPurcahsePolicyClicked = false;
+    this._isAddNewPurchasePolicyClicked = false;
+    this._isSubPurchasePolicyClicked = false;
 
     this._member = undefined;
     this._itemsSearched = undefined;
@@ -73,6 +76,9 @@ public stompClient:RxStomp;
     this._isMainDiscountClicked = false;
     this._isAddNewDiscountClicked = false;
     this._isSubDiscountClicked = false;
+    this._isMainPurcahsePolicyClicked = false;
+    this._isAddNewPurchasePolicyClicked = false;
+    this._isSubPurchasePolicyClicked = false;
     this._itemsSearched = undefined;
   }
 
@@ -124,6 +130,27 @@ public stompClient:RxStomp;
   set isSubDiscountClicked(value: boolean) {
     this.cleanAllComponents();
     this._isSubDiscountClicked = value;
+  }
+  get isMainPurcahsePolicyClicked(): boolean {
+    return this._isMainPurcahsePolicyClicked;
+  }
+  set isMainPurcahsePolicyClicked(value: boolean) {
+    this.cleanAllComponents();
+    this._isMainPurcahsePolicyClicked = value;
+  }
+  get isAddNewPurchasePolicyClicked(): boolean {
+    return this._isAddNewPurchasePolicyClicked;
+  }
+  set isAddNewPurchasePolicyClicked(value: boolean) {
+    this.cleanAllComponents();
+    this._isAddNewPurchasePolicyClicked = value;
+  }
+  get isSubPurchasePolicyClicked(): boolean {
+    return this._isSubPurchasePolicyClicked;
+  }
+  set isSubPurchasePolicyClicked(value: boolean) {
+    this.cleanAllComponents();
+    this._isSubPurchasePolicyClicked = value;
   }
 
   get isAddNewDiscountClicked(): boolean {

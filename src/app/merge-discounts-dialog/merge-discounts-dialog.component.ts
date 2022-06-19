@@ -4,7 +4,7 @@ import { CompositeDiscountTypeFacade } from 'app/http/facadeObjects/Discounts/co
 import { DiscountTypeFacade } from 'app/http/facadeObjects/Discounts/discount-type-facade';
 import { MergeLevelData } from 'app/merge-level-dialog/merge-level-dialog.component';
 import { ConfigService } from 'app/services/config-service.service';
-import { DiscountService } from 'app/services/discount-service.service';
+import { PoliciesService } from 'app/services/policies-service.service';
 import { MessageService } from 'app/services/message.service';
 
 export interface MergeDiscountData {
@@ -24,12 +24,12 @@ export class MergeDiscountsDialogComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: MergeDiscountData,
     private config: ConfigService,
     private message: MessageService,
-    private discountService: DiscountService
+    private policiesService: PoliciesService
   ) {
     this.discounts = data.discounts;
     this.discountMap = new Map();
     this.allCompositeTypes =
-      this.discountService.getAllCompositeDiscountTypes();
+      this.policiesService.getAllCompositeDiscountTypes();
     for (const discount of this.discounts) {
       this.discountMap.set(discount, false);
     }
@@ -37,7 +37,7 @@ export class MergeDiscountsDialogComponent implements OnInit {
 
   ngOnInit(): void {}
   getDiscountName(discount: DiscountTypeFacade): string {
-    return this.discountService.getDiscountName(discount);
+    return this.policiesService.getDiscountName(discount);
   }
 
   onOperatorClick(discount: CompositeDiscountTypeFacade): DiscountTypeFacade[] {

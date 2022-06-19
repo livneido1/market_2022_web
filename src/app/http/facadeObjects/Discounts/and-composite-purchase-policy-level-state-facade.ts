@@ -1,7 +1,9 @@
 import { Deserializable } from '../deserializable';
+import { Category } from '../ItemFacade';
 import { ObjectsDeserializer } from '../objects-deserializer';
 import { CompositePurchasePolicyLevelStateFacade } from './composite-purchase-policy-level-state-facade';
 import { PurchasePolicyLevelStateFacade } from './purchase-policy-level-state-facade';
+import { PurchasePolicyLevelStateWrapper, PurchasePolicyLevelStateWrapperType } from './Wrappers/purchase-policy-level-state-wrapper';
 
 export class AndCompositePurchasePolicyLevelStateFacade
   extends CompositePurchasePolicyLevelStateFacade
@@ -24,4 +26,19 @@ export class AndCompositePurchasePolicyLevelStateFacade
       }
       return this;
     }
+
+    getWrapper(): PurchasePolicyLevelStateWrapper {
+      const subWrappers: PurchasePolicyLevelStateWrapper[] = [];
+      for (const levelState of this.purchasePolicyLevelStateFacades) {
+        subWrappers.push(levelState.getWrapper());
+      }
+      return new PurchasePolicyLevelStateWrapper(
+        PurchasePolicyLevelStateWrapperType.AndCompositePurchasePolicyLevelStateFacade,
+        -1,
+        Category.cellular,
+        subWrappers
+      );
+    }
+
+
   }

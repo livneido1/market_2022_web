@@ -2,22 +2,19 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DiscountLevelStateFacade } from 'app/http/facadeObjects/Discounts/discount-level-state-facade';
 import { DiscountTypeFacade } from 'app/http/facadeObjects/Discounts/discount-type-facade';
-import { ItemLevelStateFacade } from 'app/http/facadeObjects/Discounts/item-level-state-facade';
-import { SimpleDiscountFacade } from 'app/http/facadeObjects/Discounts/simple-discount-facade';
+
 import { DiscountTypeWrapper } from 'app/http/facadeObjects/Discounts/Wrappers/discount-type-wrapper';
-import { Response } from 'app/http/facadeObjects/response';
 import { ResponseT } from 'app/http/facadeObjects/response-t';
 import { ShopFacade } from 'app/http/facadeObjects/shop-facade';
 import { GetPoliciesRequest } from 'app/http/requests/get-policies-request';
-import {
-  MergeDiscountData,
-  MergeDiscountsDialogComponent,
-} from 'app/merge-discounts-dialog/merge-discounts-dialog.component';
+
 import { ConfigService } from 'app/services/config-service.service';
-import { DiscountService } from 'app/services/discount-service.service';
+import { PoliciesService } from 'app/services/policies-service.service';
 import { EngineService } from 'app/services/engine.service';
 import { MessageService } from 'app/services/message.service';
 import { ModelAdapterService } from 'app/services/model-adapter.service';
+import { RemoveDiscountFromShopRequest } from 'app/http/requests/remove-discount-from-shop-request';
+import { Response } from 'app/http/facadeObjects/response';
 
 @Component({
   selector: 'app-discount-main',
@@ -34,7 +31,7 @@ export class DiscountMainComponent implements OnInit {
     private config: ConfigService,
     private modelAdapter: ModelAdapterService,
     public dialog: MatDialog,
-    private discountService: DiscountService,
+    private policiesService: PoliciesService,
   ) {}
 
   ngOnInit(): void {
@@ -48,13 +45,26 @@ export class DiscountMainComponent implements OnInit {
   openDiscountDialog(discount: DiscountTypeFacade) {}
 
   getDiscountName(discount:DiscountTypeFacade) {
-    return this.discountService.getDiscountName(discount);
+    return this.policiesService.getDiscountName(discount);
   }
 
-  removeDiscount(discount) {}
+  removeDiscount(discount:DiscountTypeFacade) {
+    const wrapper = discount.getWrapper();
+    const request = new RemoveDiscountFromShopRequest(wrapper,this.shop.shopName, this.config.visitor.name);
+    this.engine.removeDiscountFromShop(request).subscribe(responseJson =>{
+      const response = new Response().deserialize(responseJson);
+      if (response.isErrorOccurred()){
+        this.messageService.errorMessage(response.getMessage());
+      }
+      else {
+        this.reset();
+        this.messageService.validMessage("discount successfully removed");
+      }
+    })
+  }
 
   addDiscount() {
-    this.discountService.reset();
+    this.policiesService.reset();
     this.config.isAddNewDiscountClicked = true;
   }
 

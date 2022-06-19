@@ -383,8 +383,8 @@ export class EngineService {
       httpOptions
     );
   }
-  getPurchasePoliciesOfShop(request: GetPoliciesRequest): Observable<Response> {
-    return this.http.post<Response>(
+  getPurchasePoliciesOfShop(request: GetPoliciesRequest): Observable<ResponseT<PurchasePolicyTypeWrapper[]>> {
+    return this.http.post<ResponseT<PurchasePolicyTypeWrapper[]>>(
       this.serverUrl + '/getPurchasePoliciesOfShop',
       request,
       httpOptions

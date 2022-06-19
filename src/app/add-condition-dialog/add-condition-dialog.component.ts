@@ -5,7 +5,7 @@ import { ConditionFacade } from 'app/http/facadeObjects/Discounts/condition-faca
 import { PriceConditionFacade } from 'app/http/facadeObjects/Discounts/price-condition-facade';
 import { DialogData } from 'app/item-mat-dialog/item-mat-dialog.component';
 import { ConfigService } from 'app/services/config-service.service';
-import { DiscountService } from 'app/services/discount-service.service';
+import { PoliciesService } from 'app/services/policies-service.service';
 import { MessageService } from 'app/services/message.service';
 
 @Component({
@@ -26,7 +26,7 @@ export class AddConditionDialogComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
     private config: ConfigService,
     private messageService: MessageService,
-    private discountService: DiscountService
+    private discountService: PoliciesService
   ) {}
 
   ngOnInit(): void {

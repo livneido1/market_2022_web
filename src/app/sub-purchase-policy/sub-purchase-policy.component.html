@@ -1,0 +1,107 @@
+<div  class="backgroundComp">
+  <div class="rowLevels">
+    <div class="colLeft scrollable">
+      <div *ngIf="this.currentLevels.length >0; else noLevels">
+        <p class="tableTitle">Created Levels</p>
+        <table class="levelTable">
+          <thead>
+            <tr style="border-bottom: solid;">
+              <th>
+                <p class="tableHeaderMain"> Levels </p>
+              </th>
+              <th>
+                <!-- this is just to save 2 slots in a row -->
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let level of currentLevels" style="border-bottom: solid;">
+              <td>
+                <div
+                  style="cursor: pointer;"
+                  >
+                  {{getLevelName(level)}}
+                </div>
+              </td>
+              <td>
+                <button
+                  title="remove"
+                  class="removeButton"
+                  (click)="removeLevel(level)">
+                  <span class='material-icons'>delete</span>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <ng-template #noLevels>
+        <p class="resultTitle">Create new sub Policy</p>
+      </ng-template>
+    </div>
+    <div class="colRight">
+      <div>
+        <button class="optionalButtonsDiv"
+          (click)="addLevel()">
+          add level
+        </button>
+      </div>
+      <div>
+        <button class="optionalButtonsDiv"
+          (click)="onMergeLevels()"
+          [disabled]="!canMergeLevels()">
+          Merge levels
+        </button>
+      </div>
+
+    </div>
+  </div>
+  <div class="rowConditions">
+    <div class="colLeft">
+      <mat-form-field class="inputLong" appearance="fill">
+        <mat-label>Policy Level Type</mat-label>
+        <mat-select>
+          <mat-option *ngFor="let type of typeList"
+            (onSelectionChange)="selectType(type)"
+            [value]="type">
+            {{getTypeName(type)}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="colRight">
+
+    </div>
+  </div>
+  
+  <div class="rowInputs">
+    <div class="colLeft">
+      <mat-form-field class="inputLong" appearance="fill">
+        <mat-label > Amount of Items </mat-label>
+        <input matInput type="number"  #last   style="color: white;" [(ngModel)]="amount" placeholder="Ex. 10">
+      </mat-form-field>
+
+
+    </div>
+    <div class="colRight">
+    </div>
+  </div>
+  <div class="rowSubmit">
+    <div class="colLeft">
+      <button 
+        class="optionalButtonsDiv"
+        [disabled]="!canSubmit()"
+        (click)="onSubmitClick()">
+        submit!
+      </button>
+      <p class="errorMessage" *ngIf="!exactOneLevel()">you must have exactly one level</p>
+      <p class="errorMessage" *ngIf="!isTypeChoosed()">you must choose a type to continue</p>
+      <p class="errorMessage" *ngIf="isAmountError()">amount must be more then 0</p>
+
+    </div>
+    <div class="colRight">
+
+    </div>
+
+  </div>
+</div>

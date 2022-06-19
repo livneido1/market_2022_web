@@ -8,7 +8,7 @@ import {
   MergeDiscountsDialogComponent,
 } from 'app/merge-discounts-dialog/merge-discounts-dialog.component';
 import { ConfigService } from 'app/services/config-service.service';
-import { DiscountService } from 'app/services/discount-service.service';
+import { PoliciesService } from 'app/services/policies-service.service';
 import { EngineService } from 'app/services/engine.service';
 import { MessageService } from 'app/services/message.service';
 import { ModelAdapterService } from 'app/services/model-adapter.service';
@@ -24,13 +24,13 @@ export class NewDiscountComponent implements OnInit {
     private engine: EngineService,
     private messageService: MessageService,
     private modelAdapter: ModelAdapterService,
-    private discountService: DiscountService,
+    private policiesService: PoliciesService,
     private config: ConfigService,
     public dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
-    this.currentDiscounts = this.discountService.createdDiscountList;
+    this.currentDiscounts = this.policiesService.createdDiscountList;
   }
 
   isDiscountsEmpty() {
@@ -59,7 +59,7 @@ export class NewDiscountComponent implements OnInit {
 
   openDiscountDialog(discount: DiscountTypeFacade) {}
   getDiscountName(discount: DiscountTypeFacade) {
-    return this.discountService.getDiscountName(discount);
+    return this.policiesService.getDiscountName(discount);
   }
 
   removeDiscount(discount: DiscountTypeFacade) {

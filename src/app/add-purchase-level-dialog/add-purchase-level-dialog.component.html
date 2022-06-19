@@ -1,0 +1,48 @@
+<div style="height: 60%;">
+  <div>
+
+    <mat-form-field class="input" appearance="fill">
+      <mat-label>Policy Level Type</mat-label>
+      <mat-select>
+        <mat-option *ngFor="let levelType of levelTypes"
+          (onSelectionChange)="selectLevelType(levelType, $event)"
+          [value]="levelType">
+          {{getLevelName(levelType)}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div>
+
+    <mat-form-field *ngIf="isCategoryTypeChoosed" class="input" appearance="fill">
+      <mat-label> Category </mat-label>
+      <mat-select>
+        <mat-option *ngFor="let category of categories"
+          (onSelectionChange)="selectCategory(category, $event)"
+          [value]="category">
+          {{category}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field *ngIf="isItemTypeChoosed" class="inputLong" appearance="fill">
+      <mat-label > Item Name </mat-label>
+      <input matInput  #last  style="color: white;" [(ngModel)]="currentValue" placeholder="Ex. milk">
+      <p style="color: red;" *ngIf="isItemError()">
+        item is not found in shop
+      </p>
+    </mat-form-field>
+  </div>
+
+
+</div>
+<div style="text-align: center;">
+
+  <button mat-button
+    class="button"
+    [disabled]="!canSubmit()"
+    [mat-dialog-close]="createData()">
+    Add Level!
+  </button>
+</div>

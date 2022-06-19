@@ -1,0 +1,79 @@
+<div  class="backgroundComp">
+  <div style="height: 10%; text-align: left;">
+    <button
+      class="backButton"
+      (click)="backToShop()"
+      title="Go back to Shop"
+      >
+      <span class="material-icons">arrow_back</span>
+    </button>
+</div>
+<p class="mainTitle"> {{shop.shopName}} </p>
+  <div *ngIf="this.currentPolicies.length > 0" class="resultColumn">
+    <p class="resultTitle">Purchase Policies in Shop</p>
+    <div  style="display: block; height:300px; overflow-y: scroll;">
+      <table class="table">
+        <thead>
+          <tr>
+            <th class = "titleTh" >Purchase Policies</th>
+            <th>
+              <div style="width: 50%;
+                          float: left;
+                          font-size: smaller;">
+                <p>
+                  last update: {{this.lastUpdate}}
+                </p>
+
+              </div>
+              <div style="width: 40%;
+                          float: right;">
+                <button
+                  title="refresh shop policies"
+                  (click)="reset()">
+                  <span class='material-icons'>refresh</span>
+                </button>
+              </div>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let policy of currentPolicies">
+
+            <td style="cursor: pointer; width: 80%;"
+              (click)="openPurchasePolicyDialog(policy)">
+              <p style="font-size:x-large;">{{getPurchasePolicyName(policy)}}</p>
+
+            </td>
+            <td>
+              <div>
+
+                <button
+                  title="Remove Policy from Shop"
+                  style="float:right; cursor: pointer;"
+                  (click)="removePolicy(policy)">
+                  <span class='material-icons'>delete</span>
+                </button>
+
+
+
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div *ngIf="this.currentPolicies.length < 1" class="resultColumn">
+    <p class="resultTitle">No Policies in Shop</p>
+  </div>
+
+  <div class="SideBar">
+    <div style="height: 10%; text-align: center; margin-top: 20%;">
+      <button
+        class="optionalButton"
+        (click)="addPolicy()"
+        >
+        Add Policy
+      </button>
+    </div>
+</div>

@@ -1,5 +1,12 @@
 import { Deserializable } from '../../deserializable';
 import { Category } from '../../ItemFacade';
+import { AndCompositePurchasePolicyLevelStateFacade } from '../and-composite-purchase-policy-level-state-facade';
+import { CategoryPurchasePolicyLevelStateFacade } from '../category-purchase-policy-level-state-facade';
+import { ItemPurchasePolicyLevelStateFacade } from '../item-purchase-policy-level-state-facade';
+import { OrCompositePurchasePolicyLevelStateFacade } from '../or-composite-purchase-policy-level-state-facade';
+import { PurchasePolicyLevelStateFacade } from '../purchase-policy-level-state-facade';
+import { ShopPurchasePolicyLevelStateFacade } from '../shop-purchase-policy-level-state-facade';
+import { XorCompositePurchasePolicyLevelStateFacade } from '../xor-composite-purchase-policy-level-state-facade';
 
 export enum PurchasePolicyLevelStateWrapperType {
   AndCompositePurchasePolicyLevelStateFacade,
@@ -67,4 +74,35 @@ export class PurchasePolicyLevelStateWrapper implements Deserializable {
     }
     return undefined;
   }
+
+  getPurchaseLevelState(): PurchasePolicyLevelStateFacade {
+    switch (this.purchasePolicyLevelStateWrapperType) {
+      case PurchasePolicyLevelStateWrapperType.CategoryPurchasePolicyLevelStateFacade:
+        return new CategoryPurchasePolicyLevelStateFacade(this.category);
+      case PurchasePolicyLevelStateWrapperType.ItemPurchasePolicyLevelStateFacade:
+        return new ItemPurchasePolicyLevelStateFacade(this.itemID);
+      case PurchasePolicyLevelStateWrapperType.ShopPurchasePolicyLevelStateFacade:
+        return new ShopPurchasePolicyLevelStateFacade();
+      case PurchasePolicyLevelStateWrapperType.OrCompositePurchasePolicyLevelStateFacade:
+        const subLevels_OrComposite = this.getSubLevelStates();
+        return new OrCompositePurchasePolicyLevelStateFacade(subLevels_OrComposite);
+      case PurchasePolicyLevelStateWrapperType.XorCompositePurchasePolicyLevelStateFacade:
+        const subLevels_XorComposite = this.getSubLevelStates();
+        return new XorCompositePurchasePolicyLevelStateFacade(subLevels_XorComposite);
+      case PurchasePolicyLevelStateWrapperType.AndCompositePurchasePolicyLevelStateFacade:
+        const subLevels_AndComposite = this.getSubLevelStates();
+        return new AndCompositePurchasePolicyLevelStateFacade(subLevels_AndComposite);
+      default:
+        return undefined;
+    }
+  }
+
+  getSubLevelStates():PurchasePolicyLevelStateFacade[]{
+    const res:PurchasePolicyLevelStateFacade[] = [];
+    for (const levelState of this.purchasePolicyLevelStateWrappers){
+      res.push(levelState.getPurchaseLevelState());
+    }
+    return res;
+  }
+
 }

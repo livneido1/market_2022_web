@@ -1,0 +1,31 @@
+
+<div>
+  <div>
+    <p  class="title"></p>
+  </div>
+  <div>
+    <div class="columnLeft">
+      <ul *ngFor="let policy of policies">
+        <li>
+          <mat-checkbox
+            (change)="onUpdateMap(policy, $event.checked)">
+            {{getPolicyName(policy)}}
+          </mat-checkbox>
+        </li>
+      </ul>
+    </div>
+    <div class="columnRight">
+      <div style="text-align: center;" *ngFor="let compositePolicy of allCompositeTypes">
+        <div style="text-align: center;">
+          <button mat-button class="button"
+            [disabled]="!canSubmit()"
+            [mat-dialog-close]="onOperatorClick(compositePolicy)">
+            {{getPolicyName(compositePolicy)}}
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>

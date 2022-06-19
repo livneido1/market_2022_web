@@ -1,0 +1,31 @@
+
+<div>
+  <div>
+    <p  class="title"></p>
+  </div>
+  <div>
+    <div class="columnLeft">
+      <ul *ngFor="let level of purchaseLevels">
+        <li>
+          <mat-checkbox
+            (change)="onUpdateMap(level, $event.checked)">
+            {{getLevelName(level)}}
+          </mat-checkbox>
+        </li>
+      </ul>
+    </div>
+    <div class="columnRight">
+      <div style="text-align: center;" *ngFor="let levelState of allCompositeTypes">
+        <div style="text-align: center;">
+          <button mat-button class="button"
+            [disabled]="!canSubmit()"
+            [mat-dialog-close]="onOperatorClick(levelState)">
+            {{getLevelName(levelState)}}
+          </button>
+        </div>
+      </div>
+   
+    </div>
+  </div>
+
+</div>

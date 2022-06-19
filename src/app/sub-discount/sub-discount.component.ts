@@ -18,7 +18,7 @@ import {
   MergeLevelDialogComponent,
 } from 'app/merge-level-dialog/merge-level-dialog.component';
 import { ConfigService } from 'app/services/config-service.service';
-import { DiscountService } from 'app/services/discount-service.service';
+import { PoliciesService } from 'app/services/policies-service.service';
 import { EngineService } from 'app/services/engine.service';
 import { MessageService } from 'app/services/message.service';
 
@@ -36,7 +36,7 @@ export class SubDiscountComponent implements OnInit {
     public dialog: MatDialog,
     private config: ConfigService,
     private messageService: MessageService,
-    private discountService: DiscountService,
+    private discountService: PoliciesService,
     private engine: EngineService
   ) {}
 

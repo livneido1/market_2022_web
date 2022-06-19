@@ -41,6 +41,12 @@ import { AddConditionDialogComponent } from './add-condition-dialog/add-conditio
 import { MergeLevelDialogComponent } from './merge-level-dialog/merge-level-dialog.component';
 import { MergeConditionComponent } from './merge-condition/merge-condition.component';
 import { MergeDiscountsDialogComponent } from './merge-discounts-dialog/merge-discounts-dialog.component';
+import { MainShopPurchasePoliciesComponent } from './main-shop-purchase-policies/main-shop-purchase-policies.component';
+import { AddNewPurchasePolicyComponent } from './add-new-purchase-policy/add-new-purchase-policy.component';
+import { SubPurchasePolicyComponent } from './sub-purchase-policy/sub-purchase-policy.component';
+import { MergePurchasePoliciesComponent } from './merge-purchase-policies/merge-purchase-policies.component';
+import { AddPurchaseLevelDialogComponent } from './add-purchase-level-dialog/add-purchase-level-dialog.component';
+import { MergePurchaseLevelDialigComponent } from './merge-purchase-level-dialig/merge-purchase-level-dialig.component';
 
 @NgModule({
   declarations: [
@@ -70,7 +76,13 @@ import { MergeDiscountsDialogComponent } from './merge-discounts-dialog/merge-di
     AddConditionDialogComponent,
     MergeLevelDialogComponent,
     MergeConditionComponent,
-    MergeDiscountsDialogComponent
+    MergeDiscountsDialogComponent,
+    MainShopPurchasePoliciesComponent,
+    AddNewPurchasePolicyComponent,
+    SubPurchasePolicyComponent,
+    MergePurchasePoliciesComponent,
+    AddPurchaseLevelDialogComponent,
+    MergePurchaseLevelDialigComponent
   ],
   imports: [
     BrowserModule,
