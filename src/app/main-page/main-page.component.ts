@@ -121,6 +121,9 @@ export class MainPageComponent implements OnInit, OnDestroy {
   isMainPurcahsePolicyClicked() {
     return this.config.isMainPurcahsePolicyClicked;
   }
+  isAddNewPurchasePolicyClicked() {
+    return this.config.isAddNewPurchasePolicyClicked;
+  }
   isSubPurchasePolicyClicked() {
     return this.config.isSubPurchasePolicyClicked;
   }

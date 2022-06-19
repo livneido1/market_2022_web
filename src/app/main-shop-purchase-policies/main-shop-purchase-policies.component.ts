@@ -10,6 +10,8 @@ import { EngineService } from 'app/services/engine.service';
 import { GetPoliciesRequest } from 'app/http/requests/get-policies-request';
 import { ResponseT } from 'app/http/facadeObjects/response-t';
 import { PurchasePolicyTypeWrapper } from 'app/http/facadeObjects/Discounts/Wrappers/purchase-policy-type-wrapper';
+import { RemovePurchasePolicyFromShopRequest } from 'app/http/requests/remove-purchase-policy-from-shop-request';
+import { Response } from 'app/http/facadeObjects/response';
 
 @Component({
   selector: 'app-main-shop-purchase-policies',
@@ -42,12 +44,25 @@ export class MainShopPurchasePoliciesComponent implements OnInit {
   getPurchasePolicyName(purchasePolicy:PurchasePolicyTypeFacade) {
     return this.policiesService.getPurchasePolicyName(purchasePolicy);
   }
-  // TODO
-  removePolicy(purchasePolicy:PurchasePolicyTypeFacade ) {}
+  
+  removePolicy(purchasePolicy:PurchasePolicyTypeFacade ) {
+    const wrapper = purchasePolicy.getWrapper();
+    const request = new RemovePurchasePolicyFromShopRequest(wrapper,this.shop.shopName, this.config.visitor.name);
+    this.engine.removePurchasePolicyFromShop(request).subscribe(responseJson =>{
+      const response = new Response().deserialize(responseJson);
+      if (response.isErrorOccurred()){
+        this.messageService.errorMessage(response.getMessage());
+      }
+      else {
+        this.reset();
+        this.messageService.validMessage("policy successfully removed");
+      }
+    })
+  }
 
   addPolicy() {
     this.policiesService.reset();
-    this.config.isAddNewDiscountClicked = true;
+    this.config.isAddNewPurchasePolicyClicked = true;
   }
   // TODO
   backToShop() {}

@@ -7,7 +7,7 @@ import { PurchasePolicyTypeWrapper, PurchasePolicyTypeWrapperType } from "./Wrap
 export class AtMostPurchasePolicyTypeFacade extends PurchasePolicyTypeFacade implements Deserializable{
   amount: number;
   constructor(amount?:number,  purchasePolicyLevelStateFacade?:PurchasePolicyLevelStateFacade){
-    super("AtLeastPurchasePolicyTypeFacade", purchasePolicyLevelStateFacade);
+    super("AtMostPurchasePolicyTypeFacade", purchasePolicyLevelStateFacade);
     this.amount = amount? amount : -1;
 
   }

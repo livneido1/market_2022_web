@@ -84,7 +84,7 @@ export class SubDiscountComponent implements OnInit {
     });
   }
   onMergeLevels() {
-    const data: MergeLevelData = { levels: this.currentLevels };
+    const data: MergeLevelData = { discountLevels: this.currentLevels };
     const dialogRef = this.dialog.open(MergeLevelDialogComponent, {
       width: '500px',
       data: data,

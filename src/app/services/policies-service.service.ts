@@ -148,6 +148,8 @@ export class PoliciesService {
         return "Atleast One policy";
       case 'AndCompositePurchasePolicyLevelStateFacade':
         return "&& of all policy";
+      default:
+        return "unkown type";
     }
   }
 

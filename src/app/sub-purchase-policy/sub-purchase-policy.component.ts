@@ -1,7 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AddPurchaseLevelDialogComponent } from 'app/add-purchase-level-dialog/add-purchase-level-dialog.component';
+import { AtLeastPurchasePolicyTypeFacade } from 'app/http/facadeObjects/Discounts/at-least-purchase-policy-type-facade';
+import { AtMostPurchasePolicyTypeFacade } from 'app/http/facadeObjects/Discounts/at-most-purchase-policy-type-facade';
+import { PurchasePolicyLevelStateFacade } from 'app/http/facadeObjects/Discounts/purchase-policy-level-state-facade';
 import { PurchasePolicyTypeFacade } from 'app/http/facadeObjects/Discounts/purchase-policy-type-facade';
+import {
+  MergePurchaseLevelData,
+  MergePurchaseLevelDialigComponent,
+} from 'app/merge-purchase-level-dialig/merge-purchase-level-dialig.component';
 import { ConfigService } from 'app/services/config-service.service';
 import { EngineService } from 'app/services/engine.service';
 import { MessageService } from 'app/services/message.service';
@@ -10,26 +17,26 @@ import { PoliciesService } from 'app/services/policies-service.service';
 @Component({
   selector: 'app-sub-purchase-policy',
   templateUrl: './sub-purchase-policy.component.html',
-  styleUrls: ['./sub-purchase-policy.component.scss']
+  styleUrls: ['./sub-purchase-policy.component.scss'],
 })
 export class SubPurchasePolicyComponent implements OnInit {
-
-  currentLevels: PurchasePolicyTypeFacade[];
+  currentLevels: PurchasePolicyLevelStateFacade[];
+  currentType: PurchasePolicyTypeFacade;
+  typeList: PurchasePolicyTypeFacade[];
   amount: number;
   constructor(
     public dialog: MatDialog,
     private config: ConfigService,
     private messageService: MessageService,
-    private discountService: PoliciesService,
+    private policiesService: PoliciesService,
     private engine: EngineService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.currentLevels = [];
     this.amount = 0;
+    this.typeList = this.policiesService.getAllSimplePurchasePolicyTypeFacade();
   }
-
- 
 
   addLevel() {
     const dialogRef = this.dialog.open(AddPurchaseLevelDialogComponent, {
@@ -42,102 +49,85 @@ export class SubPurchasePolicyComponent implements OnInit {
     });
   }
 
-
   onMergeLevels() {
-    const data: MergeLevelData = { discountLevels: this.currentLevels };
-    const dialogRef = this.dialog.open(MergeLevelDialogComponent, {
+    const data: MergePurchaseLevelData = { levels: this.currentLevels };
+    const dialogRef = this.dialog.open(MergePurchaseLevelDialigComponent, {
       width: '500px',
       data: data,
     });
 
-    dialogRef.afterClosed().subscribe((result: DiscountLevelStateFacade[]) => {
-      if (result) {
-        this.currentLevels = result;
-      }
-    });
+    dialogRef
+      .afterClosed()
+      .subscribe((result: PurchasePolicyLevelStateFacade[]) => {
+        if (result) {
+          this.currentLevels = result;
+        }
+      });
   }
-  getLevelName(level: DiscountLevelStateFacade) {
-    return level.title;
+  getLevelName(level: PurchasePolicyLevelStateFacade) {
+    return this.policiesService.getPurchasePolicyLevelStateName(level);
   }
 
-  isPercantageError() {
+  getTypeName(type: PurchasePolicyTypeFacade) {
+    return this.policiesService.getPurchasePolicyName(type);
+  }
+
+  isAmountError() {
     const isError = !this.amount || this.amount < 1;
     return isError;
   }
   canSubmit() {
-    return (
-      this.exactOneLevel() &&
-      this.atMostOneCondition() &&
-      !this.isPercantageError()
-    );
+    return this.exactOneLevel() && !this.isAmountError();
   }
 
-  removeCondition(condition: ConditionFacade){
-    const index = this.currentConditions.indexOf(condition);
-    if (index >-1){
-      this.currentConditions.splice(index,1);
-    }
+  selectType(type: PurchasePolicyTypeFacade) {
+    this.currentType = type;
   }
 
-  removeLevel(level:DiscountLevelStateFacade){
+  removeLevel(level: PurchasePolicyLevelStateFacade) {
     const index = this.currentLevels.indexOf(level);
-    if (index >-1){
-      this.currentLevels.splice(index,1);
+    if (index > -1) {
+      this.currentLevels.splice(index, 1);
     }
   }
 
   onSubmitClick() {
     if (!this.exactOneLevel()) {
       this.messageService.errorMessage(
-        'cannot submit with more or less then 1 level facade, merge or create new level'
-      );
-      return;
-    }
-    if (!this.atMostOneCondition) {
-      this.messageService.errorMessage(
-        'cannot submit with more then one condition, please merge the conditions'
+        'cannot submit with more or less then 1 level, merge or create new level'
       );
       return;
     }
 
-    const discount: DiscountTypeFacade = this.createDiscountType();
-    this.discountService.createdDiscountList.push(discount)
-    this.config.isAddNewDiscountClicked = true;
-
+    const purchasePolicy: PurchasePolicyTypeFacade = this.createPolicyType();
+    this.policiesService.currentPolicyList.push(purchasePolicy);
+    this.config.isAddNewPurchasePolicyClicked = true;
   }
 
-  canMergeConditions(){
-    return this.currentConditions && this.currentConditions.length>0;
+  canMergeLevels() {
+    return this.currentLevels && this.currentLevels.length > 0;
   }
-  canMergeLevels(){
-    return this.currentLevels && this.currentLevels.length>0;
-  }
-  private createDiscountType() {
-    let discount: DiscountTypeFacade;
-    const levelState: DiscountLevelStateFacade = this.currentLevels[0];
-    // conditional discount
-    if (this.currentConditions.length > 0) {
-      const condition: ConditionFacade = this.currentConditions[0];
-      discount = new ConditionalDiscountFacade(
-        this.amount,
-        levelState,
-        condition
-      );
+  private createPolicyType() {
+    const levelState: PurchasePolicyLevelStateFacade = this.currentLevels[0];
+    this.currentType.purchasePolicyLevelStateFacade = levelState;
+    switch (this.currentType.type) {
+      case 'AtLeastPurchasePolicyTypeFacade':
+        (this.currentType as AtLeastPurchasePolicyTypeFacade).amount =
+          this.amount;
+        break;
+      case 'AtMostPurchasePolicyTypeFacade':
+        (this.currentType as AtMostPurchasePolicyTypeFacade).amount =
+          this.amount;
+        break;
     }
-    // simple discount
-    else {
-      discount = new SimpleDiscountFacade(this.amount, levelState);
-    }
-    return discount;
+    return this.currentType;
   }
 
   public exactOneLevel() {
     return this.currentLevels.length === 1;
   }
 
-  public atMostOneCondition() {
-    return this.currentConditions.length <= 1;
+  isTypeChoosed(): boolean {
+    return this.currentType !== undefined;
   }
-}
-
 }
