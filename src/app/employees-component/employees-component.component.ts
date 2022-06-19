@@ -73,10 +73,13 @@ export class EmployeesComponentComponent implements OnInit {
     };
     const dialogRef = this.openEmployeeForm(data);
     dialogRef.afterClosed().subscribe((data: EmployeeInfoReturnData) => {
-        this.updateAppointment(data, "successfully updated!");
+      this.updateAppointment(data, 'successfully updated!');
     });
   }
   private updateAppointment(data: EmployeeInfoReturnData, succMessage: string) {
+    if (!data){
+      return;
+    }
     const appoint = new ShopManagerAppointmentFacade(
       data.appointed,
       this.config.visitor.name,
@@ -90,17 +93,18 @@ export class EmployeesComponentComponent implements OnInit {
       this.shop.shopName,
       appoint
     );
-    this.engine.editShopManagerPermissions(permitRequest).subscribe(responseJson2 => {
-      const res = new Response().deserialize(responseJson2);
-      if (res.isErrorOccurred()) {
-        this.messageService.errorMessage(res.getMessage());
-        return;
-      }
-      else {
-        this.messageService.validMessage(succMessage);
-      }
-      this.resetComponent();
-    });
+    this.engine
+      .editShopManagerPermissions(permitRequest)
+      .subscribe((responseJson2) => {
+        const res = new Response().deserialize(responseJson2);
+        if (res.isErrorOccurred()) {
+          this.messageService.errorMessage(res.getMessage());
+          return;
+        } else {
+          this.messageService.validMessage(succMessage);
+        }
+        this.resetComponent();
+      });
   }
 
   addNewEmployee() {
@@ -120,12 +124,41 @@ export class EmployeesComponentComponent implements OnInit {
     };
     const dialogRef = this.openEmployeeForm(data);
     dialogRef.afterClosed().subscribe((data: EmployeeInfoReturnData) => {
-      this.createNewAppointmentByType(data);
+      if (data){
+        this.createNewAppointmentByType(data);
+      }
     });
   }
 
+  canRemoveAppointment(appointment: AppointmentFacade): boolean {
+    if (appointment) {
+      const selfCase: boolean =
+        appointment.appointed === this.config.visitor.name;
+      const shopOwnerCase: boolean =
+        !appointment.superVisor || appointment.superVisor === '';
+      const managerCase: boolean =
+        appointment.type === new ShopManagerAppointmentFacade().type;
+      return !selfCase && !shopOwnerCase && !managerCase;
+    }
+    return false;
+  }
   removeAppointment(appointment: AppointmentFacade) {
-    const request = new RemoveAppointmentRequest(appointment.superVisor,appointment.appointed,appointment.relatedShop);
+    const request = new RemoveAppointmentRequest(
+      appointment.superVisor,
+      appointment.appointed,
+      appointment.relatedShop
+    );
+    this.engine.removeShopOwnerAppointment(request).subscribe(responseJson =>{
+      const response = new Response().deserialize(responseJson);
+      if (response.isErrorOccurred()){
+        this.messageService.errorMessage(response.getMessage());
+        return;
+      }
+      else{
+        this.resetComponent();
+        this.messageService.validMessage("Successfully removed appointment from shop!");
+      }
+    })
   }
 
   private createNewAppointmentByType(data: EmployeeInfoReturnData) {
@@ -150,24 +183,30 @@ export class EmployeesComponentComponent implements OnInit {
     }
   }
 
-  private appointOwner(request: AppointmentShopOwnerRequest,data: EmployeeInfoReturnData) {
+  private appointOwner(
+    request: AppointmentShopOwnerRequest,
+    data: EmployeeInfoReturnData
+  ) {
     this.engine.appointShopOwner(request).subscribe((responseJson) => {
       const response = new Response().deserialize(responseJson);
       if (response.isErrorOccurred()) {
         this.messageService.errorMessage(response.getMessage());
       } else {
-        this.messageService.validMessage("successfully appointed!");
+        this.messageService.validMessage('successfully appointed!');
         this.resetComponent();
       }
     });
   }
-  private appointManager(request: AppointmentShopManagerRequest,data: EmployeeInfoReturnData) {
+  private appointManager(
+    request: AppointmentShopManagerRequest,
+    data: EmployeeInfoReturnData
+  ) {
     this.engine.appointShopManager(request).subscribe((responseJson) => {
       const response = new Response().deserialize(responseJson);
       if (response.isErrorOccurred()) {
         this.messageService.errorMessage(response.getMessage());
       } else {
-        this.updateAppointment(data, "successfully appointed!")
+        this.updateAppointment(data, 'successfully appointed!');
       }
     });
   }

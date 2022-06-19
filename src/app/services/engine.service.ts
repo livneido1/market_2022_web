@@ -33,6 +33,7 @@ import { GetShopEmployeesRequest } from 'app/http/requests/get-shop-employees-re
 import { InitMarketRequest } from 'app/http/requests/init-market-request';
 import { NamePasswordRequest } from 'app/http/requests/name-password-request';
 import { OpenNewShopRequest } from 'app/http/requests/open-new-shop-request';
+import { RemoveAppointmentRequest } from 'app/http/requests/remove-appointment-request';
 import { RemoveDiscountFromShopRequest } from 'app/http/requests/remove-discount-from-shop-request';
 import { RemoveItemFromShopRequest } from 'app/http/requests/remove-item-from-shop-request';
 import { RemovePurchasePolicyFromShopRequest } from 'app/http/requests/remove-purchase-policy-from-shop-request';
@@ -408,15 +409,15 @@ export class EngineService {
 
 
 
-  // removeShopOwnerAppointment(
-  //   request: removeAppointmentRequest
-  // ): Observable<ResponseT<string>> {
-  //   return this.http.post<ResponseT<string>>(
-  //     this.serverUrl + '/removeShopOwnerAppointment',
-  //     request,
-  //     httpOptions
-  //   );
-  // }
+  removeShopOwnerAppointment(
+    request: RemoveAppointmentRequest
+  ): Observable<Response> {
+    return this.http.post<Response>(
+      this.serverUrl + '/removeShopOwnerAppointment',
+      request,
+      httpOptions
+    );
+  }
   // removeMember(
   //   request: removeMember
   // ): Observable<ResponseT<string>> {

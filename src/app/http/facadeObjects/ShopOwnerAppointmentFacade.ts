@@ -17,7 +17,7 @@ export class ShopOwnerAppointmentFacade
     permissions?: PermissionFacade[],
     type?: string
   ) {
-    super(appointed, superVisor, relatedShop, permissions, type);
+    super(appointed, superVisor, relatedShop, permissions, "ShopOwnerAppointmentFacade"); 
     this.isShopFounder = false;
   }
 
