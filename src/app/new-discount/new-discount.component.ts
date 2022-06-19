@@ -24,13 +24,13 @@ export class NewDiscountComponent implements OnInit {
     private engine: EngineService,
     private messageService: MessageService,
     private modelAdapter: ModelAdapterService,
-    private discountService: PoliciesService,
+    private policiesService: PoliciesService,
     private config: ConfigService,
     public dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
-    this.currentDiscounts = this.discountService.createdDiscountList;
+    this.currentDiscounts = this.policiesService.createdDiscountList;
   }
 
   isDiscountsEmpty() {
@@ -59,7 +59,7 @@ export class NewDiscountComponent implements OnInit {
 
   openDiscountDialog(discount: DiscountTypeFacade) {}
   getDiscountName(discount: DiscountTypeFacade) {
-    return this.discountService.getDiscountName(discount);
+    return this.policiesService.getDiscountName(discount);
   }
 
   removeDiscount(discount: DiscountTypeFacade) {

@@ -16,23 +16,28 @@ import { AndCompositeConditionFacade } from 'app/http/facadeObjects/Discounts/an
 import { CompositeDiscountTypeFacade } from 'app/http/facadeObjects/Discounts/composite-discount-type-facade';
 import { MaxCompositeDiscountTypeFacade } from 'app/http/facadeObjects/Discounts/max-composite-discount-type-facade';
 import { PurchasePolicyTypeFacade } from 'app/http/facadeObjects/Discounts/purchase-policy-type-facade';
+import { CompositePurchasePolicyTypeFacade } from 'app/http/facadeObjects/Discounts/composite-purchase-policy-type-facade';
+import { OrCompositePurchasePolicyTypeFacade } from 'app/http/facadeObjects/Discounts/or-composite-purchase-policy-type-facade';
+import { AtMostPurchasePolicyTypeFacade } from 'app/http/facadeObjects/Discounts/at-most-purchase-policy-type-facade';
+import { AtLeastPurchasePolicyTypeFacade } from 'app/http/facadeObjects/Discounts/at-least-purchase-policy-type-facade';
+import { AndCompositePurchasePolicyLevelStateFacade } from 'app/http/facadeObjects/Discounts/and-composite-purchase-policy-level-state-facade';
+import { OrCompositePurchasePolicyLevelStateFacade } from 'app/http/facadeObjects/Discounts/or-composite-purchase-policy-level-state-facade';
+import { XorCompositePurchasePolicyLevelStateFacade } from 'app/http/facadeObjects/Discounts/xor-composite-purchase-policy-level-state-facade';
+import { CategoryPurchasePolicyLevelStateFacade } from 'app/http/facadeObjects/Discounts/category-purchase-policy-level-state-facade';
+import { ItemPurchasePolicyLevelStateFacade } from 'app/http/facadeObjects/Discounts/item-purchase-policy-level-state-facade';
+import { ShopPurchasePolicyLevelStateFacade } from 'app/http/facadeObjects/Discounts/shop-purchase-policy-level-state-facade';
+import { PurchasePolicyLevelStateFacade } from 'app/http/facadeObjects/Discounts/purchase-policy-level-state-facade';
+import { CompositePurchasePolicyLevelStateFacade } from 'app/http/facadeObjects/Discounts/composite-purchase-policy-level-state-facade';
 @Injectable({
   providedIn: 'root',
 })
 export class PoliciesService {
   createdDiscountList: DiscountTypeFacade[];
-  currentLevelList: DiscountLevelStateFacade[];
-  currentLevel: DiscountLevelStateFacade;
-  currentConditionList: ConditionFacade[];
-  currentCondition: ConditionFacade;
+  currentPolicyList: PurchasePolicyTypeFacade[];
 
   constructor() {
     this.createdDiscountList = [];
-    this.createdDiscountList = [];
-    this.currentLevelList = [];
-    this.currentLevel = undefined;
-    this.currentConditionList = [];
-    this.currentCondition = undefined;
+    this.currentPolicyList = [];
   }
 
   getAllLevelTypes(): string[] {
@@ -67,6 +72,29 @@ export class PoliciesService {
       new OrCompositeConditionFacade(),
     ];
   }
+  getAllCompositePurchasePolicyTypeFacade(): CompositePurchasePolicyTypeFacade[] {
+    return [new OrCompositePurchasePolicyTypeFacade()];
+  }
+  getAllSimplePurchasePolicyTypeFacade(): PurchasePolicyTypeFacade[] {
+    return [
+      new AtLeastPurchasePolicyTypeFacade(),
+      new AtMostPurchasePolicyTypeFacade(),
+    ];
+  }
+  getAllCompositePurchasePolicyLevelStateFacade(): CompositePurchasePolicyLevelStateFacade[] {
+    return [
+      new AndCompositePurchasePolicyLevelStateFacade(),
+      new OrCompositePurchasePolicyLevelStateFacade(),
+      new XorCompositePurchasePolicyLevelStateFacade(),
+    ];
+  }
+  getAllSimplePurchasePolicyLevelStateFacade(): PurchasePolicyLevelStateFacade[] {
+    return [
+      new CategoryPurchasePolicyLevelStateFacade(),
+      new ItemPurchasePolicyLevelStateFacade(),
+      new ShopPurchasePolicyLevelStateFacade(),
+    ];
+  }
   getAllCompositeDiscountTypes(): CompositeDiscountTypeFacade[] {
     return [new MaxCompositeDiscountTypeFacade()];
   }
@@ -76,36 +104,55 @@ export class PoliciesService {
       return '';
     }
     switch (discount.type) {
-        case "MaxCompositeDiscountTypeFacade":
-          return "Max Discount";
-        case "ConditionalDiscountFacade":
-          return "Conditional Discount";
-        case "SimpleDiscountFacade":
-          return "Regular Discount";
-        default:
-          return "unknown type";
+      case 'MaxCompositeDiscountTypeFacade':
+        return 'Max Discount';
+      case 'ConditionalDiscountFacade':
+        return 'Conditional Discount';
+      case 'SimpleDiscountFacade':
+        return 'Regular Discount';
+      default:
+        return 'unknown type';
     }
   }
 
-  getPurchasePolicyName(purchase: PurchasePolicyTypeFacade){
+  getPurchasePolicyName(purchase: PurchasePolicyTypeFacade) {
     if (!purchase) {
       return '';
     }
     switch (purchase.type) {
-        case "AtMostPurchasePolicyTypeFacade":
-          return "At Most Policy";
-        case "AtLeastPurchasePolicyTypeFacade":
-          return "At least Policy";
-        case "OrCompositePurchasePolicyTypeFacade":
-          return "At least One of Policies";
-        default:
-          return "unknown type";
+      case 'AtMostPurchasePolicyTypeFacade':
+        return 'At Most Policy';
+      case 'AtLeastPurchasePolicyTypeFacade':
+        return 'At least Policy';
+      case 'OrCompositePurchasePolicyTypeFacade':
+        return 'At least One of Policies';
+      default:
+        return 'unknown type';
+    }
+  }
+
+  getPurchasePolicyLevelStateName(purchaseLevelState: PurchasePolicyLevelStateFacade){
+    if (!purchaseLevelState){
+      return "";
+    }
+    switch (purchaseLevelState.type){
+      case 'ShopPurchasePolicyLevelStateFacade':
+        return "All Shop policy";
+      case 'CategoryPurchasePolicyLevelStateFacade':
+        return "by Category policy State";
+      case 'ItemPurchasePolicyLevelStateFacade':
+        return "By Item policy";
+      case 'XorCompositePurchasePolicyLevelStateFacade':
+        return "One of a kind policy";
+      case 'OrCompositePurchasePolicyLevelStateFacade':
+        return "Atleast One policy";
+      case 'AndCompositePurchasePolicyLevelStateFacade':
+        return "&& of all policy";
     }
   }
 
   reset() {
     this.createdDiscountList = [];
-    this.currentConditionList = [];
+    this.currentPolicyList = [];
   }
-
 }

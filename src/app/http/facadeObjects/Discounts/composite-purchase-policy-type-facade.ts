@@ -1,7 +1,7 @@
 import { Deserializable } from '../deserializable';
 import { ObjectsDeserializer } from '../objects-deserializer';
 import { PurchasePolicyLevelStateFacade } from './purchase-policy-level-state-facade';
-import { PurchasePolicyTypeFacade } from './purchase-policy-type-facade';
+import { PurchasePolicyTypeFacade as PurchasePolicyTypeFacade } from './purchase-policy-type-facade';
 
 export abstract class CompositePurchasePolicyTypeFacade
   extends PurchasePolicyTypeFacade

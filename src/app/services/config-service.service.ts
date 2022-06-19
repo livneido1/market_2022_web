@@ -24,6 +24,7 @@ export class ConfigService {
   private _isAddNewDiscountClicked: boolean;
   private _isSubDiscountClicked: boolean;
   private _isMainPurcahsePolicyClicked: boolean;
+  private _isSubPurchasePolicyClicked: boolean;
 
 
   //dynamic settings
@@ -54,6 +55,7 @@ public stompClient:RxStomp;
     this._isAddNewDiscountClicked = false;
     this._isSubDiscountClicked = false;
     this._isMainPurcahsePolicyClicked = false;
+    this._isSubPurchasePolicyClicked = false;
 
     this._member = undefined;
     this._itemsSearched = undefined;
@@ -73,6 +75,7 @@ public stompClient:RxStomp;
     this._isAddNewDiscountClicked = false;
     this._isSubDiscountClicked = false;
     this._isMainPurcahsePolicyClicked = false;
+    this._isSubPurchasePolicyClicked = false;
     this._itemsSearched = undefined;
   }
 
@@ -131,6 +134,13 @@ public stompClient:RxStomp;
   set isMainPurcahsePolicyClicked(value: boolean) {
     this.cleanAllComponents();
     this._isMainPurcahsePolicyClicked = value;
+  }
+  get isSubPurchasePolicyClicked(): boolean {
+    return this._isSubPurchasePolicyClicked;
+  }
+  set isSubPurchasePolicyClicked(value: boolean) {
+    this.cleanAllComponents();
+    this._isSubPurchasePolicyClicked = value;
   }
 
   get isAddNewDiscountClicked(): boolean {

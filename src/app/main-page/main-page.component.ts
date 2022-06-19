@@ -121,6 +121,9 @@ export class MainPageComponent implements OnInit, OnDestroy {
   isMainPurcahsePolicyClicked() {
     return this.config.isMainPurcahsePolicyClicked;
   }
+  isSubPurchasePolicyClicked() {
+    return this.config.isSubPurchasePolicyClicked;
+  }
 
   ngOnDestroy(): void {
     const request = new ExitSystemRequest();

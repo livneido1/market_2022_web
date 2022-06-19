@@ -1,1 +1,88 @@
-<p>add-new-purchase-policy works!</p>
+<div  class="backgroundComp">
+  <!-- back to shop -->
+  <div style="height: 10%; text-align: left; width: 100%;">
+    <button
+      class="backButton"
+      (click)="backToShop()"
+      title="Go back to Shop"
+      >
+      <span class="material-icons">arrow_back</span>
+    </button>
+  </div>
+  <!-- main row -->
+  <div *ngIf="!isPoliciesEmpty()" class="resultColumn">
+    <p class="resultTitle">Created Sub Policies</p>
+    <div  style="display: block; height:300px; overflow-y: scroll;">
+      <table class="table">
+        <thead>
+          <tr>
+            <th class = "titleTh" >Sub Policies</th>
+            <th>
+              <!-- save slot for additional value -->
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let policy of currentPolicies">
+
+            <td style="cursor: pointer; width: 80%;"
+              (click)="openPurchaseDialog(policy)">
+              <p style="font-size:x-large;">{{getPurchasePolicyName(policy)}}</p>
+
+            </td>
+            <td>
+              <div>
+
+                <button
+                  title="Remove Item From Cart"
+                  style="float:right; cursor: pointer;"
+                  (click)="removePurchase(policy)">
+                  <span class='material-icons'>delete</span>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div *ngIf="isPoliciesEmpty()" class="resultColumn">
+    <p class="resultTitle">No Sub Policies Created yet</p>
+  </div>
+
+  <div class="SideBar">
+    <div style="height: 10%; text-align: center; margin-top: 20%;">
+      <button
+        class="optionalButton"
+        (click)="addSubPolicy()"
+        >
+        Add Sub Purchase Policy
+      </button>
+    </div>
+
+    <div style="height: 10%; text-align: center; margin-top: 20%;">
+      <button
+        class="optionalButton"
+        (click)="onMergePoliciesClick()"
+        [disabled]="!currentPolicies || currentPolicies.length<=1"
+        >
+        Merge Policies
+      </button>
+    </div>
+
+
+  </div>
+
+  <div style="height: 10%; text-align: center; margin-top: 20%;">
+    <button
+      class="optionalButton"
+      [disabled]="!isExactOnePolicy()"
+      (click)="submit()"
+      >
+      Submit
+    </button>
+    <p *ngIf="!isExactOnePolicy()" class="errorMessage">you must have exactly one policy to proceed</p>
+  </div>
+
+
+</div>
