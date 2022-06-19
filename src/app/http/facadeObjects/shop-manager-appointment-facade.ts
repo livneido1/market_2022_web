@@ -15,7 +15,7 @@ export class ShopManagerAppointmentFacade
     permissions?: PermissionFacade[],
     type?: string
   ) {
-    super(appointed, superVisor, relatedShop, permissions, type);
+    super(appointed, superVisor, relatedShop, permissions, "ShopManagerAppointmentFacade");
   }
 
   deserialize(value: any): this {

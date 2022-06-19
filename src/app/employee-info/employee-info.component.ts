@@ -3,6 +3,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AppointmentFacade } from 'app/http/facadeObjects/AppointmentFacade';
 import { PermissionFacade } from 'app/http/facadeObjects/PermissionFacade';
 import { ShopManagerAppointmentFacade } from 'app/http/facadeObjects/shop-manager-appointment-facade';
+import { ShopOwnerAppointmentFacade } from 'app/http/facadeObjects/ShopOwnerAppointmentFacade';
 import { ConfigService } from 'app/services/config-service.service';
 import { MessageService } from 'app/services/message.service';
 import { ModelAdapterService } from 'app/services/model-adapter.service';
@@ -119,6 +120,11 @@ export class EmployeeInfoComponent implements OnInit {
     else{
       this.isPermissionsEditable = true;
     }
+  }
+  canEditPermissions():boolean{
+    const ownerTypeName = this.modelAdapter.getTypeName(new ShopOwnerAppointmentFacade().type);
+    return this.isPermissionsEditable && 
+    (this.type !== ownerTypeName); 
   }
 
   onNoClick(): void {

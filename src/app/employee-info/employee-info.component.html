@@ -46,7 +46,7 @@
       *ngFor="let permit of availablePermits"
       >
       <mat-checkbox
-        [disabled]="!isPermissionsEditable"
+        [disabled]="!canEditPermissions()"
         [checked]="currentPermits.get(permit)"
         (change)="updatePermits(permit,$event.checked)">
         {{permit}}
@@ -57,7 +57,7 @@
   </div>
   <div style="text-align: center;">
     <button
-      *ngIf="isPermissionsEditable || isNewAppointment"
+      *ngIf="canEditPermissions() || isNewAppointment"
       class="button"
       [disabled]="!canSubmit()"
       [mat-dialog-close]="createData()">
