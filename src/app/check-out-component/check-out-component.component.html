@@ -1,5 +1,5 @@
 <div class="backgroundComp">
-  <div style="height: 60%; ">
+  <div style="height: 70%; ">
     <div style="width: 50%; float: left;">
       <p class="title">Address Details</p>
       <div>
@@ -18,8 +18,14 @@
       </div>
       <div>
         <mat-form-field class="textInput" appearance="fill">
-          <mat-label >Bulding Number</mat-label>
-          <input matInput #last style="color:white" [(ngModel)]="buildingNum">
+          <mat-label >Country</mat-label>
+          <input matInput #last style="color:white" [(ngModel)]="country">
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field class="textInput" appearance="fill">
+          <mat-label >Zip Number</mat-label>
+          <input matInput type="number" #last style="color:white" [(ngModel)]="zipCode">
         </mat-form-field>
       </div>
 
@@ -30,9 +36,21 @@
       <div>
         <mat-form-field class="textInput" appearance="fill" >
           <mat-label > Card Number</mat-label>
-          <input  matInput #last style="color:white" [(ngModel)]="cardNum">
+          <input  matInput type="number" #last style="color:white" [(ngModel)]="cardNum">
         </mat-form-field>
 
+      </div>
+      <div>
+        <mat-form-field class="textInput" appearance="fill" >
+          <mat-label > Holder Name</mat-label>
+          <input  matInput type="text" #last style="color:white" [(ngModel)]="holderName">
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field class="textInput" appearance="fill" >
+          <mat-label > Holder ID</mat-label>
+          <input  matInput type="text" #last style="color:white" [(ngModel)]="holderID">
+        </mat-form-field>
       </div>
       <div>
         <mat-form-field class="textInput" appearance="fill">

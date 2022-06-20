@@ -1,13 +1,23 @@
 import { Deserializable } from './deserializable';
 
 export class Address implements Deserializable {
+  name: string;
+  address: string;
   city: string;
-  street: string;
-  buildingNum: string;
-  constructor() {
-    this.city = '';
-    this.street = '';
-    this.buildingNum = '';
+  country: string;
+  zip: string;
+  constructor(
+    name?: string,
+    address?: string,
+    city?: string,
+    country?: string,
+    zip?: string
+  ) {
+    this.name = name;
+    this.address = address;
+    this.city = city;
+    this.country = country;
+    this.zip = zip;
   }
 
   deserialize(value: any): this {
@@ -19,8 +29,6 @@ export class Address implements Deserializable {
   }
 
   getObj(): Address {
-      return new Address();
+    return new Address();
   }
-
-
 }

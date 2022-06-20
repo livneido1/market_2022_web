@@ -19,6 +19,7 @@ import { ItemMatDialogComponent } from 'app/item-mat-dialog/item-mat-dialog.comp
 import { ConfigService } from 'app/services/config-service.service';
 import { EngineService } from 'app/services/engine.service';
 import { MessageService } from 'app/services/message.service';
+import { ShopPurchaseHistoryData, ShopPurchaseHistoryDialogComponent } from 'app/shop-purchase-history-dialog/shop-purchase-history-dialog.component';
 
 @Component({
   selector: 'app-shop-info-component',
@@ -135,10 +136,10 @@ export class ShopInfoComponentComponent implements OnInit {
       });
     });
   }
-  showDiscounts(){
+  showDiscounts() {
     this.config.isMainDiscountClicked = true;
   }
-  onPurchasePoliciesClick(){
+  onPurchasePoliciesClick() {
     this.config.isMainPurcahsePolicyClicked = true;
   }
   getItemCurrentAmount(item: ItemFacade) {
@@ -164,21 +165,20 @@ export class ShopInfoComponentComponent implements OnInit {
           item,
           this.shop.shopName
         );
-        this.engine.changeShopItemInfo(request).subscribe(responseJson =>{
-            const response = new Response().deserialize(responseJson);
-            if (response.isErrorOccurred()){
-              this.messageService.errorMessage(response.getMessage());
-            }
-            else{
-              this.messageService.validMessage("item info changed!");
-              this.resetShop();
-            }
-        })
+        this.engine.changeShopItemInfo(request).subscribe((responseJson) => {
+          const response = new Response().deserialize(responseJson);
+          if (response.isErrorOccurred()) {
+            this.messageService.errorMessage(response.getMessage());
+          } else {
+            this.messageService.validMessage('item info changed!');
+            this.resetShop();
+          }
+        });
       }
     });
   }
 
-  onEmployeesClick(){
+  onEmployeesClick() {
     this.config.isEmployeesinfoClicked = true;
   }
 
@@ -190,6 +190,31 @@ export class ShopInfoComponentComponent implements OnInit {
       this.itemList.push(item);
     }
     this.lastUpdate = new Date().toLocaleString();
+  }
+
+  showPurchaseHistory() {
+    const request = new TwoStringRequest(
+      this.config.visitor.name,
+      this.shop.shopName
+    );
+    this.engine.getShopPurchaseHistory(request).subscribe((responseJson) => {
+      const response = new ResponseT<string>().deserialize(responseJson);
+      if (response.isErrorOccurred()) {
+        this.messageService.errorMessage(response.getMessage());
+        return;
+      } else {
+        const history: string = response.value;
+        const data : ShopPurchaseHistoryData = {history: history}; 
+        const dialogRef = this.dialog.open(ShopPurchaseHistoryDialogComponent, {
+          width: '500px',
+          data:  data,
+        });
+
+        dialogRef.afterClosed().subscribe((result) => {
+          console.log('The dialog was closed');
+        });
+      }
+    });
   }
 
   resetShop() {

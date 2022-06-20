@@ -47,6 +47,7 @@ import { SubPurchasePolicyComponent } from './sub-purchase-policy/sub-purchase-p
 import { MergePurchasePoliciesComponent } from './merge-purchase-policies/merge-purchase-policies.component';
 import { AddPurchaseLevelDialogComponent } from './add-purchase-level-dialog/add-purchase-level-dialog.component';
 import { MergePurchaseLevelDialigComponent } from './merge-purchase-level-dialig/merge-purchase-level-dialig.component';
+import { ShopPurchaseHistoryDialogComponent } from './shop-purchase-history-dialog/shop-purchase-history-dialog.component';
 
 @NgModule({
   declarations: [
@@ -82,7 +83,8 @@ import { MergePurchaseLevelDialigComponent } from './merge-purchase-level-dialig
     SubPurchasePolicyComponent,
     MergePurchasePoliciesComponent,
     AddPurchaseLevelDialogComponent,
-    MergePurchaseLevelDialigComponent
+    MergePurchaseLevelDialigComponent,
+    ShopPurchaseHistoryDialogComponent
   ],
   imports: [
     BrowserModule,
