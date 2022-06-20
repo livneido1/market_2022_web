@@ -1,25 +1,35 @@
-import { Deserializable } from "./deserializable";
-import { PaymentMethod } from "./payment-method";
+import { Deserializable } from './deserializable';
+import { PaymentMethod } from './payment-method';
 
-export class CreditCard implements Deserializable,PaymentMethod {
-  cardNumber: string;
-  expiredDate: string;
-  threeDigits: string;
+export class CreditCard implements Deserializable, PaymentMethod {
+  number: string;
+  month: string;
+  year: string;
+  cvv: string;
+  holder: string;
+  id: string;
 
-  constructor(){
-    this.cardNumber = "";
-    this.threeDigits = "";
-    this.expiredDate = "";
-
+  constructor(
+    number?: string,
+    month?: string,
+    year?: string,
+    cvv?: string,
+    holder?: string,
+    id?: string
+  ) {
+    this.number = number;
+    this.month = month;
+    this.year = year;
+    this.cvv = cvv;
+    this.holder = holder;
+    this.id = id;
   }
 
   deserialize(value: any): this {
-      if (!value){
-        return this;
-      }
-      Object.assign(this,value);
+    if (!value) {
       return this;
+    }
+    Object.assign(this, value);
+    return this;
   }
-
-
 }
