@@ -48,6 +48,7 @@ import { MergePurchasePoliciesComponent } from './merge-purchase-policies/merge-
 import { AddPurchaseLevelDialogComponent } from './add-purchase-level-dialog/add-purchase-level-dialog.component';
 import { MergePurchaseLevelDialigComponent } from './merge-purchase-level-dialig/merge-purchase-level-dialig.component';
 import { ShopPurchaseHistoryDialogComponent } from './shop-purchase-history-dialog/shop-purchase-history-dialog.component';
+import { ManagerSettingsComponent } from './manager-settings/manager-settings.component';
 
 @NgModule({
   declarations: [
@@ -84,7 +85,8 @@ import { ShopPurchaseHistoryDialogComponent } from './shop-purchase-history-dial
     MergePurchasePoliciesComponent,
     AddPurchaseLevelDialogComponent,
     MergePurchaseLevelDialigComponent,
-    ShopPurchaseHistoryDialogComponent
+    ShopPurchaseHistoryDialogComponent,
+    ManagerSettingsComponent
   ],
   imports: [
     BrowserModule,

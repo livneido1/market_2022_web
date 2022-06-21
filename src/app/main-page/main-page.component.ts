@@ -18,7 +18,9 @@ import { map } from 'rxjs';
   styleUrls: ['./main-page.component.scss'],
 })
 export class MainPageComponent implements OnInit, OnDestroy {
-  constructor(private config: ConfigService, private engine: EngineService) {}
+  constructor(
+    private config: ConfigService,
+    private engine: EngineService) {}
 
   ngOnInit(): void {
     this.engine.guestLogin().subscribe((responseJson) => {
@@ -26,6 +28,7 @@ export class MainPageComponent implements OnInit, OnDestroy {
       if (response.isErrorOccurred()) {
         console.log(response.getMessage());
       } else {
+        this.config.isManagerLoggedIn = false;
         const visitor = new VisitorFacade().deserialize(response.value);
         this.config.visitor = visitor;
         console.log('returned from guest login');
@@ -126,6 +129,9 @@ export class MainPageComponent implements OnInit, OnDestroy {
   }
   isSubPurchasePolicyClicked() {
     return this.config.isSubPurchasePolicyClicked;
+  }
+  isManagerSettingsClicked() {
+    return this.config.isManagerSettingsClicked;
   }
 
   ngOnDestroy(): void {

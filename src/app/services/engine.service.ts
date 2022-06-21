@@ -31,6 +31,7 @@ import { GetManagerPermissionRequest } from 'app/http/requests/get-manager-permi
 import { GetPoliciesRequest } from 'app/http/requests/get-policies-request';
 import { GetShopEmployeesRequest } from 'app/http/requests/get-shop-employees-request';
 import { InitMarketRequest } from 'app/http/requests/init-market-request';
+import { IsSystemManagerRequest } from 'app/http/requests/is-system-manager-request';
 import { NamePasswordRequest } from 'app/http/requests/name-password-request';
 import { OpenNewShopRequest } from 'app/http/requests/open-new-shop-request';
 import { RemoveAppointmentRequest } from 'app/http/requests/remove-appointment-request';
@@ -410,6 +411,15 @@ export class EngineService {
   ): Observable<Response> {
     return this.  http.post<Response>(
       this.serverUrl + '/reOpenClosedShop',
+      request,
+      httpOptions
+    );
+  }
+  isSystemManager(
+    request: IsSystemManagerRequest
+  ): Observable<Response> {
+    return this.  http.post<ResponseT<boolean>>(
+      this.serverUrl + '/isSystemManager',
       request,
       httpOptions
     );

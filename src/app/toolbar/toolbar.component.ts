@@ -31,6 +31,13 @@ export class ToolbarComponent implements OnInit {
   loginClicked(): void {
     this.config.isLoginClicked = true;
   }
+  isManagerLoggedIn():boolean{
+    return this.config.isManagerLoggedIn;
+  }
+
+  managerSettings(){
+    this.config.isManagerSettingsClicked = true;
+  }
 
   openUserSettings() {
     this.config.isUserSettingClicked = true;
