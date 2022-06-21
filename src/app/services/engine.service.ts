@@ -405,6 +405,15 @@ export class EngineService {
     );
   }
 
+  reOpenClosedShop(
+    request: TwoStringRequest
+  ): Observable<Response> {
+    return this.  http.post<Response>(
+      this.serverUrl + '/reOpenClosedShop',
+      request,
+      httpOptions
+    );
+  }
 
 
 

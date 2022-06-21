@@ -19,11 +19,10 @@ export abstract class AppointmentFacade {
     permissions?: PermissionFacade[],
     type?: string
   ) {
-    this.appointed = appointed? appointed : '';
-    this.superVisor = superVisor? superVisor : '';
-    this.relatedShop = relatedShop? relatedShop : '';
-    this.permissions = permissions? permissions : [];
-    this.type = type? type : '';
+    this.appointed = appointed ? appointed : '';
+    this.superVisor = superVisor ? superVisor : '';
+    this.relatedShop = relatedShop ? relatedShop : '';
+    this.permissions = permissions ? permissions : [];
+    this.type = type ? type : '';
   }
-
 }
