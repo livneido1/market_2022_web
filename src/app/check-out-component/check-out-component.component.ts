@@ -21,8 +21,8 @@ export class CheckOutComponentComponent implements OnInit {
   cardNum: string;
   CVV: string;
   expirationDate: string;
-  holderName:string;
-  holderID:string;
+  holderName: string;
+  holderID: string;
   constructor(
     private config: ConfigService,
     private engine: EngineService,
@@ -34,9 +34,22 @@ export class CheckOutComponentComponent implements OnInit {
   submitCheckOut() {
     const date = new Date(this.expirationDate);
     const month = (date.getMonth() + 1).toString();
-    const year =(date.getFullYear()).toString();
-    const creditCart: CreditCard = new CreditCard(this.cardNum,month, year,this.CVV, this.holderName, this.holderID);
-    const address: Address = new Address(this.config.visitor.name,this.street,this.city, this.country,this.zipCode);
+    const year = date.getFullYear().toString();
+    const creditCart: CreditCard = new CreditCard(
+      this.cardNum,
+      month,
+      year,
+      this.CVV,
+      this.holderName,
+      this.holderID
+    );
+    const address: Address = new Address(
+      this.config.visitor.name,
+      this.street,
+      this.city,
+      this.country,
+      this.zipCode
+    );
     const request = new BuyShoppingCartRequest();
     request.address = address;
     request.expectedPrice = this.config.visitor.cart.price;
@@ -45,7 +58,11 @@ export class CheckOutComponentComponent implements OnInit {
     this.engine.buyShoppingCart(request).subscribe((responseJson) => {
       const response = new ResponseT().deserialize(responseJson);
       if (response.isErrorOccurred()) {
-        this.messageService.errorMessage(response.getMessage(), "Got it!" ,4000 );
+        this.messageService.errorMessage(
+          response.getMessage(),
+          'Got it!',
+          4000
+        );
         this.config.isCartInfoClicked = true;
         // if error is
         // if (response.value) {
@@ -54,7 +71,7 @@ export class CheckOutComponentComponent implements OnInit {
         //   );
         // }
       } else {
-        this.messageService.validMessage("bought successfully");
+        this.messageService.validMessage('bought successfully');
         this.config.visitor.cart = new ShoppingCartFacade().deserialize(
           response.value
         );
@@ -65,15 +82,24 @@ export class CheckOutComponentComponent implements OnInit {
 
   canSubmit() {
     return (
-      this.city &&  this.city !== "" &&
-      this.street &&  this.street !== "" &&
-      this.country &&  this.country !== "" &&
-      this.zipCode &&  this.zipCode !== "" &&
-      this.cardNum &&  this.cardNum !== "" &&
-      this.CVV &&  this.CVV !== "" &&
-      this.expirationDate &&  this.expirationDate !== "" &&
-      this.holderName &&  this.holderName !== "" &&
-      this.holderID &&  this.holderID !== "" 
+      this.city &&
+      this.city !== '' &&
+      this.street &&
+      this.street !== '' &&
+      this.country &&
+      this.country !== '' &&
+      this.zipCode &&
+      this.zipCode !== '' &&
+      this.cardNum &&
+      this.cardNum !== '' &&
+      this.CVV &&
+      this.CVV !== '' &&
+      this.expirationDate &&
+      this.expirationDate !== '' &&
+      this.holderName &&
+      this.holderName !== '' &&
+      this.holderID &&
+      this.holderID !== ''
     );
   }
 }

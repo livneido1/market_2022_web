@@ -6,6 +6,7 @@ import { VisitorFacade } from 'app/http/facadeObjects/visitor-facade';
 import { AddPersonalQueryRequest } from 'app/http/requests/add-personal-query-request';
 import { OpenNewShopRequest } from 'app/http/requests/open-new-shop-request';
 import { RequestVisitorName } from 'app/http/requests/request-visitor-name';
+import { TwoStringRequest } from 'app/http/requests/two-string-request';
 import { OpenNewShopDialogComponent } from 'app/open-new-shop-dialog/open-new-shop-dialog.component';
 import { ConfigService } from 'app/services/config-service.service';
 import { EngineService } from 'app/services/engine.service';
@@ -18,6 +19,7 @@ import { MessageService } from 'app/services/message.service';
 export class UserSettingsComponent implements OnInit {
   currentAnswer: string;
   currentQuestion: string;
+  shopToReOpen: string;
   constructor(
     private engine: EngineService,
     private config: ConfigService,
@@ -99,6 +101,30 @@ export class UserSettingsComponent implements OnInit {
         }
       });
     });
+  }
+
+  canReOpenShop(){
+    if (this.shopToReOpen){
+      return this.shopToReOpen !== "";
+    }
+    return false;
+  }
+
+  reOpenShop(){
+    if (this.shopToReOpen){
+      const request = new TwoStringRequest(this.config.visitor.name, this.shopToReOpen);
+      this.engine.reOpenClosedShop(request).subscribe(responseJson =>{
+        const response = new Response().deserialize(responseJson);
+        if (response.isErrorOccurred()){
+          this.messageService.errorMessage(response.getMessage());
+          return;
+        }
+        else{
+          this.messageService.validMessage("succesfully reopen shop!");
+          this.shopToReOpen = undefined;
+        }
+      })
+    }
   }
 
   resetQuestion() {

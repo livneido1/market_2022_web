@@ -30,6 +30,18 @@
     </button>
 
   </div>
+  <div style="height: 10%; text-align: center;">
+    <mat-form-field style="width: 30%; " appearance="fill">
+      <mat-label >ReOpen Closed Shop </mat-label>
+      <input matInput  #last style="color: white;" [(ngModel)]="shopToReOpen" >
+    </mat-form-field>
+    <button
+      [disabled]="!canReOpenShop()"
+      (click)="reOpenShop()">
+      Re-Open
+    </button>
+  </div>
+
 
   <div style="height: 10%; text-align: center;" >
     <div hidden>

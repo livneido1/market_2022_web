@@ -12,6 +12,7 @@ import { ResponseT } from 'app/http/facadeObjects/response-t';
 import { ShopFacade } from 'app/http/facadeObjects/shop-facade';
 import { AddItemToShopRequest } from 'app/http/requests/add-item-to-shop-request';
 import { ChangeShopItemInfoRequest } from 'app/http/requests/change-shop-item-info-request';
+import { CloseShopRequest } from 'app/http/requests/close-shop-request';
 import { RemoveItemFromShopRequest } from 'app/http/requests/remove-item-from-shop-request';
 import { SetItemCurrentAmountRequest } from 'app/http/requests/set-item-current-amount-request';
 import { TwoStringRequest } from 'app/http/requests/two-string-request';
@@ -204,7 +205,7 @@ export class ShopInfoComponentComponent implements OnInit {
         return;
       } else {
         const history: string = response.value;
-        const data : ShopPurchaseHistoryData = {history: history}; 
+        const data : ShopPurchaseHistoryData = {history: history};
         const dialogRef = this.dialog.open(ShopPurchaseHistoryDialogComponent, {
           width: '500px',
           data:  data,
@@ -217,6 +218,19 @@ export class ShopInfoComponentComponent implements OnInit {
     });
   }
 
+  closeShop(){
+    const request = new CloseShopRequest(this.config.visitor.name , this.shop.shopName);
+    this.engine.closeShop(request).subscribe(responseJson=>{
+      const response = new Response().deserialize(responseJson);
+      if (response.isErrorOccurred()){
+        this.messageService.errorMessage(response.getMessage());
+      }
+      else{
+        this.messageService.validMessage("shop succefully removed!, to re open it, go to member settings");
+        this.config.isSearchItemClicked = true;
+      }
+    })
+  }
   resetShop() {
     const request = new TwoStringRequest();
     request.name = this.config.visitor.name;
