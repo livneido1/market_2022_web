@@ -122,6 +122,9 @@ export class ToolbarComponent implements OnInit {
   selectCategory(category) {
     this.searchText = category;
   }
+  goHome(){
+    this.config.isSearchItemClicked = true;
+  }
 
   getExample(): string {
     switch (this.productSearchBy) {

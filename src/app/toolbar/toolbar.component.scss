@@ -4,6 +4,7 @@
 
 }
 .registerButton{
+  cursor: pointer;
   float:right;
   padding-left: 10px;
   height: 40px;
@@ -17,7 +18,15 @@
   margin-left: 40%;
 }
 .loginButton{
+  cursor: pointer;
   float:right;
+  height: 40px;
+  width: 100px;
+  margin-top: 10px;
+}
+.homeButton{
+  cursor: pointer;
+  float: left;
   height: 40px;
   width: 100px;
   margin-top: 10px;
@@ -27,6 +36,8 @@
   height: 40px;
   width: 100px;
   margin-top: 10px;
+  cursor: pointer;
+
 
 }
 
@@ -35,9 +46,13 @@
   height: 40px;
   width: 100px;
   margin-top: 10px;
+  cursor: pointer;
+
 }
 
 .searchButton{
   height: 54px;
   margin-left: 10px;
+  cursor: pointer;
+
 }
