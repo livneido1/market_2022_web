@@ -25,6 +25,13 @@
       Register
 
     </button>
+    <button
+      title="manager page"
+      class="cartIcon"
+      *ngIf="isManagerLoggedIn()"
+      (click)="managerSettings()">
+      <span class="material-icons">settings</span>
+    </button>
 
   </div>
   <!-- <p style="margin-left: 10px;">Market Name</p> -->

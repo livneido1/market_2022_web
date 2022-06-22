@@ -7,10 +7,10 @@ import { AddPersonalQueryRequest } from 'app/http/requests/add-personal-query-re
 import { OpenNewShopRequest } from 'app/http/requests/open-new-shop-request';
 import { RequestVisitorName } from 'app/http/requests/request-visitor-name';
 import { TwoStringRequest } from 'app/http/requests/two-string-request';
-import { OpenNewShopDialogComponent } from 'app/open-new-shop-dialog/open-new-shop-dialog.component';
 import { ConfigService } from 'app/services/config-service.service';
 import { EngineService } from 'app/services/engine.service';
 import { MessageService } from 'app/services/message.service';
+import { OpenNewShopDialogComponent } from 'app/open-new-shop-dialog/open-new-shop-dialog.component';
 @Component({
   selector: 'app-user-settings',
   templateUrl: './user-settings.component.html',
@@ -68,6 +68,7 @@ export class UserSettingsComponent implements OnInit {
           this.messageService.errorMessage(response.getMessage());
         } else{
           const visitor = new VisitorFacade().deserialize(response.value);
+          this.config.isManagerLoggedIn = false;
           this.config.isMemberLoggedIn = false;
           this.config.member = undefined;
           this.config.visitor = visitor;

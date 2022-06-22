@@ -205,7 +205,7 @@ export class ShopInfoComponentComponent implements OnInit {
         return;
       } else {
         const history: string = response.value;
-        const data : ShopPurchaseHistoryData = {history: history};
+        const data : ShopPurchaseHistoryData = {history: history}; 
         const dialogRef = this.dialog.open(ShopPurchaseHistoryDialogComponent, {
           width: '500px',
           data:  data,

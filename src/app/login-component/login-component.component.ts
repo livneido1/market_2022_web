@@ -7,6 +7,8 @@ import { ResponseT } from 'app/http/facadeObjects/response-t';
 import { MessageService } from 'app/services/message.service';
 import { ValidateSecurityRequest } from 'app/http/requests/validate-security-request';
 import { MemberFacade } from 'app/http/facadeObjects/MemberFacade';
+import { IsSystemManagerRequest } from 'app/http/requests/is-system-manager-request';
+import { Response } from 'app/http/facadeObjects/response';
 
 @Component({
   selector: 'app-login-component',
@@ -56,6 +58,7 @@ export class LoginComponentComponent implements OnInit {
           } else {
             this.answers = [];
             this.validateQuestions();
+
           }
         }
       });
@@ -93,11 +96,21 @@ export class LoginComponentComponent implements OnInit {
           this.config.visitor.name = member.name;
           this.config.member = member;
           this.config.isMemberLoggedIn = true;
+          this.isManagerLoggedIn(member.name);
           this.config.isSearchItemClicked = true;
         }
       });
   }
 
+  isManagerLoggedIn(name:string){
+    const request = new IsSystemManagerRequest(name);
+    this.engine.isSystemManager(request).subscribe(responseJson=>{
+      const respone = new ResponseT<Boolean>().deserialize(responseJson);
+      if (!respone.isErrorOccurred()){
+        this.config.isManagerLoggedIn = respone.value;
+      }
+    })
+  }
   canSubmitAnswer() {
     return this.currentAnswer && this.currentAnswer !== '';
   }

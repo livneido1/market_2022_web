@@ -31,11 +31,13 @@ import { GetManagerPermissionRequest } from 'app/http/requests/get-manager-permi
 import { GetPoliciesRequest } from 'app/http/requests/get-policies-request';
 import { GetShopEmployeesRequest } from 'app/http/requests/get-shop-employees-request';
 import { InitMarketRequest } from 'app/http/requests/init-market-request';
+import { IsSystemManagerRequest } from 'app/http/requests/is-system-manager-request';
 import { NamePasswordRequest } from 'app/http/requests/name-password-request';
 import { OpenNewShopRequest } from 'app/http/requests/open-new-shop-request';
 import { RemoveAppointmentRequest } from 'app/http/requests/remove-appointment-request';
 import { RemoveDiscountFromShopRequest } from 'app/http/requests/remove-discount-from-shop-request';
 import { RemoveItemFromShopRequest } from 'app/http/requests/remove-item-from-shop-request';
+import { RemoveMemberRequest } from 'app/http/requests/remove-member-request';
 import { RemovePurchasePolicyFromShopRequest } from 'app/http/requests/remove-purchase-policy-from-shop-request';
 import { RequestVisitorName } from 'app/http/requests/request-visitor-name';
 import { SearchProductByNameRequest } from 'app/http/requests/search-product-by-name-request';
@@ -414,6 +416,15 @@ export class EngineService {
       httpOptions
     );
   }
+  isSystemManager(
+    request: IsSystemManagerRequest
+  ): Observable<Response> {
+    return this.  http.post<ResponseT<boolean>>(
+      this.serverUrl + '/isSystemManager',
+      request,
+      httpOptions
+    );
+  }
 
 
 
@@ -427,13 +438,13 @@ export class EngineService {
       httpOptions
     );
   }
-  // removeMember(
-  //   request: removeMember
-  // ): Observable<ResponseT<string>> {
-  //   return this.http.post<ResponseT<string>>(
-  //     this.serverUrl + '/removeMember',
-  //     request,
-  //     httpOptions
-  //   );
-  // }
+  removeMember(
+    request: RemoveMemberRequest
+  ): Observable<ResponseT<string>> {
+    return this.http.post<ResponseT<string>>(
+      this.serverUrl + '/removeMember',
+      request,
+      httpOptions
+    );
+  }
 }
