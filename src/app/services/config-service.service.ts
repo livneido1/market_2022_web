@@ -28,16 +28,15 @@ export class ConfigService {
   private _isSubPurchasePolicyClicked: boolean;
   private _isManagerSettingsClicked: boolean;
 
-
   //dynamic settings
   private _visitor: VisitorFacade;
   private _isMemberLoggedIn: boolean;
   private _member: MemberFacade;
-  isManagerLoggedIn: boolean;
+  private _isManagerLoggedIn: boolean;
   itemSearchResult: ItemFacade[];
 
-public serverUrl: string = 'http://localhost:8080';
-public stompClient:RxStomp;
+  public serverUrl: string = 'http://localhost:8080';
+  public stompClient: RxStomp;
 
   private _selectedShop: ShopFacade;
   private _itemsSearched: ItemFacade[];
@@ -65,7 +64,7 @@ public stompClient:RxStomp;
     this._member = undefined;
     this._itemsSearched = undefined;
     this.selectedShop = undefined;
-    this.isManagerLoggedIn = false;
+    this._isManagerLoggedIn = false;
   }
 
   cleanAllComponents() {
@@ -221,6 +220,12 @@ public stompClient:RxStomp;
   }
   set isMarketInitialized(value: boolean) {
     this._isMarketInitialized = value;
+  }
+  get isManagerLoggedIn() {
+    return this._isManagerLoggedIn;
+  }
+  set isManagerLoggedIn(value: boolean) {
+    this._isManagerLoggedIn = value;
   }
 
   get visitor() {

@@ -2,15 +2,12 @@ import { Deserializable } from '../facadeObjects/deserializable';
 
 export class RemoveMemberRequest implements Deserializable {
   manager: string;
-  MemberToRemove: string;
+  memberToRemove: string;
 
-  constructor() {
-    this.manager = "";
-    this.MemberToRemove = "";
+  constructor(manager?: string, memberToRemove?: string) {
+    this.manager = manager;
+    this.memberToRemove = memberToRemove;
   }
-
-
-
 
   deserialize(value: any): this {
     if (!value) {

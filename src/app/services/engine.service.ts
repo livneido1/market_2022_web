@@ -37,6 +37,7 @@ import { OpenNewShopRequest } from 'app/http/requests/open-new-shop-request';
 import { RemoveAppointmentRequest } from 'app/http/requests/remove-appointment-request';
 import { RemoveDiscountFromShopRequest } from 'app/http/requests/remove-discount-from-shop-request';
 import { RemoveItemFromShopRequest } from 'app/http/requests/remove-item-from-shop-request';
+import { RemoveMemberRequest } from 'app/http/requests/remove-member-request';
 import { RemovePurchasePolicyFromShopRequest } from 'app/http/requests/remove-purchase-policy-from-shop-request';
 import { RequestVisitorName } from 'app/http/requests/request-visitor-name';
 import { SearchProductByNameRequest } from 'app/http/requests/search-product-by-name-request';
@@ -437,13 +438,13 @@ export class EngineService {
       httpOptions
     );
   }
-  // removeMember(
-  //   request: removeMember
-  // ): Observable<ResponseT<string>> {
-  //   return this.http.post<ResponseT<string>>(
-  //     this.serverUrl + '/removeMember',
-  //     request,
-  //     httpOptions
-  //   );
-  // }
+  removeMember(
+    request: RemoveMemberRequest
+  ): Observable<ResponseT<string>> {
+    return this.http.post<ResponseT<string>>(
+      this.serverUrl + '/removeMember',
+      request,
+      httpOptions
+    );
+  }
 }
