@@ -1,0 +1,29 @@
+<div>
+  <div class="leftColumn">
+    <ul>
+      <li *ngFor="let name of this.pendingMembers">
+        <mat-checkbox
+         (change)="onClickChange(name,$event)"
+          >
+          name
+        </mat-checkbox>
+
+      </li>
+    </ul>
+  </div>
+
+  <div class="rightColumn">
+    <div class="optionalButtonsDiv">
+      <button class="optionalButton approveButton"
+        [mat-dialog-close]="returnData(true)">
+        Approve
+      </button>
+    </div>
+    <div class="optionalButtonsDiv">
+      <button class="optionalButton rejectButton"
+        [mat-dialog-close]="returnData(false)">
+        Approve
+      </button>
+    </div>
+  </div>
+</div>

@@ -18,6 +18,7 @@ import { AddPersonalQueryRequest } from 'app/http/requests/add-personal-query-re
 import { AddPurchasePolicyToShopRequest } from 'app/http/requests/add-purchase-policy-to-shop-request';
 import { AppointmentShopManagerRequest } from 'app/http/requests/appointment-shop-manager-request';
 import { AppointmentShopOwnerRequest } from 'app/http/requests/appointment-shop-owner-request';
+import { ApproveAppointmentRequest } from 'app/http/requests/approve-appointment-request';
 import { BuyShoppingCartRequest } from 'app/http/requests/buy-shopping-cart-request';
 import { ChangeShopItemInfoRequest } from 'app/http/requests/change-shop-item-info-request';
 import { CloseShopRequest } from 'app/http/requests/close-shop-request';
@@ -32,6 +33,7 @@ import { GetPoliciesRequest } from 'app/http/requests/get-policies-request';
 import { GetShopEmployeesRequest } from 'app/http/requests/get-shop-employees-request';
 import { InitMarketRequest } from 'app/http/requests/init-market-request';
 import { IsSystemManagerRequest } from 'app/http/requests/is-system-manager-request';
+import { MyPendingAppsRequest } from 'app/http/requests/my-pending-apps-request';
 import { NamePasswordRequest } from 'app/http/requests/name-password-request';
 import { OpenNewShopRequest } from 'app/http/requests/open-new-shop-request';
 import { RemoveAppointmentRequest } from 'app/http/requests/remove-appointment-request';
@@ -447,4 +449,33 @@ export class EngineService {
       httpOptions
     );
   }
+  getMyPendingApps(
+    request: MyPendingAppsRequest
+  ): Observable<ResponseT<string[]>> {
+    return this.http.post<ResponseT<string[]>>(
+      this.serverUrl + '/getMyPendingApps',
+      request,
+      httpOptions
+    );
+  }
+  approveAppointment(
+    request: ApproveAppointmentRequest
+  ): Observable<Response> {
+    return this.http.post<Response>(
+      this.serverUrl + '/approveAppointment',
+      request,
+      httpOptions
+    );
+  }
+  rejectAppointment(
+    request: ApproveAppointmentRequest
+  ): Observable<Response> {
+    return this.http.post<Response>(
+      this.serverUrl + '/rejectAppointment',
+      request,
+      httpOptions
+    );
+  }
+
+
 }

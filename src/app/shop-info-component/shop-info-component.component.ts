@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AddItemDialogComponent } from 'app/add-item-dialog/add-item-dialog.component';
+import {
+  ApprovePendingAppsDialogComponent,
+  PendingAppsData,
+  PendingAppsReturnValue,
+} from 'app/approve-pending-apps-dialog/approve-pending-apps-dialog.component';
 import { GetStringValueComponent } from 'app/get-string-value/get-string-value.component';
 import {
   GetValueDialogComponent,
@@ -11,8 +16,10 @@ import { Response } from 'app/http/facadeObjects/response';
 import { ResponseT } from 'app/http/facadeObjects/response-t';
 import { ShopFacade } from 'app/http/facadeObjects/shop-facade';
 import { AddItemToShopRequest } from 'app/http/requests/add-item-to-shop-request';
+import { ApproveAppointmentRequest } from 'app/http/requests/approve-appointment-request';
 import { ChangeShopItemInfoRequest } from 'app/http/requests/change-shop-item-info-request';
 import { CloseShopRequest } from 'app/http/requests/close-shop-request';
+import { MyPendingAppsRequest } from 'app/http/requests/my-pending-apps-request';
 import { RemoveItemFromShopRequest } from 'app/http/requests/remove-item-from-shop-request';
 import { SetItemCurrentAmountRequest } from 'app/http/requests/set-item-current-amount-request';
 import { TwoStringRequest } from 'app/http/requests/two-string-request';
@@ -20,7 +27,10 @@ import { ItemMatDialogComponent } from 'app/item-mat-dialog/item-mat-dialog.comp
 import { ConfigService } from 'app/services/config-service.service';
 import { EngineService } from 'app/services/engine.service';
 import { MessageService } from 'app/services/message.service';
-import { ShopPurchaseHistoryData, ShopPurchaseHistoryDialogComponent } from 'app/shop-purchase-history-dialog/shop-purchase-history-dialog.component';
+import {
+  ShopPurchaseHistoryData,
+  ShopPurchaseHistoryDialogComponent,
+} from 'app/shop-purchase-history-dialog/shop-purchase-history-dialog.component';
 
 @Component({
   selector: 'app-shop-info-component',
@@ -205,10 +215,10 @@ export class ShopInfoComponentComponent implements OnInit {
         return;
       } else {
         const history: string = response.value;
-        const data : ShopPurchaseHistoryData = {history: history}; 
+        const data: ShopPurchaseHistoryData = { history: history };
         const dialogRef = this.dialog.open(ShopPurchaseHistoryDialogComponent, {
           width: '500px',
-          data:  data,
+          data: data,
         });
 
         dialogRef.afterClosed().subscribe((result) => {
@@ -217,19 +227,78 @@ export class ShopInfoComponentComponent implements OnInit {
       }
     });
   }
-
-  closeShop(){
-    const request = new CloseShopRequest(this.config.visitor.name , this.shop.shopName);
-    this.engine.closeShop(request).subscribe(responseJson=>{
-      const response = new Response().deserialize(responseJson);
-      if (response.isErrorOccurred()){
+  getMyPendingApps() {
+    const request = new MyPendingAppsRequest(
+      this.shop.shopName,
+      this.config.visitor.name
+    );
+    this.engine.getMyPendingApps(request).subscribe((responseJson) => {
+      const response = new ResponseT<string>().deserialize(responseJson);
+      if (response.isErrorOccurred()) {
         this.messageService.errorMessage(response.getMessage());
+        return;
       }
-      else{
-        this.messageService.validMessage("shop succefully removed!, to re open it, go to member settings");
+      const names: string[] = response.value;
+      if (!names || names.length < 1) {
+        this.messageService.validMessage('you have no pending apppointments');
+      } else {
+        const data: PendingAppsData = {
+          names: names,
+        };
+        const dialogRef = this.dialog.open(ApprovePendingAppsDialogComponent, {
+          width: '500px',
+          data: data,
+        });
+        dialogRef.afterClosed().subscribe((data: PendingAppsReturnValue) => {
+          this.approveOrRejectBatch(data);
+        });
+      }
+    });
+  }
+  // TODO create method on server side
+  approveOrRejectBatch(data: PendingAppsReturnValue) {
+    for (const memberName of data.checked) {
+      this.approveRejectAppointment(memberName, data.approve);
+    }
+  }
+
+  private approveRejectAppointment(memberName: string, approve:boolean) {
+    const request = new ApproveAppointmentRequest(
+      this.shop.shopName,
+      memberName,
+      this.config.visitor.name
+    );
+    if (approve) {
+      this.engine.approveAppointment(request).subscribe((responseJson) => {
+        const response = new Response().deserialize(responseJson);
+        if (response.isErrorOccurred()) {
+          this.messageService.errorMessage(response.getMessage());
+        }
+        else{
+          this.messageService.validMessage("successfully done");
+          // TODO doesnt need to reset after each approve
+          this.resetShop();
+        }
+      });
+    }
+  }
+
+  closeShop() {
+    const request = new CloseShopRequest(
+      this.config.visitor.name,
+      this.shop.shopName
+    );
+    this.engine.closeShop(request).subscribe((responseJson) => {
+      const response = new Response().deserialize(responseJson);
+      if (response.isErrorOccurred()) {
+        this.messageService.errorMessage(response.getMessage());
+      } else {
+        this.messageService.validMessage(
+          'shop succefully removed!, to re open it, go to member settings'
+        );
         this.config.isSearchItemClicked = true;
       }
-    })
+    });
   }
   resetShop() {
     const request = new TwoStringRequest();

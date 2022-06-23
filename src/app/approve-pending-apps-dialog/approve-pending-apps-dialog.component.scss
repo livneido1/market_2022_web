@@ -1,0 +1,31 @@
+.rightColumn{
+  height: 100%;
+  width: 50%;
+  text-align: right;
+
+}
+.leftColumn{
+  width: 50%;
+  height: 100%;
+  float: left;
+  text-align: left;
+}
+
+.optionalButton{
+  border-radius: 20px;
+  border-color: black;
+  border-width: 1px;
+  width: 50%;
+  height: 50px;
+  cursor: pointer;
+}
+.rejectButton{
+  background-color: rgb(228, 46, 46);
+}
+.approveButton{
+  background-color: rgb(53, 242, 144);
+}
+.optionalButtonsDiv{
+  height: 10%;
+  text-align: center;
+}
