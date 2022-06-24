@@ -15,7 +15,7 @@ export class ModelAdapterService {
 
 
   getAllPermissions(): string[] {
-    return ['Employees edit', 'See History'];
+    return ['Employees edit', 'See History', 'Can Approve Bids'];
   }
   getPermissionFromText(text: string): PermissionFacade {
     const permit = new PermissionFacade();
@@ -25,6 +25,9 @@ export class ModelAdapterService {
         return permit;
       case 'See History':
         permit.name = 'PurchaseHistoryPermission';
+        return permit;
+      case 'Can Approve Bids':
+        permit.name = 'ApproveBidPermission';
         return permit;
     }
     return undefined;
@@ -36,6 +39,8 @@ export class ModelAdapterService {
           return "Employees edit";
         case "PurchaseHistoryPermission":
           return "See History";
+        case "ApproveBidPermission":
+          return "Can Approve Bids";
       }
       return undefined;
   }
