@@ -6,7 +6,9 @@ import {
   GetValueDialogComponent,
   GetValueDialogData,
 } from 'app/get-value-dialog/get-value-dialog.component';
+import { AppointmentFacade } from 'app/http/facadeObjects/AppointmentFacade';
 import { Category, ItemFacade } from 'app/http/facadeObjects/ItemFacade';
+import { PermissionFacade } from 'app/http/facadeObjects/PermissionFacade';
 import { Response } from 'app/http/facadeObjects/response';
 import { ResponseT } from 'app/http/facadeObjects/response-t';
 import { ShopFacade } from 'app/http/facadeObjects/shop-facade';
@@ -267,6 +269,43 @@ export class ShopInfoComponentComponent implements OnInit {
       }
 
     });
+  }
+
+  hasHistoryPermission():boolean{
+    return this.hasPermission('PurchaseHistoryPermission');
+  }
+  hasBidPermissions():boolean{
+    return this.hasPermission('ApproveBidPermission');
+  }
+  isOwnerOrManager():boolean{
+    if (this.shop.employees.has(this.config.visitor.name)){
+      return true;
+    }
+    return false;
+  }
+  hasEmployeePermission():boolean{
+    return this.hasPermission('EmployeesPermission');
+  }
+  isFounder():boolean{
+    if (this.shop.employees.has(this.config.visitor.name)){
+      const app:AppointmentFacade = this.shop.employees.get(this.config.visitor.name);
+      if (!app.superVisor){
+        return true;
+      }
+    }
+    return false;
+  }
+
+  hasPermission(permission: string):boolean{
+    if (this.shop.employees.has(this.config.visitor.name)){
+      const app:AppointmentFacade = this.shop.employees.get(this.config.visitor.name);
+      for (const permit of app.permissions){
+        if (permit.name === permission){
+          return true;
+        }
+      }
+    }
+    return false;
   }
 
   resetShop() {
