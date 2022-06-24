@@ -41,16 +41,17 @@
               <div>
 
                 <button
-                  title="Remove Item From Cart"
+                  *ngIf="isOwnerOrManager()"
+                  title="Remove Item From Shop"
                   style="float:right; cursor: pointer;"
                   (click)="removeItem(item)">
                   <span class='material-icons'>delete</span>
                 </button>
 
                 <button
+                  *ngIf="isOwnerOrManager()"
                   title="set item info"
                   style="cursor: pointer;"
-
                   (click)="setItemInfo(item)">
                   <span class="material-icons">settings</span>
                 </button>
@@ -67,6 +68,7 @@
 
               <div>
                 <button
+                  *ngIf="isOwnerOrManager()"
                   style="cursor: pointer; width: 100%;margin-top: 10px;"
                   (click)="setItemAmount(item)">
                   Change Item Amount in Shop
@@ -86,6 +88,7 @@
   <div class="SideBar">
     <div style="height: 10%; text-align: center; margin-top: 20%;">
       <button
+        *ngIf="isOwnerOrManager()"
         class="optionalButton"
         (click)="addItemToShop()"
         >
@@ -94,6 +97,7 @@
     </div>
     <div class="optionalButtonsDiv">
       <button class="optionalButton"
+        *ngIf="hasEmployeePermission()"
         (click)="onEmployeesClick()"
       >
         Employees
@@ -101,6 +105,7 @@
     </div>
     <div class="optionalButtonsDiv">
       <button class="optionalButton"
+
         (click)="showDiscounts()"
       >
         Shop Discounts
@@ -115,6 +120,7 @@
     </div>
     <div class="optionalButtonsDiv">
       <button class="optionalButton"
+        *ngIf="hasBidPermissions()"
         (click)="showPendingBidsToApprove()"
       >
         My Pending Bids To Approve
@@ -122,6 +128,7 @@
     </div>
     <div class="optionalButtonsDiv">
       <button class="optionalButton"
+        *ngIf="hasHistoryPermission()"
         (click)="showPurchaseHistory()"
       >
         Purchase History
@@ -129,6 +136,7 @@
     </div>
     <div class="optionalButtonsDiv">
       <button class="optionalButton"
+        *ngIf="isFounder()"
         (click)="closeShop()"
       >
         Close Shop
