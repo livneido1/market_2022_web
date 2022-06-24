@@ -54,6 +54,14 @@
                   (click)="setItemInfo(item)">
                   <span class="material-icons">settings</span>
                 </button>
+                <div>
+                  <button
+                    style="cursor: pointer;"
+                    title="offer a bid"
+                    (click)="offerBid(item)">
+                    <span class="material-icons">local_offer</span>
+                  </button>
+                </div>
 
               </div>
 
@@ -103,6 +111,13 @@
         (click)="onPurchasePoliciesClick()"
       >
         Shop Purchase Policies
+      </button>
+    </div>
+    <div class="optionalButtonsDiv">
+      <button class="optionalButton"
+        (click)="showPendingBidsToApprove()"
+      >
+        My Pending Bids To Approve
       </button>
     </div>
     <div class="optionalButtonsDiv">

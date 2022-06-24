@@ -1,3 +1,4 @@
+import { BidFacade } from './bid-facade';
 import { Deserializable } from './deserializable';
 import { ItemFacade } from './ItemFacade';
 
@@ -5,11 +6,17 @@ export class ShoppingBasketFacade implements Deserializable {
   items: Map<number, number>; //<Item,quantity>
   itemMap: Map<number, ItemFacade>
   price: number;
+  bids: Map<number, BidFacade>
 
-  constructor() {
-    this.items = new Map();
-    this.itemMap = new Map();
-    this.price = -2;
+  constructor(
+    items?: Map<number, number>,
+    itemMap?: Map<number, ItemFacade>,
+    price?: number,
+    bids?: Map<number, BidFacade>) {
+      this.items= items;
+      this.itemMap= itemMap;
+      this.price= price;
+      this.bids= bids;
   }
   deserialize(value: any): this {
     if (!value) {
@@ -27,6 +34,12 @@ export class ShoppingBasketFacade implements Deserializable {
       const id = Number(entry[0]);
       const item = new ItemFacade().deserialize(entry[1]);
       this.itemMap.set(id,item);
+    }
+    this.bids = new Map();
+    for (const entry of Object.entries( value.bids)) {
+      const id = Number(entry[0]);
+      const bid = new BidFacade().deserialize(entry[1]);
+      this.bids.set(id,bid);
     }
     return this;
   }

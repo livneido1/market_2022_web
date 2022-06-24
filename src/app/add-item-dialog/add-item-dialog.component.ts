@@ -1,9 +1,11 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Category } from 'app/http/facadeObjects/ItemFacade';
+import { Category, ItemFacade } from 'app/http/facadeObjects/ItemFacade';
 import { DialogData } from 'app/item-mat-dialog/item-mat-dialog.component';
 import { ConfigService } from 'app/services/config-service.service';
 import { MessageService } from 'app/services/message.service';
+
+
 
 @Component({
   selector: 'app-add-item-dialog',
