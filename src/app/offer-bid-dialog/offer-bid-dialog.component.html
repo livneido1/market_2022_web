@@ -1,0 +1,18 @@
+<div style="height: 60%;">
+  <p style="font-size: xx-large;">item: {{this.item.name}}</p>
+  <mat-form-field class="inputLong" appearance="fill">
+    <mat-label > offer amount </mat-label>
+    <input [disabled]="!this.editable" matInput  #last  style="color: white;" [(ngModel)]="amount">
+  </mat-form-field>
+  <mat-form-field class="inputLong" appearance="fill">
+    <mat-label > bid price </mat-label>
+    <input [disabled]="!this.editable" matInput  #last  style="color: white;" [(ngModel)]="price">
+  </mat-form-field>
+</div>
+<button
+  *ngIf="this.editable"
+  class="button"
+  [disabled]="!canSubmit()"
+  [mat-dialog-close]="submit()">
+  {{this.buttonTitle}}
+</button>

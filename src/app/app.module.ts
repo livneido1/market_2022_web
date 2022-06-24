@@ -49,6 +49,7 @@ import { MergePurchaseLevelDialigComponent } from './merge-purchase-level-dialig
 import { ShopPurchaseHistoryDialogComponent } from './shop-purchase-history-dialog/shop-purchase-history-dialog.component';
 import { ManagerSettingsComponent } from './manager-settings/manager-settings.component';
 import { OpenNewShopDialogComponent } from './open-new-shop-dialog/open-new-shop-dialog.component';
+import { OfferBidDialogComponent } from './offer-bid-dialog/offer-bid-dialog.component';
 
 @NgModule({
   declarations: [
@@ -87,6 +88,7 @@ import { OpenNewShopDialogComponent } from './open-new-shop-dialog/open-new-shop
     MergePurchaseLevelDialigComponent,
     ShopPurchaseHistoryDialogComponent,
     ManagerSettingsComponent,
+    OfferBidDialogComponent,
   ],
   imports: [
     BrowserModule,

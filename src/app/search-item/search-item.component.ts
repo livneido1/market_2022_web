@@ -10,6 +10,7 @@ import { ShopFacade } from 'app/http/facadeObjects/shop-facade';
 import { AddItemToShoppingCartRequest } from 'app/http/requests/add-item-to-shopping-cart-request';
 import { TwoStringRequest } from 'app/http/requests/two-string-request';
 import { ItemMatDialogComponent } from 'app/item-mat-dialog/item-mat-dialog.component';
+import { BidData, OfferBidDialogComponent } from 'app/offer-bid-dialog/offer-bid-dialog.component';
 import { ConfigService } from 'app/services/config-service.service';
 import { EngineService } from 'app/services/engine.service';
 import { MessageService } from 'app/services/message.service';
@@ -52,7 +53,7 @@ export class SearchItemComponent implements OnInit {
       console.log('The dialog was closed');
     });
   }
- 
+
   canSearchShopName() {
     return this.shopName && this.shopName !== '';
   }
@@ -153,6 +154,25 @@ export class SearchItemComponent implements OnInit {
 
   getAllCategories() {
     return this.config.getAllCategories();
+  }
+  offerBid(item:ItemFacade){
+    const data: BidData = {
+      visitorName: this.config.visitor.name,
+      item: item,
+      amount: 0,
+      price: 0,
+      editable: true,
+      buttonTitle: "submit an offer!"
+    }
+    const dialogRef = this.dialog.open(OfferBidDialogComponent, {
+      width: '250px',
+      data: data,
+    });
+
+    dialogRef.afterClosed().subscribe((data:BidData) => {
+      this.engine.bid
+
+    });
   }
 
   changeFilter(checked, category: string) {

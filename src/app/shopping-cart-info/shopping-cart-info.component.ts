@@ -127,7 +127,7 @@ export class ShoppingCartInfoComponent implements OnInit {
       const response = new ResponseT<ShoppingCartFacade>().deserialize(
         responseJson
       );
-      if (response.isErrorOccurred) {
+      if (response.isErrorOccurred()) {
         this.messageService.errorMessage(response.getMessage());
       } else {
         const newCart = new ShoppingCartFacade().deserialize(response.value);

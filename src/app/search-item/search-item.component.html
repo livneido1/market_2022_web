@@ -67,10 +67,20 @@
 
               </td>
               <td>
-                <button style="cursor: pointer;"
-                  (click)="addToCart(item)">
-                  add to cart
-                </button>
+                <div>
+                  <button style="cursor: pointer;"
+                    (click)="addToCart(item)">
+                    add to cart
+                  </button>
+                </div>
+                <div>
+                  <button
+                    style="cursor: pointer;"
+                    title="offer a bid"
+                    (click)="offerBid(item)">
+                    <span class="material-icons">local_offer</span>
+                  </button>
+                </div>
               </td>
 
             </tr>

@@ -358,42 +358,52 @@ export class EngineService {
 
   ////////////////////////////////// V2 /////////////////////////////////
 
-  addDiscountToShop(request :AddDiscountToShopRequest): Observable<Response> {
+  addDiscountToShop(request: AddDiscountToShopRequest): Observable<Response> {
     return this.http.post<Response>(
       this.serverUrl + '/addDiscountToShop',
       request,
       httpOptions
     );
   }
-  removeDiscountFromShop(request: RemoveDiscountFromShopRequest): Observable<Response> {
+  removeDiscountFromShop(
+    request: RemoveDiscountFromShopRequest
+  ): Observable<Response> {
     return this.http.post<Response>(
       this.serverUrl + '/removeDiscountFromShop',
       request,
       httpOptions
     );
   }
-  addPurchasePolicyToShop(request: AddPurchasePolicyToShopRequest): Observable<Response> {
+  addPurchasePolicyToShop(
+    request: AddPurchasePolicyToShopRequest
+  ): Observable<Response> {
     return this.http.post<Response>(
       this.serverUrl + '/addPurchasePolicyToShop',
       request,
       httpOptions
     );
   }
-  removePurchasePolicyFromShop(request: RemovePurchasePolicyFromShopRequest): Observable<ResponseT<PurchasePolicyTypeWrapper[]>> {
+  removePurchasePolicyFromShop(
+    request: RemovePurchasePolicyFromShopRequest
+  ): Observable<ResponseT<PurchasePolicyTypeWrapper[]>> {
     return this.http.post<ResponseT<PurchasePolicyTypeWrapper[]>>(
       this.serverUrl + '/removePurchasePolicyFromShop',
       request,
       httpOptions
     );
   }
-  getPurchasePoliciesOfShop(request: GetPoliciesRequest): Observable<ResponseT<PurchasePolicyTypeWrapper[]>> {
+  getPurchasePoliciesOfShop(
+    request: GetPoliciesRequest
+  ): Observable<ResponseT<PurchasePolicyTypeWrapper[]>> {
     return this.http.post<ResponseT<PurchasePolicyTypeWrapper[]>>(
       this.serverUrl + '/getPurchasePoliciesOfShop',
       request,
       httpOptions
     );
   }
-  getDiscountTypesOfShop(request: GetPoliciesRequest): Observable<ResponseT<DiscountTypeWrapper[]>> {
+  getDiscountTypesOfShop(
+    request: GetPoliciesRequest
+  ): Observable<ResponseT<DiscountTypeWrapper[]>> {
     return this.http.post<ResponseT<DiscountTypeWrapper[]>>(
       this.serverUrl + '/getDiscountTypesOfShop',
       request,
@@ -407,27 +417,20 @@ export class EngineService {
     );
   }
 
-  reOpenClosedShop(
-    request: TwoStringRequest
-  ): Observable<Response> {
-    return this.  http.post<Response>(
+  reOpenClosedShop(request: TwoStringRequest): Observable<Response> {
+    return this.http.post<Response>(
       this.serverUrl + '/reOpenClosedShop',
       request,
       httpOptions
     );
   }
-  isSystemManager(
-    request: IsSystemManagerRequest
-  ): Observable<Response> {
-    return this.  http.post<ResponseT<boolean>>(
+  isSystemManager(request: IsSystemManagerRequest): Observable<Response> {
+    return this.http.post<ResponseT<boolean>>(
       this.serverUrl + '/isSystemManager',
       request,
       httpOptions
     );
   }
-
-
-
 
   removeShopOwnerAppointment(
     request: RemoveAppointmentRequest
@@ -438,11 +441,46 @@ export class EngineService {
       httpOptions
     );
   }
-  removeMember(
-    request: RemoveMemberRequest
-  ): Observable<ResponseT<string>> {
+  removeMember(request: RemoveMemberRequest): Observable<ResponseT<string>> {
     return this.http.post<ResponseT<string>>(
       this.serverUrl + '/removeMember',
+      request,
+      httpOptions
+    );
+  }
+
+  addABid(request: AddABidRequest): Observable<Response> {
+    return this.http.post<Response>(
+      this.serverUrl + '/addABid',
+      request,
+      httpOptions
+    );
+  }
+
+  approveABid(request: ApproveABidRequest): Observable<Response> {
+    return this.http.post<Response>(
+      this.serverUrl + '/approveABid',
+      request,
+      httpOptions
+    );
+  }
+  suggestNewOfferToBid(request: SuggestNewOfferToBidRequest): Observable<Response> {
+    return this.http.post<Response>(
+      this.serverUrl + '/suggestNewOfferToBid',
+      request,
+      httpOptions
+    );
+  }
+  rejectABid(request: RejectABidRequest): Observable<Response> {
+    return this.http.post<Response>(
+      this.serverUrl + '/rejectABid',
+      request,
+      httpOptions
+    );
+  }
+  cancelABid(request: CancelABidRequest): Observable<Response> {
+    return this.http.post<Response>(
+      this.serverUrl + '/cancelABid',
       request,
       httpOptions
     );
