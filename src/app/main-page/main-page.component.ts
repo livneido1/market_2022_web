@@ -133,6 +133,9 @@ export class MainPageComponent implements OnInit, OnDestroy {
   isManagerSettingsClicked() {
     return this.config.isManagerSettingsClicked;
   }
+  isPendingBidsClicked() {
+    return this.config.isPendingBidsClicked;
+  }
 
   ngOnDestroy(): void {
     const request = new ExitSystemRequest();

@@ -27,6 +27,7 @@ export class ConfigService {
   private _isAddNewPurchasePolicyClicked: boolean;
   private _isSubPurchasePolicyClicked: boolean;
   private _isManagerSettingsClicked: boolean;
+  private _isPendingBidsClicked: boolean;
 
   //dynamic settings
   private _visitor: VisitorFacade;
@@ -60,6 +61,7 @@ export class ConfigService {
     this._isAddNewPurchasePolicyClicked = false;
     this._isSubPurchasePolicyClicked = false;
     this._isManagerSettingsClicked = false;
+    this._isPendingBidsClicked = false;
 
     this._member = undefined;
     this._itemsSearched = undefined;
@@ -83,6 +85,7 @@ export class ConfigService {
     this._isAddNewPurchasePolicyClicked = false;
     this._isSubPurchasePolicyClicked = false;
     this._isManagerSettingsClicked = false;
+    this._isPendingBidsClicked = false;
     this._itemsSearched = undefined;
   }
 
@@ -162,6 +165,13 @@ export class ConfigService {
   set isManagerSettingsClicked(value: boolean) {
     this.cleanAllComponents();
     this._isManagerSettingsClicked = value;
+  }
+  get isPendingBidsClicked(): boolean {
+    return this._isPendingBidsClicked;
+  }
+  set isPendingBidsClicked(value: boolean) {
+    this.cleanAllComponents();
+    this._isPendingBidsClicked = value;
   }
 
   get isAddNewDiscountClicked(): boolean {

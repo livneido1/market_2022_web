@@ -27,6 +27,7 @@ export class BidFacade implements Deserializable {
     this.shopOwnersStatus = new Map();
     if (value) {
       Object.assign(this, value);
+      this.shopOwnersStatus = new Map();
       for (const entry of Object.entries(value.shopOwnersStatus)) {
         const approved: boolean = entry[1] as boolean;
         this.shopOwnersStatus.set(entry[0], approved);

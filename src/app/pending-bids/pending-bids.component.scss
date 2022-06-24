@@ -8,11 +8,26 @@
 }
 
 
-.filterTitle{
-  margin-top: 15%;
-   text-align: center;
-   font-size: large;
-   font-family: cursive
+.resultTitle{
+  font-family: cursive;
+  margin-top: 5%;
+  text-align: center;
+  font-size: xxx-large;
+  margin-bottom: 30px;
+}
+.mainTitle{
+  font-size: xxx-large;
+  font-family: cursive;
+  text-align:center;
+  margin-top: 5%;
+}
+
+.resultColumn{
+  width: 100%;
+  float: left;
+  height: 100%;
+
+
 }
 
 .titleTh{
@@ -25,7 +40,8 @@
 }
 
 .table{
-
+  width: 90%;
+  margin-left:10%;
   margin-left: auto;
   margin-right: auto;
   border: 1px solid black;
@@ -51,13 +67,7 @@
 
   }
 }
-.resultTitle{
-  font-family: cursive;
-  margin-top: 10%;
-  text-align: center;
-  font-size: xxx-large;
-  margin-bottom: 30px;
-}
+
 
 .itemButton{
   font-size:x-large;
@@ -76,31 +86,23 @@
 
 }
 
-.button{
-  width: 75%;
+.optionalButtonsDiv{
+  height: 10%;
+  text-align: center;
+}
+
+.optionalButton{
+  border-radius: 20px;
+  border-color: black;
+  border-width: 1px;
+  width: 50%;
   height: 50px;
-  margin-left: 12.5%;
   cursor: pointer;
+}
 
+.name{
+  font-size: x-large;
 }
 
 
-.column{
-  float:left;
-  width: 80%;
-
-}
-
-.left{
-  width: 80%;
-  // float: left;
-  height: 100%;
-}
-
-.right{
-  width: 20%;
-  background: rgb(86, 104, 110);
-  color: white;
-  height: 100%;
-}
 

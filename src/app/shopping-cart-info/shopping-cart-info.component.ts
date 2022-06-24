@@ -10,7 +10,12 @@ import { EngineService } from 'app/services/engine.service';
 import { ResponseT } from 'app/http/facadeObjects/response-t';
 import { MessageService } from 'app/services/message.service';
 import { EditItemFromShoppingCartRequest } from 'app/http/requests/edit-item-from-shopping-cart-request';
-import { GetValueDialogComponent, GetValueDialogData } from 'app/get-value-dialog/get-value-dialog.component';
+import {
+  GetValueDialogComponent,
+  GetValueDialogData,
+} from 'app/get-value-dialog/get-value-dialog.component';
+import { UserBidsDialogComponent } from 'app/user-bids-dialog/user-bids-dialog.component';
+import { BidFacade } from 'app/http/facadeObjects/bid-facade';
 
 @Component({
   selector: 'app-shopping-cart-info',
@@ -83,6 +88,18 @@ export class ShoppingCartInfoComponent implements OnInit {
     }
 
     return itemsAndAmount;
+  }
+  myBids() {
+    const bids: BidFacade[] = [];
+    for (const basket of this.cart.cart.values()) {
+      bids.push(...basket.bids.values());
+    }
+    const dialogRef = this.dialog.open(UserBidsDialogComponent, {
+      width: '500px',
+      data: { bids: bids },
+    });
+
+    dialogRef.afterClosed().subscribe();
   }
 
   canCheckOut(): boolean {

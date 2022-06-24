@@ -30,7 +30,7 @@
       </div>
     </div>
 
-    <div *ngIf="isMemberLoggedin()">
+    <div>
       <p class="filterTitle">Search Shop</p>
       <mat-form-field style="width: 80%; margin-left: 2.5%;" appearance="fill">
         <mat-label >Search Shop Name</mat-label>
@@ -71,14 +71,6 @@
                   <button style="cursor: pointer;"
                     (click)="addToCart(item)">
                     add to cart
-                  </button>
-                </div>
-                <div>
-                  <button
-                    style="cursor: pointer;"
-                    title="offer a bid"
-                    (click)="offerBid(item)">
-                    <span class="material-icons">local_offer</span>
                   </button>
                 </div>
               </td>

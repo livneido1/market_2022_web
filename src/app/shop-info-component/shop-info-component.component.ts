@@ -10,6 +10,7 @@ import { Category, ItemFacade } from 'app/http/facadeObjects/ItemFacade';
 import { Response } from 'app/http/facadeObjects/response';
 import { ResponseT } from 'app/http/facadeObjects/response-t';
 import { ShopFacade } from 'app/http/facadeObjects/shop-facade';
+import { AddABidRequest } from 'app/http/requests/add-abid-request';
 import { AddItemToShopRequest } from 'app/http/requests/add-item-to-shop-request';
 import { ChangeShopItemInfoRequest } from 'app/http/requests/change-shop-item-info-request';
 import { CloseShopRequest } from 'app/http/requests/close-shop-request';
@@ -17,6 +18,7 @@ import { RemoveItemFromShopRequest } from 'app/http/requests/remove-item-from-sh
 import { SetItemCurrentAmountRequest } from 'app/http/requests/set-item-current-amount-request';
 import { TwoStringRequest } from 'app/http/requests/two-string-request';
 import { ItemMatDialogComponent } from 'app/item-mat-dialog/item-mat-dialog.component';
+import { BidData, OfferBidDialogComponent } from 'app/offer-bid-dialog/offer-bid-dialog.component';
 import { ConfigService } from 'app/services/config-service.service';
 import { EngineService } from 'app/services/engine.service';
 import { MessageService } from 'app/services/message.service';
@@ -205,7 +207,7 @@ export class ShopInfoComponentComponent implements OnInit {
         return;
       } else {
         const history: string = response.value;
-        const data : ShopPurchaseHistoryData = {history: history}; 
+        const data : ShopPurchaseHistoryData = {history: history};
         const dialogRef = this.dialog.open(ShopPurchaseHistoryDialogComponent, {
           width: '500px',
           data:  data,
@@ -231,6 +233,42 @@ export class ShopInfoComponentComponent implements OnInit {
       }
     })
   }
+
+  showPendingBidsToApprove(){
+    this.config.isPendingBidsClicked = true;
+  }
+  offerBid(item:ItemFacade){
+    const data: BidData = {
+      visitorName: this.config.visitor.name,
+      item: item,
+      amount: 0,
+      price: 0,
+      editable: true,
+      buttonTitle: "submit an offer!"
+    }
+    const dialogRef = this.dialog.open(OfferBidDialogComponent, {
+      width: '250px',
+      data: data,
+    });
+
+    dialogRef.afterClosed().subscribe((data:BidData) => {
+      if (data){
+        const request = new AddABidRequest(data.visitorName,this.shop.shopName, item.id,data.price,data.amount );
+        this.engine.addABid(request).subscribe(responseJson=>{
+          const response = new Response().deserialize(responseJson);
+          if (response.isErrorOccurred()){
+            this.messageService.errorMessage(response.getMessage());
+          }
+          else{
+            this.messageService.validMessage("bid succesfully offered");
+            this.resetShop();
+          }
+        })
+      }
+
+    });
+  }
+
   resetShop() {
     const request = new TwoStringRequest();
     request.name = this.config.visitor.name;

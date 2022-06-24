@@ -7,6 +7,7 @@ import { ObjectsDeserializer } from 'app/http/facadeObjects/objects-deserializer
 import { Response } from 'app/http/facadeObjects/response';
 import { ResponseT } from 'app/http/facadeObjects/response-t';
 import { ShopFacade } from 'app/http/facadeObjects/shop-facade';
+import { AddABidRequest } from 'app/http/requests/add-abid-request';
 import { AddItemToShoppingCartRequest } from 'app/http/requests/add-item-to-shopping-cart-request';
 import { TwoStringRequest } from 'app/http/requests/two-string-request';
 import { ItemMatDialogComponent } from 'app/item-mat-dialog/item-mat-dialog.component';
@@ -155,25 +156,7 @@ export class SearchItemComponent implements OnInit {
   getAllCategories() {
     return this.config.getAllCategories();
   }
-  offerBid(item:ItemFacade){
-    const data: BidData = {
-      visitorName: this.config.visitor.name,
-      item: item,
-      amount: 0,
-      price: 0,
-      editable: true,
-      buttonTitle: "submit an offer!"
-    }
-    const dialogRef = this.dialog.open(OfferBidDialogComponent, {
-      width: '250px',
-      data: data,
-    });
 
-    dialogRef.afterClosed().subscribe((data:BidData) => {
-      this.engine.bid
-
-    });
-  }
 
   changeFilter(checked, category: string) {
     if (!checked) {
