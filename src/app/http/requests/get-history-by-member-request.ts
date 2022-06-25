@@ -4,9 +4,12 @@ export class GetHistoryByMemberRequest implements Deserializable {
   systemManagerName: string;
   memberName: string;
 
-  constructor() {
-    this.systemManagerName = '';
-    this.memberName = '';
+  constructor(
+    systemManagerName?: string,
+    memberName?: string
+  ) {
+    this.systemManagerName = systemManagerName;
+    this.memberName = memberName;
   }
   deserialize(value: any): this {
     if (!value) {

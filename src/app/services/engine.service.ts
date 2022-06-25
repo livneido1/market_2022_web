@@ -53,6 +53,7 @@ import { TwoStringRequest } from 'app/http/requests/two-string-request';
 import { UpdateShopItemAmountRequest } from 'app/http/requests/update-shop-item-amount-request';
 import { ValidateSecurityRequest } from 'app/http/requests/validate-security-request';
 import { catchError, Observable } from 'rxjs';
+import { GetMarketInfoRequest } from 'app/http/requests/get-market-info-request';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -348,6 +349,13 @@ export class EngineService {
   getHistoryByShop(request: TwoStringRequest): Observable<ResponseT<string>> {
     return this.http.post<ResponseT<string>>(
       this.serverUrl + '/getHistoryByShop',
+      request,
+      httpOptions
+    );
+  }
+  getMarketInfo(request: GetMarketInfoRequest): Observable<ResponseT<string>> {
+    return this.http.post<ResponseT<string>>(
+      this.serverUrl + '/getMarketInfo',
       request,
       httpOptions
     );
