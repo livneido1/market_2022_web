@@ -11,6 +11,7 @@ import { ResponseT } from 'app/http/facadeObjects/response-t';
 import { ShopFacade } from 'app/http/facadeObjects/shop-facade';
 import { ShoppingCartFacade } from 'app/http/facadeObjects/shopping-cart-facade';
 import { VisitorFacade } from 'app/http/facadeObjects/visitor-facade';
+import { AddABidRequest } from 'app/http/requests/add-abid-request';
 import { AddDiscountToShopRequest } from 'app/http/requests/add-discount-to-shop-request';
 import { AddItemToShopRequest } from 'app/http/requests/add-item-to-shop-request';
 import { AddItemToShoppingCartRequest } from 'app/http/requests/add-item-to-shopping-cart-request';
@@ -19,7 +20,9 @@ import { AddPurchasePolicyToShopRequest } from 'app/http/requests/add-purchase-p
 import { AppointmentShopManagerRequest } from 'app/http/requests/appointment-shop-manager-request';
 import { AppointmentShopOwnerRequest } from 'app/http/requests/appointment-shop-owner-request';
 import { ApproveAppointmentRequest } from 'app/http/requests/approve-appointment-request';
+import { ApproveABidRequest } from 'app/http/requests/approve-abid-request';
 import { BuyShoppingCartRequest } from 'app/http/requests/buy-shopping-cart-request';
+import { CancelABidRequest } from 'app/http/requests/cancel-abid-request';
 import { ChangeShopItemInfoRequest } from 'app/http/requests/change-shop-item-info-request';
 import { CloseShopRequest } from 'app/http/requests/close-shop-request';
 import { EditItemFromShoppingCartRequest } from 'app/http/requests/edit-item-from-shopping-cart-request';
@@ -36,6 +39,7 @@ import { IsSystemManagerRequest } from 'app/http/requests/is-system-manager-requ
 import { MyPendingAppsRequest } from 'app/http/requests/my-pending-apps-request';
 import { NamePasswordRequest } from 'app/http/requests/name-password-request';
 import { OpenNewShopRequest } from 'app/http/requests/open-new-shop-request';
+import { RejectABidRequest } from 'app/http/requests/reject-abid-request';
 import { RemoveAppointmentRequest } from 'app/http/requests/remove-appointment-request';
 import { RemoveDiscountFromShopRequest } from 'app/http/requests/remove-discount-from-shop-request';
 import { RemoveItemFromShopRequest } from 'app/http/requests/remove-item-from-shop-request';
@@ -44,6 +48,7 @@ import { RemovePurchasePolicyFromShopRequest } from 'app/http/requests/remove-pu
 import { RequestVisitorName } from 'app/http/requests/request-visitor-name';
 import { SearchProductByNameRequest } from 'app/http/requests/search-product-by-name-request';
 import { SetItemCurrentAmountRequest } from 'app/http/requests/set-item-current-amount-request';
+import { SuggestNewOfferToBidRequest } from 'app/http/requests/suggest-new-offer-to-bid-request';
 import { TwoStringRequest } from 'app/http/requests/two-string-request';
 import { UpdateShopItemAmountRequest } from 'app/http/requests/update-shop-item-amount-request';
 import { ValidateSecurityRequest } from 'app/http/requests/validate-security-request';
@@ -360,42 +365,52 @@ export class EngineService {
 
   ////////////////////////////////// V2 /////////////////////////////////
 
-  addDiscountToShop(request :AddDiscountToShopRequest): Observable<Response> {
+  addDiscountToShop(request: AddDiscountToShopRequest): Observable<Response> {
     return this.http.post<Response>(
       this.serverUrl + '/addDiscountToShop',
       request,
       httpOptions
     );
   }
-  removeDiscountFromShop(request: RemoveDiscountFromShopRequest): Observable<Response> {
+  removeDiscountFromShop(
+    request: RemoveDiscountFromShopRequest
+  ): Observable<Response> {
     return this.http.post<Response>(
       this.serverUrl + '/removeDiscountFromShop',
       request,
       httpOptions
     );
   }
-  addPurchasePolicyToShop(request: AddPurchasePolicyToShopRequest): Observable<Response> {
+  addPurchasePolicyToShop(
+    request: AddPurchasePolicyToShopRequest
+  ): Observable<Response> {
     return this.http.post<Response>(
       this.serverUrl + '/addPurchasePolicyToShop',
       request,
       httpOptions
     );
   }
-  removePurchasePolicyFromShop(request: RemovePurchasePolicyFromShopRequest): Observable<ResponseT<PurchasePolicyTypeWrapper[]>> {
+  removePurchasePolicyFromShop(
+    request: RemovePurchasePolicyFromShopRequest
+  ): Observable<ResponseT<PurchasePolicyTypeWrapper[]>> {
     return this.http.post<ResponseT<PurchasePolicyTypeWrapper[]>>(
       this.serverUrl + '/removePurchasePolicyFromShop',
       request,
       httpOptions
     );
   }
-  getPurchasePoliciesOfShop(request: GetPoliciesRequest): Observable<ResponseT<PurchasePolicyTypeWrapper[]>> {
+  getPurchasePoliciesOfShop(
+    request: GetPoliciesRequest
+  ): Observable<ResponseT<PurchasePolicyTypeWrapper[]>> {
     return this.http.post<ResponseT<PurchasePolicyTypeWrapper[]>>(
       this.serverUrl + '/getPurchasePoliciesOfShop',
       request,
       httpOptions
     );
   }
-  getDiscountTypesOfShop(request: GetPoliciesRequest): Observable<ResponseT<DiscountTypeWrapper[]>> {
+  getDiscountTypesOfShop(
+    request: GetPoliciesRequest
+  ): Observable<ResponseT<DiscountTypeWrapper[]>> {
     return this.http.post<ResponseT<DiscountTypeWrapper[]>>(
       this.serverUrl + '/getDiscountTypesOfShop',
       request,
@@ -409,27 +424,20 @@ export class EngineService {
     );
   }
 
-  reOpenClosedShop(
-    request: TwoStringRequest
-  ): Observable<Response> {
-    return this.  http.post<Response>(
+  reOpenClosedShop(request: TwoStringRequest): Observable<Response> {
+    return this.http.post<Response>(
       this.serverUrl + '/reOpenClosedShop',
       request,
       httpOptions
     );
   }
-  isSystemManager(
-    request: IsSystemManagerRequest
-  ): Observable<Response> {
-    return this.  http.post<ResponseT<boolean>>(
+  isSystemManager(request: IsSystemManagerRequest): Observable<Response> {
+    return this.http.post<ResponseT<boolean>>(
       this.serverUrl + '/isSystemManager',
       request,
       httpOptions
     );
   }
-
-
-
 
   removeShopOwnerAppointment(
     request: RemoveAppointmentRequest
@@ -440,9 +448,7 @@ export class EngineService {
       httpOptions
     );
   }
-  removeMember(
-    request: RemoveMemberRequest
-  ): Observable<ResponseT<string>> {
+  removeMember(request: RemoveMemberRequest): Observable<ResponseT<string>> {
     return this.http.post<ResponseT<string>>(
       this.serverUrl + '/removeMember',
       request,
@@ -477,5 +483,40 @@ export class EngineService {
     );
   }
 
+  addABid(request: AddABidRequest): Observable<Response> {
+    return this.http.post<Response>(
+      this.serverUrl + '/addABid',
+      request,
+      httpOptions
+    );
+  }
 
+  approveABid(request: ApproveABidRequest): Observable<Response> {
+    return this.http.post<Response>(
+      this.serverUrl + '/approveABid',
+      request,
+      httpOptions
+    );
+  }
+  suggestNewOfferToBid(request: SuggestNewOfferToBidRequest): Observable<Response> {
+    return this.http.post<Response>(
+      this.serverUrl + '/suggestNewOfferToBid',
+      request,
+      httpOptions
+    );
+  }
+  rejectABid(request: RejectABidRequest): Observable<Response> {
+    return this.http.post<Response>(
+      this.serverUrl + '/rejectABid',
+      request,
+      httpOptions
+    );
+  }
+  cancelABid(request: CancelABidRequest): Observable<Response> {
+    return this.http.post<Response>(
+      this.serverUrl + '/cancelABid',
+      request,
+      httpOptions
+    );
+  }
 }

@@ -1,5 +1,4 @@
 import { Deserializable } from "./deserializable";
-import { ShopFacade } from "./shop-facade";
 import { ShoppingBasketFacade } from "./shopping-basket-facade";
 
 export class ShoppingCartFacade  implements Deserializable{

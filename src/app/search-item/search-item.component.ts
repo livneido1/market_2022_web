@@ -7,9 +7,11 @@ import { ObjectsDeserializer } from 'app/http/facadeObjects/objects-deserializer
 import { Response } from 'app/http/facadeObjects/response';
 import { ResponseT } from 'app/http/facadeObjects/response-t';
 import { ShopFacade } from 'app/http/facadeObjects/shop-facade';
+import { AddABidRequest } from 'app/http/requests/add-abid-request';
 import { AddItemToShoppingCartRequest } from 'app/http/requests/add-item-to-shopping-cart-request';
 import { TwoStringRequest } from 'app/http/requests/two-string-request';
 import { ItemMatDialogComponent } from 'app/item-mat-dialog/item-mat-dialog.component';
+import { BidData, OfferBidDialogComponent } from 'app/offer-bid-dialog/offer-bid-dialog.component';
 import { ConfigService } from 'app/services/config-service.service';
 import { EngineService } from 'app/services/engine.service';
 import { MessageService } from 'app/services/message.service';
@@ -52,7 +54,7 @@ export class SearchItemComponent implements OnInit {
       console.log('The dialog was closed');
     });
   }
- 
+
   canSearchShopName() {
     return this.shopName && this.shopName !== '';
   }
@@ -154,6 +156,7 @@ export class SearchItemComponent implements OnInit {
   getAllCategories() {
     return this.config.getAllCategories();
   }
+
 
   changeFilter(checked, category: string) {
     if (!checked) {

@@ -6,17 +6,22 @@ import {
   PendingAppsData,
   PendingAppsReturnValue,
 } from 'app/approve-pending-apps-dialog/approve-pending-apps-dialog.component';
+import { AddItemToCartDialogComponent } from 'app/add-item-to-cart-dialog/add-item-to-cart-dialog.component';
 import { GetStringValueComponent } from 'app/get-string-value/get-string-value.component';
 import {
   GetValueDialogComponent,
   GetValueDialogData,
 } from 'app/get-value-dialog/get-value-dialog.component';
+import { AppointmentFacade } from 'app/http/facadeObjects/AppointmentFacade';
 import { Category, ItemFacade } from 'app/http/facadeObjects/ItemFacade';
+import { PermissionFacade } from 'app/http/facadeObjects/PermissionFacade';
 import { Response } from 'app/http/facadeObjects/response';
 import { ResponseT } from 'app/http/facadeObjects/response-t';
 import { ShopFacade } from 'app/http/facadeObjects/shop-facade';
+import { AddABidRequest } from 'app/http/requests/add-abid-request';
 import { AddItemToShopRequest } from 'app/http/requests/add-item-to-shop-request';
 import { ApproveAppointmentRequest } from 'app/http/requests/approve-appointment-request';
+import { AddItemToShoppingCartRequest } from 'app/http/requests/add-item-to-shopping-cart-request';
 import { ChangeShopItemInfoRequest } from 'app/http/requests/change-shop-item-info-request';
 import { CloseShopRequest } from 'app/http/requests/close-shop-request';
 import { MyPendingAppsRequest } from 'app/http/requests/my-pending-apps-request';
@@ -24,6 +29,7 @@ import { RemoveItemFromShopRequest } from 'app/http/requests/remove-item-from-sh
 import { SetItemCurrentAmountRequest } from 'app/http/requests/set-item-current-amount-request';
 import { TwoStringRequest } from 'app/http/requests/two-string-request';
 import { ItemMatDialogComponent } from 'app/item-mat-dialog/item-mat-dialog.component';
+import { BidData, OfferBidDialogComponent } from 'app/offer-bid-dialog/offer-bid-dialog.component';
 import { ConfigService } from 'app/services/config-service.service';
 import { EngineService } from 'app/services/engine.service';
 import { MessageService } from 'app/services/message.service';
@@ -300,6 +306,104 @@ export class ShopInfoComponentComponent implements OnInit {
       }
     });
   }
+
+  showPendingBidsToApprove(){
+    this.config.isPendingBidsClicked = true;
+  }
+  offerBid(item:ItemFacade){
+    const data: BidData = {
+      visitorName: this.config.visitor.name,
+      item: item,
+      amount: 0,
+      price: 0,
+      editable: true,
+      buttonTitle: "submit an offer!"
+    }
+    const dialogRef = this.dialog.open(OfferBidDialogComponent, {
+      width: '250px',
+      data: data,
+    });
+
+    dialogRef.afterClosed().subscribe((data:BidData) => {
+      if (data){
+        const request = new AddABidRequest(data.visitorName,this.shop.shopName, item.id,data.price,data.amount );
+        this.engine.addABid(request).subscribe(responseJson=>{
+          const response = new Response().deserialize(responseJson);
+          if (response.isErrorOccurred()){
+            this.messageService.errorMessage(response.getMessage());
+          }
+          else{
+            this.messageService.validMessage("bid succesfully offered");
+            this.resetShop();
+          }
+        })
+      }
+
+    });
+  }
+
+  hasHistoryPermission():boolean{
+    return this.hasPermission('PurchaseHistoryPermission');
+  }
+  hasBidPermissions():boolean{
+    return this.hasPermission('ApproveBidPermission');
+  }
+  isOwnerOrManager():boolean{
+    if (this.shop.employees.has(this.config.visitor.name)){
+      return true;
+    }
+    return false;
+  }
+  hasEmployeePermission():boolean{
+    return this.hasPermission('EmployeesPermission');
+  }
+  isFounder():boolean{
+    if (this.shop.employees.has(this.config.visitor.name)){
+      const app:AppointmentFacade = this.shop.employees.get(this.config.visitor.name);
+      if (!app.superVisor){
+        return true;
+      }
+    }
+    return false;
+  }
+
+  hasPermission(permission: string):boolean{
+    if (this.shop.employees.has(this.config.visitor.name)){
+      const app:AppointmentFacade = this.shop.employees.get(this.config.visitor.name);
+      for (const permit of app.permissions){
+        if (permit.name === permission){
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  addToCart(item: ItemFacade) {
+    const dialogRef = this.dialog.open(AddItemToCartDialogComponent, {
+      width: '300px',
+      data: {},
+    });
+
+    dialogRef.afterClosed().subscribe((amount) => {
+      if (!amount){
+        return;
+      }
+      const request = new AddItemToShoppingCartRequest();
+      request.amount = amount;
+      request.itemToInsert = item;
+      request.visitorName = this.config.visitor.name;
+      this.engine.addItemToShoppingCart(request).subscribe((responseJson) => {
+        const response = new Response().deserialize(responseJson);
+        if (response.isErrorOccurred()) {
+          this.messageService.errorMessage(response.getMessage());
+        } else {
+          this.messageService.validMessage('Item Successfully added');
+        }
+      });
+    });
+  }
+
   resetShop() {
     const request = new TwoStringRequest();
     request.name = this.config.visitor.name;

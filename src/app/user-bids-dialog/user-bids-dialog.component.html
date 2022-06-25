@@ -1,0 +1,55 @@
+<div *ngIf="hasPendingBids()">
+  <p class="mainTitle"> your current bids </p>
+  <div  style="display: block; height:300px; overflow-y: scroll;">
+    <table class="table">
+      <thead>
+        <tr>
+          <th class = "titleTh" >Bids</th>
+          <th style=" border-bottom: inset">
+            status
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let bid of bids">
+
+          <td style="cursor: pointer; width: 80%; border-bottom: inset">
+
+              <p class="name">buyer: {{bid.buyerName}}</p>
+              <p class="subTitle">itemId: {{bid.itemId}}</p>
+              <p class="subTitle">amount: {{bid.amount}}</p>
+              <p class="subTitle">total price: {{bid.price}}</p>
+
+          </td>
+          <td style="border-bottom: inset">
+            <div >
+              <span *ngIf="bid.approved"
+                    style="color: green !important;"
+                    class="material-icons">
+                done
+              </span>
+              <!-- <span style="color: black !important;" class="material-icons">question_mark</span> -->
+              <span *ngIf="!bid.approved"
+                    style="color: red !important;"
+                    class="material-icons">
+                close
+              </span>
+
+            </div>
+
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div *ngIf="!hasPendingBids()">
+  <p style="
+    font-size: xXx-large;
+    font-family: cursive;
+    text-align: center;
+    margin-top: 10%;">
+    you have no pending bids
+  </p>
+</div>
+

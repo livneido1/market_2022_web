@@ -3,8 +3,8 @@ import { Deserializable } from './deserializable';
 export class PermissionFacade implements Deserializable {
   name: string;
 
-  constructor() {
-    this.name = '';
+  constructor(name?: string) {
+    this.name = name;
   }
   deserialize(value: any): this {
     if (!value) {

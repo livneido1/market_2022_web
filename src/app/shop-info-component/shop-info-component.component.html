@@ -8,6 +8,9 @@
           <tr>
             <th class = "titleTh" >Products</th>
             <th>
+
+            </th>
+            <th>
               <div style="width: 50%;
                           float: left;
                           font-size: smaller;">
@@ -38,27 +41,46 @@
 
             </td>
             <td>
+              <button style="cursor: pointer;"
+                (click)="addToCart(item)"
+                title="add item to cart">
+                <span class="material-icons">
+                  add_shopping_cart
+                  </span>
+              </button>
+            </td>
+            <td>
               <div>
 
                 <button
-                  title="Remove Item From Cart"
+                  *ngIf="isOwnerOrManager()"
+                  title="Remove Item From Shop"
                   style="float:right; cursor: pointer;"
                   (click)="removeItem(item)">
                   <span class='material-icons'>delete</span>
                 </button>
 
                 <button
+                  *ngIf="isOwnerOrManager()"
                   title="set item info"
                   style="cursor: pointer;"
-
                   (click)="setItemInfo(item)">
                   <span class="material-icons">settings</span>
                 </button>
+                <div>
+                  <button
+                    style="cursor: pointer;"
+                    title="offer a bid"
+                    (click)="offerBid(item)">
+                    <span class="material-icons">local_offer</span>
+                  </button>
+                </div>
 
               </div>
 
               <div>
                 <button
+                  *ngIf="isOwnerOrManager()"
                   style="cursor: pointer; width: 100%;margin-top: 10px;"
                   (click)="setItemAmount(item)">
                   Change Item Amount in Shop
@@ -78,6 +100,7 @@
   <div class="SideBar">
     <div style="height: 10%; text-align: center; margin-top: 20%;">
       <button
+        *ngIf="isOwnerOrManager()"
         class="optionalButton"
         (click)="addItemToShop()"
         >
@@ -86,6 +109,7 @@
     </div>
     <div class="optionalButtonsDiv">
       <button class="optionalButton"
+        *ngIf="hasEmployeePermission()"
         (click)="onEmployeesClick()"
       >
         Employees
@@ -114,6 +138,15 @@
     </div>
     <div class="optionalButtonsDiv">
       <button class="optionalButton"
+        *ngIf="hasBidPermissions()"
+        (click)="showPendingBidsToApprove()"
+      >
+        My Pending Bids To Approve
+      </button>
+    </div>
+    <div class="optionalButtonsDiv">
+      <button class="optionalButton"
+        *ngIf="hasHistoryPermission()"
         (click)="showPurchaseHistory()"
       >
         Purchase History
@@ -121,6 +154,7 @@
     </div>
     <div class="optionalButtonsDiv">
       <button class="optionalButton"
+        *ngIf="isFounder()"
         (click)="closeShop()"
       >
         Close Shop
