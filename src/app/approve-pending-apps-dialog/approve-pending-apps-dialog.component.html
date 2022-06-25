@@ -5,7 +5,7 @@
         <mat-checkbox
          (change)="onClickChange(name,$event)"
           >
-          name
+          {{name}}
         </mat-checkbox>
 
       </li>
@@ -15,14 +15,16 @@
   <div class="rightColumn">
     <div class="optionalButtonsDiv">
       <button class="optionalButton approveButton"
+        [disabled]="!canSubmit()"
         [mat-dialog-close]="returnData(true)">
         Approve
       </button>
     </div>
     <div class="optionalButtonsDiv">
       <button class="optionalButton rejectButton"
+        [disabled]="!canSubmit()"
         [mat-dialog-close]="returnData(false)">
-        Approve
+        reject
       </button>
     </div>
   </div>

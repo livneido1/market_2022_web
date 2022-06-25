@@ -39,7 +39,7 @@ export class ApprovePendingAppsDialogComponent implements OnInit {
   ngOnInit(): void {}
 
   onClickChange(name:string,  event: any){
-    if (event.isUserInput){
+    if (event.checked){
       this.pendingMap.set(name, event.checked);
     }
   }
