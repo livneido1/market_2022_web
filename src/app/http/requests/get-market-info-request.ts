@@ -2,7 +2,8 @@ import { Deserializable } from "../facadeObjects/deserializable";
 
 export class GetMarketInfoRequest implements Deserializable{
   sysManager :string
-  constructor(){
+  constructor(sysManager?:string){
+    this.sysManager = sysManager;
 
   }
 

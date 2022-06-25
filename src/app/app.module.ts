@@ -53,6 +53,7 @@ import { ApprovePendingAppsDialogComponent } from './approve-pending-apps-dialog
 import { OfferBidDialogComponent } from './offer-bid-dialog/offer-bid-dialog.component';
 import { PendingBidsComponent } from './pending-bids/pending-bids.component';
 import { UserBidsDialogComponent } from './user-bids-dialog/user-bids-dialog.component';
+import { ShowTextDialogComponent } from './show-text-dialog/show-text-dialog.component';
 
 @NgModule({
   declarations: [
@@ -94,7 +95,8 @@ import { UserBidsDialogComponent } from './user-bids-dialog/user-bids-dialog.com
     OfferBidDialogComponent,
     UserBidsDialogComponent,
     PendingBidsComponent,
-    ApprovePendingAppsDialogComponent
+    ApprovePendingAppsDialogComponent,
+    ShowTextDialogComponent
   ],
   imports: [
     AppRoutingModule,
