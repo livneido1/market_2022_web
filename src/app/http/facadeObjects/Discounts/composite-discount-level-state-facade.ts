@@ -31,4 +31,7 @@ export abstract class CompositeDiscountLevelStateFacade
       }
       return this;
   }
+  getString(): string {
+      return "Level: Composite Level Discount";
+  }
 }

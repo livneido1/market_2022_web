@@ -1,24 +1,28 @@
-import { Deserializable } from "../deserializable";
-import { Category } from "../ItemFacade";
-import { DiscountLevelStateFacade } from "./discount-level-state-facade";
-import { DiscountLevelStateWrapper, DiscountLevelStateWrapperType } from "./Wrappers/discount-level-state-wrapper";
+import { Deserializable } from '../deserializable';
+import { Category } from '../ItemFacade';
+import { DiscountLevelStateFacade } from './discount-level-state-facade';
+import {
+  DiscountLevelStateWrapper,
+  DiscountLevelStateWrapperType,
+} from './Wrappers/discount-level-state-wrapper';
 
-export class CategoryLevelStateFacade extends DiscountLevelStateFacade implements Deserializable {
-
+export class CategoryLevelStateFacade
+  extends DiscountLevelStateFacade
+  implements Deserializable
+{
   category: Category;
 
+  constructor(category?: Category) {
+    super('CategoryLevelStateFacade', 'Category Level');
 
-  constructor(category?:Category){
-    super("CategoryLevelStateFacade", "Category Level");
-
-    this.category = category? category : undefined;
+    this.category = category ? category : undefined;
   }
 
   deserialize(value: any): this {
-    if (!value){
+    if (!value) {
       return this;
     }
-    Object.assign(this,value);
+    Object.assign(this, value);
     this.category = value.category;
     return this;
   }
@@ -29,6 +33,10 @@ export class CategoryLevelStateFacade extends DiscountLevelStateFacade implement
       -1,
       this.category,
       []
-    )
-}
+    );
+  }
+
+  getString(): string {
+      return "Level: Category Discount\nCategory:"+this.category;
+  }
 }

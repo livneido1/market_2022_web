@@ -10,11 +10,12 @@ export abstract class CompositeDiscountTypeFacade
   discountTypes: DiscountTypeFacade[];
   constructor(
     type?: string,
+    title?:string,
     percentageOfDiscount?: number,
     discountLevelState?: DiscountLevelStateFacade,
     discountTypes?: DiscountTypeFacade[]
   ) {
-    super(type, percentageOfDiscount, discountLevelState);
+    super(type,title, percentageOfDiscount, discountLevelState);
     this.discountTypes = discountTypes;
   }
 

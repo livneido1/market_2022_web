@@ -38,4 +38,8 @@ export class AndCompositeConditionFacade
       -1
     );
   }
+
+  getString(): string {
+      return "need all conditions";
+  }
 }

@@ -33,4 +33,14 @@ export class PriceConditionFacade
       this.price
     );
   }
+
+  
+  getString(): string {
+    return (
+      'Minumun Price' +
+      '\n' +
+      'price : ' +
+      this.price 
+    );
+  }
 }

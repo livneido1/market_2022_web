@@ -92,6 +92,8 @@ export class LoginComponentComponent implements OnInit {
           const member: MemberFacade = new MemberFacade().deserialize(
             response.value
           );
+          let dest='/rec/login/'+this.config.visitor.name +'/'+member.name;
+          this.config.stompClient.publish({destination: dest}); 
           this.config.visitor.cart = member.myCart;
           this.config.visitor.name = member.name;
           this.config.member = member;

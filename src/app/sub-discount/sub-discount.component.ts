@@ -24,6 +24,7 @@ import { MessageService } from 'app/services/message.service';
 import { MatTreeNestedDataSource } from '@angular/material/tree';
 import { NestedTreeControl } from '@angular/cdk/tree';
 import { CompositeDiscountLevelStateFacade } from 'app/http/facadeObjects/Discounts/composite-discount-level-state-facade';
+import { TreeViewAdapterService } from 'app/services/tree-view-adapter.service';
 
 export interface TreeViewItem {
   name: string;
@@ -40,15 +41,18 @@ export class SubDiscountComponent implements OnInit {
   currentConditions: ConditionFacade[];
   currentPercentage: number;
   selectedLevel: DiscountLevelStateFacade;
+  selectedCondition: ConditionFacade;
 
   treeControl = new NestedTreeControl<TreeViewItem>((node) => node.children);
-  dataSource = new MatTreeNestedDataSource<TreeViewItem>();
+  levelDataSource = new MatTreeNestedDataSource<TreeViewItem>();
+  conditionDataSource = new MatTreeNestedDataSource<TreeViewItem>();
   constructor(
     public dialog: MatDialog,
     private config: ConfigService,
     private messageService: MessageService,
     private discountService: PoliciesService,
-    private engine: EngineService
+    private engine: EngineService,
+    private treeAdapter: TreeViewAdapterService
   ) {}
 
   ngOnInit(): void {
@@ -64,6 +68,8 @@ export class SubDiscountComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.currentConditions.push(result);
+        this.updateConditionTreeData();
+
       }
     });
   }
@@ -92,6 +98,7 @@ export class SubDiscountComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result: ConditionFacade[]) => {
       if (result) {
         this.currentConditions = result;
+        this.updateConditionTreeData();
       }
     });
   }
@@ -192,37 +199,55 @@ export class SubDiscountComponent implements OnInit {
     return this.currentConditions.length <= 1;
   }
 
+
+
+
+
+  //////////////////////////////// TreeView Methds ////////////////////////////////  
+  /////////////////////////////////////////////////////////////////////////////////
+  ///////////////////////////////////////////////////////////////////////////////// 
+  ///////////////////////////////////////////////////////////////////////////////// 
+
+  getLevelInfo(){
+    if (this.selectedLevel){
+      return this.selectedLevel.getString();
+    }
+    return "";
+  }
   updateLevelTreeData() {
     const items: TreeViewItem[] = [];
     for (const lvl of this.currentLevels) {
-      items.push(this.discountLevelToTreeViewItem(lvl));
+      items.push(this.treeAdapter.discountLevelToTreeViewItem(lvl));
     }
-    this.dataSource.data = items;
-  }
-
-  discountLevelToTreeViewItem(level: DiscountLevelStateFacade): TreeViewItem {
-    const children: TreeViewItem[] = [];
-    const asComposite = level as CompositeDiscountLevelStateFacade;
-    if (asComposite.discountLevelStateFacades) {
-      for (const child of asComposite.discountLevelStateFacades) {
-        const item = this.discountLevelToTreeViewItem(child);
-        children.push(item);
-      }
-    }
-    const treeViewItem: TreeViewItem = {
-      name: level.title,
-      value: level,
-      children: children,
-    };
-    return treeViewItem
-  }
-
-  hasChild(_: number, node: TreeViewItem){
-    return (!!node.children && node.children.length > 0);
+    this.levelDataSource.data = items;
   }
   onLevelSelect(node: TreeViewItem){
     this.selectedLevel = node.value;
   }
+
+  getConditionInfo(){
+    if (this.selectedCondition){
+      return this.selectedCondition.getString();
+    }
+    return "";
+  }
+  updateConditionTreeData() {
+    const items: TreeViewItem[] = [];
+    for (const cond of this.currentConditions) {
+      items.push(this.treeAdapter.ConditionToTreeViewItem(cond));
+    }
+    this.conditionDataSource.data = items;
+  }
+  onConditionSelect(node: TreeViewItem){
+    this.selectedCondition = node.value;
+  }
+
+
+
+  hasChild(_: number, node: TreeViewItem){
+    return (!!node.children && node.children.length > 0);
+  }
+ 
 
     
 }
