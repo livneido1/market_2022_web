@@ -29,7 +29,10 @@ import { RemoveItemFromShopRequest } from 'app/http/requests/remove-item-from-sh
 import { SetItemCurrentAmountRequest } from 'app/http/requests/set-item-current-amount-request';
 import { TwoStringRequest } from 'app/http/requests/two-string-request';
 import { ItemMatDialogComponent } from 'app/item-mat-dialog/item-mat-dialog.component';
-import { BidData, OfferBidDialogComponent } from 'app/offer-bid-dialog/offer-bid-dialog.component';
+import {
+  BidData,
+  OfferBidDialogComponent,
+} from 'app/offer-bid-dialog/offer-bid-dialog.component';
 import { ConfigService } from 'app/services/config-service.service';
 import { EngineService } from 'app/services/engine.service';
 import { MessageService } from 'app/services/message.service';
@@ -37,6 +40,7 @@ import {
   ShopPurchaseHistoryData,
   ShopPurchaseHistoryDialogComponent,
 } from 'app/shop-purchase-history-dialog/shop-purchase-history-dialog.component';
+import { ModelAdapterService } from 'app/services/model-adapter.service';
 
 @Component({
   selector: 'app-shop-info-component',
@@ -51,7 +55,8 @@ export class ShopInfoComponentComponent implements OnInit {
     private config: ConfigService,
     private engine: EngineService,
     public dialog: MatDialog,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private modelAdapter: ModelAdapterService
   ) {}
 
   ngOnInit(): void {
@@ -268,7 +273,7 @@ export class ShopInfoComponentComponent implements OnInit {
     }
   }
 
-  private approveRejectAppointment(memberName: string, approve:boolean) {
+  private approveRejectAppointment(memberName: string, approve: boolean) {
     const request = new ApproveAppointmentRequest(
       this.shop.shopName,
       memberName,
@@ -279,9 +284,8 @@ export class ShopInfoComponentComponent implements OnInit {
         const response = new Response().deserialize(responseJson);
         if (response.isErrorOccurred()) {
           this.messageService.errorMessage(response.getMessage());
-        }
-        else{
-          this.messageService.validMessage("successfully done");
+        } else {
+          this.messageService.validMessage('successfully done');
           // TODO doesnt need to reset after each approve
           this.resetShop();
         }
@@ -307,73 +311,79 @@ export class ShopInfoComponentComponent implements OnInit {
     });
   }
 
-  showPendingBidsToApprove(){
+  showPendingBidsToApprove() {
     this.config.isPendingBidsClicked = true;
   }
-  offerBid(item:ItemFacade){
+  offerBid(item: ItemFacade) {
     const data: BidData = {
       visitorName: this.config.visitor.name,
       item: item,
       amount: 0,
       price: 0,
       editable: true,
-      buttonTitle: "submit an offer!"
-    }
+      buttonTitle: 'submit an offer!',
+    };
     const dialogRef = this.dialog.open(OfferBidDialogComponent, {
       width: '250px',
       data: data,
     });
 
-    dialogRef.afterClosed().subscribe((data:BidData) => {
-      if (data){
-        const request = new AddABidRequest(data.visitorName,this.shop.shopName, item.id,data.price,data.amount );
-        this.engine.addABid(request).subscribe(responseJson=>{
+    dialogRef.afterClosed().subscribe((data: BidData) => {
+      if (data) {
+        const request = new AddABidRequest(
+          data.visitorName,
+          this.shop.shopName,
+          item.id,
+          data.price,
+          data.amount
+        );
+        this.engine.addABid(request).subscribe((responseJson) => {
           const response = new Response().deserialize(responseJson);
-          if (response.isErrorOccurred()){
+          if (response.isErrorOccurred()) {
             this.messageService.errorMessage(response.getMessage());
-          }
-          else{
-            this.messageService.validMessage("bid succesfully offered");
+          } else {
+            this.messageService.validMessage('bid succesfully offered');
             this.resetShop();
           }
-        })
+        });
       }
-
     });
   }
 
-  hasHistoryPermission():boolean{
-    return this.hasPermission('PurchaseHistoryPermission');
+  hasHistoryPermission(): boolean {
+    return this.modelAdapter.hasPermission(
+      this.shop,
+      this.config.visitor.name,
+      'PurchaseHistoryPermission'
+    );
   }
-  hasBidPermissions():boolean{
-    return this.hasPermission('ApproveBidPermission');
+  hasBidPermissions(): boolean {
+    return this.modelAdapter.hasPermission(
+      this.shop,
+      this.config.visitor.name,
+      'ApproveBidPermission'
+    );
   }
-  isOwnerOrManager():boolean{
-    if (this.shop.employees.has(this.config.visitor.name)){
+  isOwnerOrManager(): boolean {
+    if (this.shop.employees.has(this.config.visitor.name)) {
       return true;
     }
     return false;
   }
-  hasEmployeePermission():boolean{
-    return this.hasPermission('EmployeesPermission');
+  hasEmployeePermission(): boolean {
+    return this.modelAdapter.hasPermission(
+      this.shop,
+      this.config.visitor.name,
+      'EmployeesPermission'
+    );
   }
-  isFounder():boolean{
-    if (this.shop.employees.has(this.config.visitor.name)){
-      const app:AppointmentFacade = this.shop.employees.get(this.config.visitor.name);
-      if (!app.superVisor){
+  isFounder(): boolean {
+    if (this.shop.employees.has(this.config.visitor.name)) {
+      const app: AppointmentFacade = this.shop.employees.get(
+        this.config.visitor.name
+      );
+      if (!app.superVisor) {
         return true;
-      }
-    }
-    return false;
-  }
-
-  hasPermission(permission: string):boolean{
-    if (this.shop.employees.has(this.config.visitor.name)){
-      const app:AppointmentFacade = this.shop.employees.get(this.config.visitor.name);
-      for (const permit of app.permissions){
-        if (permit.name === permission){
-          return true;
-        }
       }
     }
     return false;
@@ -386,7 +396,7 @@ export class ShopInfoComponentComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((amount) => {
-      if (!amount){
+      if (!amount) {
         return;
       }
       const request = new AddItemToShoppingCartRequest();
