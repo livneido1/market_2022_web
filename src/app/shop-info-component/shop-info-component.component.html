@@ -8,6 +8,9 @@
           <tr>
             <th class = "titleTh" >Products</th>
             <th>
+
+            </th>
+            <th>
               <div style="width: 50%;
                           float: left;
                           font-size: smaller;">
@@ -36,6 +39,15 @@
               <p>price per Unit: {{item.price}}</p>
               <p>Amount in Shop: {{getItemCurrentAmount(item)}}</p>
 
+            </td>
+            <td>
+              <button style="cursor: pointer;"
+                (click)="addToCart(item)"
+                title="add item to cart">
+                <span class="material-icons">
+                  add_shopping_cart
+                  </span>
+              </button>
             </td>
             <td>
               <div>
