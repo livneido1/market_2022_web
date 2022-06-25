@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AppointmentFacade } from 'app/http/facadeObjects/AppointmentFacade';
 import { PermissionFacade } from 'app/http/facadeObjects/PermissionFacade';
+import { ShopFacade } from 'app/http/facadeObjects/shop-facade';
 import { ShopManagerAppointmentFacade } from 'app/http/facadeObjects/shop-manager-appointment-facade';
 import { ShopOwnerAppointmentFacade } from 'app/http/facadeObjects/ShopOwnerAppointmentFacade';
 
@@ -74,5 +75,18 @@ export class ModelAdapterService {
         return manager;
     }
     return undefined;
+  }
+
+  
+  hasPermission(shop:ShopFacade, visitorName:string, permission: string):boolean{
+    if (shop.employees.has(visitorName)){
+      const app:AppointmentFacade = shop.employees.get(visitorName);
+      for (const permit of app.permissions){
+        if (permit.name === permission){
+          return true;
+        }
+      }
+    }
+    return false;
   }
 }

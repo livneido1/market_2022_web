@@ -48,6 +48,7 @@
               <div>
 
                 <button
+                  *ngIf="isOwnerOrManager()"
                   title="Remove Policy from Shop"
                   style="float:right; cursor: pointer;"
                   (click)="removePolicy(policy)">
@@ -70,6 +71,7 @@
   <div class="SideBar">
     <div style="height: 10%; text-align: center; margin-top: 20%;">
       <button
+        *ngIf="isOwnerOrManager()"
         class="optionalButton"
         (click)="addPolicy()"
         >

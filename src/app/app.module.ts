@@ -93,6 +93,8 @@ import { UserBidsDialogComponent } from './user-bids-dialog/user-bids-dialog.com
     ManagerSettingsComponent,
     OfferBidDialogComponent,
     UserBidsDialogComponent,
+    PendingBidsComponent,
+    ApprovePendingAppsDialogComponent
   ],
   imports: [
     AppRoutingModule,

@@ -100,4 +100,11 @@ export class MainShopPurchasePoliciesComponent implements OnInit {
     });
   }
 
+  isOwnerOrManager(): boolean {
+    if (this.shop.employees.has(this.config.visitor.name)) {
+      return true;
+    }
+    return false;
+  }
+
 }

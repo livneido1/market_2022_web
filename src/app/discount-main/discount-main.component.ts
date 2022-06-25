@@ -70,6 +70,14 @@ export class DiscountMainComponent implements OnInit {
 
   backToShop() {}
 
+  
+  isOwnerOrManager(): boolean {
+    if (this.shop.employees.has(this.config.visitor.name)) {
+      return true;
+    }
+    return false;
+  }
+
   reset() {
     this.lastUpdate = new Date().toLocaleString();
     const request = new GetPoliciesRequest(
