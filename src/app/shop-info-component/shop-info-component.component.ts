@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AddItemDialogComponent } from 'app/add-item-dialog/add-item-dialog.component';
+import { AddItemToCartDialogComponent } from 'app/add-item-to-cart-dialog/add-item-to-cart-dialog.component';
 import { GetStringValueComponent } from 'app/get-string-value/get-string-value.component';
 import {
   GetValueDialogComponent,
@@ -14,6 +15,7 @@ import { ResponseT } from 'app/http/facadeObjects/response-t';
 import { ShopFacade } from 'app/http/facadeObjects/shop-facade';
 import { AddABidRequest } from 'app/http/requests/add-abid-request';
 import { AddItemToShopRequest } from 'app/http/requests/add-item-to-shop-request';
+import { AddItemToShoppingCartRequest } from 'app/http/requests/add-item-to-shopping-cart-request';
 import { ChangeShopItemInfoRequest } from 'app/http/requests/change-shop-item-info-request';
 import { CloseShopRequest } from 'app/http/requests/close-shop-request';
 import { RemoveItemFromShopRequest } from 'app/http/requests/remove-item-from-shop-request';
@@ -306,6 +308,31 @@ export class ShopInfoComponentComponent implements OnInit {
       }
     }
     return false;
+  }
+
+  addToCart(item: ItemFacade) {
+    const dialogRef = this.dialog.open(AddItemToCartDialogComponent, {
+      width: '300px',
+      data: {},
+    });
+
+    dialogRef.afterClosed().subscribe((amount) => {
+      if (!amount){
+        return;
+      }
+      const request = new AddItemToShoppingCartRequest();
+      request.amount = amount;
+      request.itemToInsert = item;
+      request.visitorName = this.config.visitor.name;
+      this.engine.addItemToShoppingCart(request).subscribe((responseJson) => {
+        const response = new Response().deserialize(responseJson);
+        if (response.isErrorOccurred()) {
+          this.messageService.errorMessage(response.getMessage());
+        } else {
+          this.messageService.validMessage('Item Successfully added');
+        }
+      });
+    });
   }
 
   resetShop() {
