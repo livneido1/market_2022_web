@@ -21,7 +21,15 @@ import { ConfigService } from 'app/services/config-service.service';
 import { PoliciesService } from 'app/services/policies-service.service';
 import { EngineService } from 'app/services/engine.service';
 import { MessageService } from 'app/services/message.service';
+import { MatTreeNestedDataSource } from '@angular/material/tree';
+import { NestedTreeControl } from '@angular/cdk/tree';
+import { CompositeDiscountLevelStateFacade } from 'app/http/facadeObjects/Discounts/composite-discount-level-state-facade';
 
+export interface TreeViewItem {
+  name: string;
+  value: any;
+  children: TreeViewItem[];
+}
 @Component({
   selector: 'app-sub-discount',
   templateUrl: './sub-discount.component.html',
@@ -31,7 +39,10 @@ export class SubDiscountComponent implements OnInit {
   currentLevels: DiscountLevelStateFacade[];
   currentConditions: ConditionFacade[];
   currentPercentage: number;
+  selectedLevel: DiscountLevelStateFacade;
 
+  treeControl = new NestedTreeControl<TreeViewItem>((node) => node.children);
+  dataSource = new MatTreeNestedDataSource<TreeViewItem>();
   constructor(
     public dialog: MatDialog,
     private config: ConfigService,
@@ -64,6 +75,7 @@ export class SubDiscountComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.currentLevels.push(result);
+        this.updateLevelTreeData();
       }
     });
   }
@@ -93,6 +105,8 @@ export class SubDiscountComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result: DiscountLevelStateFacade[]) => {
       if (result) {
         this.currentLevels = result;
+        this.updateLevelTreeData();
+
       }
     });
   }
@@ -112,17 +126,17 @@ export class SubDiscountComponent implements OnInit {
     );
   }
 
-  removeCondition(condition: ConditionFacade){
+  removeCondition(condition: ConditionFacade) {
     const index = this.currentConditions.indexOf(condition);
-    if (index >-1){
-      this.currentConditions.splice(index,1);
+    if (index > -1) {
+      this.currentConditions.splice(index, 1);
     }
   }
 
-  removeLevel(level:DiscountLevelStateFacade){
+  removeLevel(level: DiscountLevelStateFacade) {
     const index = this.currentLevels.indexOf(level);
-    if (index >-1){
-      this.currentLevels.splice(index,1);
+    if (index > -1) {
+      this.currentLevels.splice(index, 1);
     }
   }
 
@@ -141,16 +155,15 @@ export class SubDiscountComponent implements OnInit {
     }
 
     const discount: DiscountTypeFacade = this.createDiscountType();
-    this.discountService.createdDiscountList.push(discount)
+    this.discountService.createdDiscountList.push(discount);
     this.config.isAddNewDiscountClicked = true;
-
   }
 
-  canMergeConditions(){
-    return this.currentConditions && this.currentConditions.length>0;
+  canMergeConditions() {
+    return this.currentConditions && this.currentConditions.length > 0;
   }
-  canMergeLevels(){
-    return this.currentLevels && this.currentLevels.length>0;
+  canMergeLevels() {
+    return this.currentLevels && this.currentLevels.length > 0;
   }
   private createDiscountType() {
     let discount: DiscountTypeFacade;
@@ -178,4 +191,38 @@ export class SubDiscountComponent implements OnInit {
   public atMostOneCondition() {
     return this.currentConditions.length <= 1;
   }
+
+  updateLevelTreeData() {
+    const items: TreeViewItem[] = [];
+    for (const lvl of this.currentLevels) {
+      items.push(this.discountLevelToTreeViewItem(lvl));
+    }
+    this.dataSource.data = items;
+  }
+
+  discountLevelToTreeViewItem(level: DiscountLevelStateFacade): TreeViewItem {
+    const children: TreeViewItem[] = [];
+    const asComposite = level as CompositeDiscountLevelStateFacade;
+    if (asComposite.discountLevelStateFacades) {
+      for (const child of asComposite.discountLevelStateFacades) {
+        const item = this.discountLevelToTreeViewItem(child);
+        children.push(item);
+      }
+    }
+    const treeViewItem: TreeViewItem = {
+      name: level.title,
+      value: level,
+      children: children,
+    };
+    return treeViewItem
+  }
+
+  hasChild(_: number, node: TreeViewItem){
+    return (!!node.children && node.children.length > 0);
+  }
+  onLevelSelect(node: TreeViewItem){
+    this.selectedLevel = node.value;
+  }
+
+    
 }

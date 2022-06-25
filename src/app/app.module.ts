@@ -54,6 +54,7 @@ import { OfferBidDialogComponent } from './offer-bid-dialog/offer-bid-dialog.com
 import { PendingBidsComponent } from './pending-bids/pending-bids.component';
 import { UserBidsDialogComponent } from './user-bids-dialog/user-bids-dialog.component';
 import { ShowTextDialogComponent } from './show-text-dialog/show-text-dialog.component';
+import {MatTreeModule} from '@angular/material/tree';
 
 @NgModule({
   declarations: [
@@ -114,6 +115,7 @@ import { ShowTextDialogComponent } from './show-text-dialog/show-text-dialog.com
     MatDialogModule,
     MatSnackBarModule,
     MatDatepickerModule,
+    MatTreeModule,
 
 
 
