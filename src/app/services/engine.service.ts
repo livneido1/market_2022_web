@@ -170,8 +170,8 @@ export class EngineService {
 
   buyShoppingCart(
     request: BuyShoppingCartRequest
-  ): Observable<ResponseT<ShoppingCartFacade>> {
-    return this.http.post<ResponseT<ShoppingCartFacade>>(
+  ): Observable<Response> {
+    return this.http.post<Response>(
       this.serverUrl + '/buyShoppingCart',
       request,
       httpOptions
