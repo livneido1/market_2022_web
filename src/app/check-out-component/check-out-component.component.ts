@@ -64,12 +64,6 @@ export class CheckOutComponentComponent implements OnInit {
           4000
         );
         this.config.isCartInfoClicked = true;
-        // if error is
-        // if (response.value) {
-        //   this.config.visitor.cart = new ShoppingCartFacade().deserialize(
-        //     response.value
-        //   );
-        // }
       } else {
         this.messageService.validMessage('bought successfully');
         this.config.visitor.cart = new ShoppingCartFacade().deserialize(
