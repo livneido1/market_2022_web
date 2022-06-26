@@ -24,13 +24,9 @@ import { MessageService } from 'app/services/message.service';
 import { MatTreeNestedDataSource } from '@angular/material/tree';
 import { NestedTreeControl } from '@angular/cdk/tree';
 import { CompositeDiscountLevelStateFacade } from 'app/http/facadeObjects/Discounts/composite-discount-level-state-facade';
-import { TreeViewAdapterService } from 'app/services/tree-view-adapter.service';
+import { TreeViewAdapterService, TreeViewItem } from 'app/services/tree-view-adapter.service';
 
-export interface TreeViewItem {
-  name: string;
-  value: any;
-  children: TreeViewItem[];
-}
+
 @Component({
   selector: 'app-sub-discount',
   templateUrl: './sub-discount.component.html',
@@ -41,7 +37,9 @@ export class SubDiscountComponent implements OnInit {
   currentConditions: ConditionFacade[];
   currentPercentage: number;
   selectedLevel: DiscountLevelStateFacade;
+  selectedLevelNode: TreeViewItem;
   selectedCondition: ConditionFacade;
+  selectedConditionNode: TreeViewItem;
 
   treeControl = new NestedTreeControl<TreeViewItem>((node) => node.children);
   levelDataSource = new MatTreeNestedDataSource<TreeViewItem>();
@@ -203,10 +201,10 @@ export class SubDiscountComponent implements OnInit {
 
 
 
-  //////////////////////////////// TreeView Methds ////////////////////////////////  
+  //////////////////////////////// TreeView Methds ////////////////////////////////
   /////////////////////////////////////////////////////////////////////////////////
-  ///////////////////////////////////////////////////////////////////////////////// 
-  ///////////////////////////////////////////////////////////////////////////////// 
+  /////////////////////////////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////////////////////////
 
   getLevelInfo(){
     if (this.selectedLevel){
@@ -217,12 +215,13 @@ export class SubDiscountComponent implements OnInit {
   updateLevelTreeData() {
     const items: TreeViewItem[] = [];
     for (const lvl of this.currentLevels) {
-      items.push(this.treeAdapter.discountLevelToTreeViewItem(lvl));
+      items.push(this.treeAdapter.discountLevelToTreeViewItem(lvl,true));
     }
     this.levelDataSource.data = items;
   }
   onLevelSelect(node: TreeViewItem){
     this.selectedLevel = node.value;
+    this.selectedLevelNode = node;
   }
 
   getConditionInfo(){
@@ -234,12 +233,13 @@ export class SubDiscountComponent implements OnInit {
   updateConditionTreeData() {
     const items: TreeViewItem[] = [];
     for (const cond of this.currentConditions) {
-      items.push(this.treeAdapter.ConditionToTreeViewItem(cond));
+      items.push(this.treeAdapter.ConditionToTreeViewItem(cond,true));
     }
     this.conditionDataSource.data = items;
   }
   onConditionSelect(node: TreeViewItem){
     this.selectedCondition = node.value;
+    this.selectedConditionNode = node;
   }
 
 
@@ -247,7 +247,7 @@ export class SubDiscountComponent implements OnInit {
   hasChild(_: number, node: TreeViewItem){
     return (!!node.children && node.children.length > 0);
   }
- 
 
-    
+
+
 }

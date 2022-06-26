@@ -9,7 +9,7 @@ export class ItemPurchasePolicyLevelStateFacade
 {
   itemID: number;
   constructor(itemID?: number) {
-    super('ItemPurchasePolicyLevelStateFacade');
+    super('ItemPurchasePolicyLevelStateFacade' , 'Item Purcahse Policy');
     this.itemID = itemID;
   }
 
@@ -20,5 +20,9 @@ export class ItemPurchasePolicyLevelStateFacade
       Category.cellular,
       []
     );
+  }
+
+  getString(): string {
+      return "Item Policy Level\nItemID:" +this.itemID;
   }
 }

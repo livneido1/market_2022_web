@@ -8,7 +8,7 @@ export class ShopPurchasePolicyLevelStateFacade
   implements Deserializable
 {
   constructor() {
-    super('ShopPurchasePolicyLevelStateFacade');
+    super('ShopPurchasePolicyLevelStateFacade', 'Shop Level');
   }
 
   getWrapper(): PurchasePolicyLevelStateWrapper {
@@ -18,5 +18,9 @@ export class ShopPurchasePolicyLevelStateFacade
         Category.cellular,
         []
       )
+  }
+
+  getString(): string {
+      return "All Shop Purchase Policy"
   }
 }

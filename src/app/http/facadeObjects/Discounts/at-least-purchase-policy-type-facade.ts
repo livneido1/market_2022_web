@@ -7,7 +7,7 @@ import { PurchasePolicyTypeWrapper, PurchasePolicyTypeWrapperType } from "./Wrap
 export class AtLeastPurchasePolicyTypeFacade extends PurchasePolicyTypeFacade implements Deserializable {
   amount: number;
   constructor(amount?:number,  purchasePolicyLevelStateFacade?:PurchasePolicyLevelStateFacade){
-    super("AtLeastPurchasePolicyTypeFacade", purchasePolicyLevelStateFacade);
+    super("AtLeastPurchasePolicyTypeFacade","AtLeast Policy", purchasePolicyLevelStateFacade);
     this.amount = amount? amount : -1;
 
   }
@@ -28,5 +28,9 @@ export class AtLeastPurchasePolicyTypeFacade extends PurchasePolicyTypeFacade im
       this.purchasePolicyLevelStateFacade.getWrapper(),
       []
     );
+  }
+
+  getString(): string {
+      return "Info: Atleast " + this.amount + " items needed\nLevel: "+this.purchasePolicyLevelStateFacade.getString();
   }
 }

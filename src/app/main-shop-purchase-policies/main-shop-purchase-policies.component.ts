@@ -12,6 +12,9 @@ import { ResponseT } from 'app/http/facadeObjects/response-t';
 import { PurchasePolicyTypeWrapper } from 'app/http/facadeObjects/Discounts/Wrappers/purchase-policy-type-wrapper';
 import { RemovePurchasePolicyFromShopRequest } from 'app/http/requests/remove-purchase-policy-from-shop-request';
 import { Response } from 'app/http/facadeObjects/response';
+import { NestedTreeControl } from '@angular/cdk/tree';
+import { TreeViewAdapterService, TreeViewItem } from 'app/services/tree-view-adapter.service';
+import { MatTreeNestedDataSource } from '@angular/material/tree';
 
 @Component({
   selector: 'app-main-shop-purchase-policies',
@@ -24,6 +27,12 @@ export class MainShopPurchasePoliciesComponent implements OnInit {
   lastUpdate: string;
   currentPolicies: PurchasePolicyTypeFacade[];
 
+
+
+  selectedNode: TreeViewItem
+  selectedPolicy: PurchasePolicyTypeFacade
+  treeControl = new NestedTreeControl<TreeViewItem>((node) => node.children);
+  policyDataSource = new MatTreeNestedDataSource<TreeViewItem>();
   constructor(
     private engine: EngineService,
     private messageService: MessageService,
@@ -31,6 +40,7 @@ export class MainShopPurchasePoliciesComponent implements OnInit {
     private modelAdapter: ModelAdapterService,
     public dialog: MatDialog,
     private policiesService: PoliciesService,
+    private treeAdapter: TreeViewAdapterService,
   ) { }
 
   ngOnInit(): void {
@@ -44,7 +54,7 @@ export class MainShopPurchasePoliciesComponent implements OnInit {
   getPurchasePolicyName(purchasePolicy:PurchasePolicyTypeFacade) {
     return this.policiesService.getPurchasePolicyName(purchasePolicy);
   }
-  
+
   removePolicy(purchasePolicy:PurchasePolicyTypeFacade ) {
     const wrapper = purchasePolicy.getWrapper();
     const request = new RemovePurchasePolicyFromShopRequest(wrapper,this.shop.shopName, this.config.visitor.name);
@@ -88,6 +98,7 @@ export class MainShopPurchasePoliciesComponent implements OnInit {
             const purchasePolicy = wrapper.getPurchasePolicyType();
             this.currentPolicies.push(purchasePolicy);
           }
+          this.updatePolicyTreeData();
           this.messageService.validMessage(
             "successfully loaded shop's policies"
           );
@@ -106,5 +117,44 @@ export class MainShopPurchasePoliciesComponent implements OnInit {
     }
     return false;
   }
+
+
+  canDelete(){
+    return this.selectedNode && this.selectedNode.isParent;
+  }
+
+
+  /////////////////////////// Tree view Code ////////////////////////////
+  ///////////////////////////////////////////////////////////////////////
+  ///////////////////////////////////////////////////////////////////////
+  ///////////////////////////////////////////////////////////////////////
+  getPolicyInfo(){
+    if (this.selectedPolicy){
+      return this.selectedPolicy.getString();
+    }
+    return "";
+  }
+  updatePolicyTreeData() {
+    const items: TreeViewItem[] = [];
+    for (const policy of this.currentPolicies) {
+      items.push(this.treeAdapter.PolicyToTreeItem(policy,true));
+    }
+    this.policyDataSource.data = items;
+  }
+  onPolicySelect(node: TreeViewItem){
+    this.selectedPolicy = node.value;
+    this.selectedNode = node;
+  }
+
+
+
+  hasChild(_: number, node: TreeViewItem){
+    return (!!node.children && node.children.length > 0);
+  }
+
+  ///////////////////////////////////////////////////////////////////////////
+  ///////////////////////////////////////////////////////////////////////////
+  ///////////////////////////////////////////////////////////////////////////
+
 
 }

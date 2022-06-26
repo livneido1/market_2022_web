@@ -44,6 +44,7 @@
                   </div>
                   <div style="text-align: center;">
                     <button
+                      *ngIf="this.selectedLevelNode && this.selectedLevelNode.isParent"
                       title="remove"
                       class="removeButton"
                       (click)="removeLevel(this.selectedLevel)">
@@ -122,6 +123,7 @@
                   </div>
                   <div style="text-align: center;">
                     <button
+                      *ngIf="this.selectedConditionNode && this.selectedConditionNode.isParent"
                       title="remove"
                       class="removeButton"
                       (click)="removeCondition(this.selectedCondition)">

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { MatTreeNestedDataSource } from '@angular/material/tree';
 import { AddPurchaseLevelDialogComponent } from 'app/add-purchase-level-dialog/add-purchase-level-dialog.component';
 import { AtLeastPurchasePolicyTypeFacade } from 'app/http/facadeObjects/Discounts/at-least-purchase-policy-type-facade';
 import { AtMostPurchasePolicyTypeFacade } from 'app/http/facadeObjects/Discounts/at-most-purchase-policy-type-facade';
@@ -13,6 +14,8 @@ import { ConfigService } from 'app/services/config-service.service';
 import { EngineService } from 'app/services/engine.service';
 import { MessageService } from 'app/services/message.service';
 import { PoliciesService } from 'app/services/policies-service.service';
+import { TreeViewAdapterService, TreeViewItem } from 'app/services/tree-view-adapter.service';
+import { NestedTreeControl } from '@angular/cdk/tree';
 
 @Component({
   selector: 'app-sub-purchase-policy',
@@ -24,12 +27,18 @@ export class SubPurchasePolicyComponent implements OnInit {
   currentType: PurchasePolicyTypeFacade;
   typeList: PurchasePolicyTypeFacade[];
   amount: number;
+
+  selectedNode: TreeViewItem
+  selectedPolicy: PurchasePolicyLevelStateFacade
+  treeControl = new NestedTreeControl<TreeViewItem>((node) => node.children);
+  policyDataSource = new MatTreeNestedDataSource<TreeViewItem>();
   constructor(
     public dialog: MatDialog,
     private config: ConfigService,
     private messageService: MessageService,
     private policiesService: PoliciesService,
-    private engine: EngineService
+    private engine: EngineService,
+    private treeAdapter: TreeViewAdapterService
   ) {}
 
   ngOnInit(): void {
@@ -45,6 +54,7 @@ export class SubPurchasePolicyComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.currentLevels.push(result);
+        this.updatePolicyTreeData();
       }
     });
   }
@@ -61,6 +71,7 @@ export class SubPurchasePolicyComponent implements OnInit {
       .subscribe((result: PurchasePolicyLevelStateFacade[]) => {
         if (result) {
           this.currentLevels = result;
+          this.updatePolicyTreeData();
         }
       });
   }
@@ -88,6 +99,7 @@ export class SubPurchasePolicyComponent implements OnInit {
     const index = this.currentLevels.indexOf(level);
     if (index > -1) {
       this.currentLevels.splice(index, 1);
+      this.updatePolicyTreeData();
     }
   }
 
@@ -130,4 +142,44 @@ export class SubPurchasePolicyComponent implements OnInit {
   isTypeChoosed(): boolean {
     return this.currentType !== undefined;
   }
+
+
+  canDelete(){
+    return this.selectedNode && this.selectedNode.isParent;
+  }
+
+
+  /////////////////////////// Tree view Code ////////////////////////////
+  ///////////////////////////////////////////////////////////////////////
+  ///////////////////////////////////////////////////////////////////////
+  ///////////////////////////////////////////////////////////////////////
+  getPolicyInfo(){
+    if (this.selectedPolicy){
+      return this.selectedPolicy.getString();
+    }
+    return "";
+  }
+  updatePolicyTreeData() {
+    const items: TreeViewItem[] = [];
+    for (const policy of this.currentLevels) {
+      items.push(this.treeAdapter.policyLevelToTreeViewItem(policy,true));
+    }
+    this.policyDataSource.data = items;
+  }
+  onPolicySelect(node: TreeViewItem){
+    this.selectedPolicy = node.value;
+    this.selectedNode = node;
+  }
+
+
+
+  hasChild(_: number, node: TreeViewItem){
+    return (!!node.children && node.children.length > 0);
+  }
+
+  ///////////////////////////////////////////////////////////////////////////
+  ///////////////////////////////////////////////////////////////////////////
+  ///////////////////////////////////////////////////////////////////////////
+
+
 }

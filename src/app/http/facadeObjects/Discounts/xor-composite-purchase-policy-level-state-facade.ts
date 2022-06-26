@@ -13,6 +13,7 @@ export class XorCompositePurchasePolicyLevelStateFacade
   ) {
     super(
       'XorCompositePurchasePolicyLevelStateFacade',
+      'Exactly one',
       purchasePolicyLevelStateFacades
     );
   }
@@ -28,5 +29,9 @@ export class XorCompositePurchasePolicyLevelStateFacade
       Category.cellular,
       subWrappers
     );
+  }
+
+  getString(): string {
+      return "Exactly one of sub Policies Level must be held";
   }
 }

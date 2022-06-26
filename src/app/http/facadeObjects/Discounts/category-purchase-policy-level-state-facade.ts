@@ -9,7 +9,7 @@ export class CategoryPurchasePolicyLevelStateFacade
 {
   category: Category;
   constructor(category?: Category) {
-    super('CategoryPurchasePolicyLevelStateFacade');
+    super('CategoryPurchasePolicyLevelStateFacade','Items Category Level');
     this.category = category;
   }
 
@@ -28,5 +28,9 @@ export class CategoryPurchasePolicyLevelStateFacade
       this.category,
       []
     );
+  }
+
+  getString(): string {
+      return "Category Level Policy\nCategory: "+this.category;
   }
 }

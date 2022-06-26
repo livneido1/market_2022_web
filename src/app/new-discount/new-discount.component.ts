@@ -12,6 +12,9 @@ import { PoliciesService } from 'app/services/policies-service.service';
 import { EngineService } from 'app/services/engine.service';
 import { MessageService } from 'app/services/message.service';
 import { ModelAdapterService } from 'app/services/model-adapter.service';
+import { TreeViewAdapterService, TreeViewItem } from 'app/services/tree-view-adapter.service';
+import { MatTreeNestedDataSource } from '@angular/material/tree';
+import { NestedTreeControl } from '@angular/cdk/tree';
 
 @Component({
   selector: 'app-new-discount',
@@ -20,17 +23,24 @@ import { ModelAdapterService } from 'app/services/model-adapter.service';
 })
 export class NewDiscountComponent implements OnInit {
   currentDiscounts: DiscountTypeFacade[];
+  selectedDiscount: DiscountTypeFacade;
+  selectedNode: TreeViewItem;
+
+  treeControl = new NestedTreeControl<TreeViewItem>((node) => node.children);
+  discountDataSource = new MatTreeNestedDataSource<TreeViewItem>();
   constructor(
     private engine: EngineService,
     private messageService: MessageService,
     private modelAdapter: ModelAdapterService,
     private policiesService: PoliciesService,
     private config: ConfigService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private treeAdapter: TreeViewAdapterService
   ) {}
 
   ngOnInit(): void {
     this.currentDiscounts = this.policiesService.createdDiscountList;
+    this.updateDiscountTreeData();
   }
 
   isDiscountsEmpty() {
@@ -52,6 +62,7 @@ export class NewDiscountComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result: DiscountTypeFacade[]) => {
       if (result) {
         this.currentDiscounts = result;
+        this.updateDiscountTreeData();
       }
     });
   }
@@ -67,6 +78,10 @@ export class NewDiscountComponent implements OnInit {
     if (index !== 1){
       this.currentDiscounts.splice(index,1);
     }
+  }
+
+  canDelete(){
+    return this.selectedNode && this.selectedNode.isParent
   }
 
   submit() {
@@ -96,4 +111,38 @@ export class NewDiscountComponent implements OnInit {
   isExactOneDiscout(): boolean {
     return this.currentDiscounts.length === 1;
   }
+
+
+
+  /////////////////////////// Tree view Code ////////////////////////////
+  ///////////////////////////////////////////////////////////////////////
+  ///////////////////////////////////////////////////////////////////////
+  ///////////////////////////////////////////////////////////////////////
+  getDiscountInfo(){
+    if (this.selectedDiscount){
+      return this.selectedDiscount.getString();
+    }
+    return "";
+  }
+  updateDiscountTreeData() {
+    const items: TreeViewItem[] = [];
+    for (const discount of this.currentDiscounts) {
+      items.push(this.treeAdapter.DiscountToTreeViewItem(discount,true));
+    }
+    this.discountDataSource.data = items;
+  }
+  onDiscountSelect(node: TreeViewItem){
+    this.selectedDiscount = node.value;
+    this.selectedNode = node;
+  }
+
+
+
+  hasChild(_: number, node: TreeViewItem){
+    return (!!node.children && node.children.length > 0);
+  }
+
+  ///////////////////////////////////////////////////////////////////////////
+  ///////////////////////////////////////////////////////////////////////////
+  ///////////////////////////////////////////////////////////////////////////
 }
