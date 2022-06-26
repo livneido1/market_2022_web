@@ -10,6 +10,7 @@ import * as SockJS from 'sockjs-client';
 import * as Stomp from 'stompjs';
 import { RxStomp } from '@stomp/rx-stomp';
 import { map } from 'rxjs';
+import { StatisticsData } from 'app/http/facadeObjects/StatisticsData';
 
 
 @Component({
@@ -77,12 +78,14 @@ export class MainPageComponent implements OnInit, OnDestroy {
   watchForNotifications() {
     this.config.stompClient.watch('/user/notification/item')
     .pipe(
-      map((response) => {
-        const text: string = response.body;
-        console.log('Got ' + text);
-        return text;
-      }))
-    .subscribe((notification: string) => alert(notification));}
+      map((response) => {const text: string = response.body; return text; }))
+    .subscribe((notification: string) =>{ 
+      const statistics = new StatisticsData().deserialize(notification);
+        if(statistics.numOfVisitors){
+            notification= '123reached';
+        }
+      alert(notification)});
+    }
 
 
   isRegisterClicked(): boolean {
