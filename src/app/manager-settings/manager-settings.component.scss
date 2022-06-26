@@ -106,5 +106,24 @@
   cursor: pointer;
 }
 
+.statsTable{
+  background: white;
+  border: outset;
+  height: 80%;
+  width: 100%;
+}
+.header{
+  font-size: x-large;
+  font-family: cursive;
+  border-bottom: solid;
+}
 
+.tableBody{
+  font-size: large;
+  font-family: cursive;
+  text-align: center;
+  border-right: solid;
+  border-bottom: solid;
+  width: 50%;
+}
 

@@ -1,6 +1,69 @@
 <div  class="backgroundComp">
   <div class="resultColumn">
-    <p class="resultTitle">stats chart should be placed here</p>
+    <div style="height: 10%; width: 100%; text-align: center;">
+      <span style="font-family: cursive; font-size: xxx-large;">
+        Market Live Stats
+
+      </span>
+      <span class="material-icons" style="font-size: xxx-large !important;" >
+        sensors
+      </span>
+
+    </div>
+    <table class="statsTable">
+      <thead>
+        <tr>
+          <th class="header">
+            Stats
+          </th>
+          <th class="header">
+            Values
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- <tr *ngFor="let valueSet of getValueSets()">
+          <td class=  "tableBody">
+            test {{valueSet.header}}
+          </td>
+          <td class="tableBody">
+            test {{valueSet.value}}
+          </td>
+        </tr> -->
+        <tr>
+          <td class=  "tableBody">
+            Number Of Shop Owners
+          </td>
+          <td class=  "tableBody">
+            {{this.config.currentStatistics.numOfOwners}}
+          </td>
+        </tr>
+        <tr>
+          <td class=  "tableBody">
+            Number Of Members
+          </td>
+          <td class=  "tableBody">
+            {{this.config.currentStatistics.numOfRegularMembers}}
+          </td>
+        </tr>
+        <tr>
+          <td class=  "tableBody">
+            Number Of Shop Managers
+          </td>
+          <td class=  "tableBody">
+            {{this.config.currentStatistics.numOfShopsManagers}}
+          </td>
+        </tr>
+        <tr>
+          <td class=  "tableBody">
+            Number Of Visitors
+          </td>
+          <td class=  "tableBody">
+            {{this.config.currentStatistics.numOfVisitors}}
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 
   <div class="SideBar">

@@ -7,6 +7,7 @@ import {
 } from 'app/get-value-dialog/get-value-dialog.component';
 import { Response } from 'app/http/facadeObjects/response';
 import { ResponseT } from 'app/http/facadeObjects/response-t';
+import { StatisticsData } from 'app/http/facadeObjects/StatisticsData';
 import { GetHistoryByMemberRequest } from 'app/http/requests/get-history-by-member-request';
 import { GetMarketInfoRequest } from 'app/http/requests/get-market-info-request';
 import { RemoveMemberRequest } from 'app/http/requests/remove-member-request';
@@ -19,6 +20,11 @@ import {
   TextData,
 } from 'app/show-text-dialog/show-text-dialog.component';
 
+
+export interface statisticValueSet{
+  header: string;
+  value: string;
+}
 @Component({
   selector: 'app-manager-settings',
   templateUrl: './manager-settings.component.html',
@@ -26,7 +32,7 @@ import {
 })
 export class ManagerSettingsComponent implements OnInit {
   constructor(
-    private config: ConfigService,
+    public config: ConfigService,
     private engine: EngineService,
     public dialog: MatDialog,
     private messageService: MessageService
@@ -151,5 +157,16 @@ export class ManagerSettingsComponent implements OnInit {
           textRef.afterClosed().subscribe();
         }
       });
+  }
+
+
+  getValueSets(): statisticValueSet[]{
+    const data:StatisticsData = this.config.currentStatistics;
+    const sets = [];
+    sets.push("Number Of Shop Owners", data.numOfOwners);
+    sets.push("Number Of Members", data.numOfRegularMembers);
+    sets.push("Number Of Shop Managers", data.numOfShopsManagers);
+    sets.push("Number Of Visitor", data.numOfVisitors);
+    return sets;
   }
 }
