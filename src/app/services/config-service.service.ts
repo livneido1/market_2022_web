@@ -3,6 +3,7 @@ import { RxStomp } from '@stomp/rx-stomp';
 import { Category, ItemFacade } from 'app/http/facadeObjects/ItemFacade';
 import { MemberFacade } from 'app/http/facadeObjects/MemberFacade';
 import { ShopFacade } from 'app/http/facadeObjects/shop-facade';
+import { StatisticsData } from 'app/http/facadeObjects/StatisticsData';
 import { VisitorFacade } from 'app/http/facadeObjects/visitor-facade';
 
 @Injectable({
@@ -35,6 +36,8 @@ export class ConfigService {
   private _member: MemberFacade;
   private _isManagerLoggedIn: boolean;
   itemSearchResult: ItemFacade[];
+  currentStatistics: StatisticsData;
+
 
   public serverUrl: string = 'http://localhost:8080';
   public stompClient: RxStomp;
@@ -67,6 +70,7 @@ export class ConfigService {
     this._itemsSearched = undefined;
     this.selectedShop = undefined;
     this._isManagerLoggedIn = false;
+    this.currentStatistics = new StatisticsData(1,1,1,0,1);
   }
 
   cleanAllComponents() {
