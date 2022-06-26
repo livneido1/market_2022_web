@@ -1,7 +1,10 @@
 import { Deserializable } from '../deserializable';
 import { DiscountLevelStateFacade } from './discount-level-state-facade';
 import { DiscountTypeFacade } from './discount-type-facade';
-import { DiscountTypeWrapper, DiscountTypeWrapperType } from './Wrappers/discount-type-wrapper';
+import {
+  DiscountTypeWrapper,
+  DiscountTypeWrapperType,
+} from './Wrappers/discount-type-wrapper';
 
 export class SimpleDiscountFacade
   extends DiscountTypeFacade
@@ -11,7 +14,12 @@ export class SimpleDiscountFacade
     percentageOfDiscount?: number,
     discountLevelState?: DiscountLevelStateFacade
   ) {
-    super('SimpleDiscountFacade', percentageOfDiscount, discountLevelState);
+    super(
+      'SimpleDiscountFacade',
+      'regular discount',
+      percentageOfDiscount,
+      discountLevelState
+    );
   }
   deserialize(value: any): this {
     if (!value) {
@@ -28,6 +36,17 @@ export class SimpleDiscountFacade
       this.discountLevelState.getWrapper(),
       null,
       []
+    );
+  }
+
+  getString(): string {
+    return (
+      'percentage: ' +
+      this.percentageOfDiscount +
+      '\n' +
+      'level: ' +
+      this.discountLevelState.title +
+      '\n'
     );
   }
 }

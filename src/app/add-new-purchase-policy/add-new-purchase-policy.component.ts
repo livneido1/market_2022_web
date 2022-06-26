@@ -9,6 +9,9 @@ import { EngineService } from 'app/services/engine.service';
 import { MessageService } from 'app/services/message.service';
 import { ModelAdapterService } from 'app/services/model-adapter.service';
 import { PoliciesService } from 'app/services/policies-service.service';
+import { NestedTreeControl } from '@angular/cdk/tree';
+import { TreeViewAdapterService, TreeViewItem } from 'app/services/tree-view-adapter.service';
+import { MatTreeNestedDataSource } from '@angular/material/tree';
 
 @Component({
   selector: 'app-add-new-purchase-policy',
@@ -18,17 +21,24 @@ import { PoliciesService } from 'app/services/policies-service.service';
 export class AddNewPurchasePolicyComponent implements OnInit {
   currentPolicies: PurchasePolicyTypeFacade[];
 
+
+  selectedNode: TreeViewItem
+  selectedPolicy: PurchasePolicyTypeFacade
+  treeControl = new NestedTreeControl<TreeViewItem>((node) => node.children);
+  policyDataSource = new MatTreeNestedDataSource<TreeViewItem>();
   constructor(
     private engine: EngineService,
     private messageService: MessageService,
     private modelAdapter: ModelAdapterService,
     private policiesService: PoliciesService,
     private config: ConfigService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private treeAdapter: TreeViewAdapterService
   ) { }
 
   ngOnInit(): void {
     this.currentPolicies = this.policiesService.currentPolicyList;
+    this.updatePolicyTreeData();
   }
 
   isPoliciesEmpty() {
@@ -50,6 +60,7 @@ export class AddNewPurchasePolicyComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result: PurchasePolicyTypeFacade[]) => {
       if (result) {
         this.currentPolicies = result;
+        this.updatePolicyTreeData();
       }
     });
   }
@@ -66,6 +77,7 @@ export class AddNewPurchasePolicyComponent implements OnInit {
     const index = this.currentPolicies.indexOf(policy);
     if (index !== 1){
       this.currentPolicies.splice(index,1);
+      this.updatePolicyTreeData();
     }
   }
 
@@ -96,5 +108,44 @@ export class AddNewPurchasePolicyComponent implements OnInit {
   isExactOnePolicy(): boolean {
     return this.currentPolicies.length === 1;
   }
+
+  canDelete(){
+    return this.selectedNode && this.selectedNode.isParent;
+  }
+
+
+  /////////////////////////// Tree view Code ////////////////////////////
+  ///////////////////////////////////////////////////////////////////////
+  ///////////////////////////////////////////////////////////////////////
+  ///////////////////////////////////////////////////////////////////////
+  getPolicyInfo(){
+    if (this.selectedPolicy){
+      return this.selectedPolicy.getString();
+    }
+    return "";
+  }
+  updatePolicyTreeData() {
+    const items: TreeViewItem[] = [];
+    for (const policy of this.currentPolicies) {
+      items.push(this.treeAdapter.PolicyToTreeItem(policy,true));
+    }
+    this.policyDataSource.data = items;
+  }
+  onPolicySelect(node: TreeViewItem){
+    this.selectedPolicy = node.value;
+    this.selectedNode = node;
+  }
+
+
+
+  hasChild(_: number, node: TreeViewItem){
+    return (!!node.children && node.children.length > 0);
+  }
+
+  ///////////////////////////////////////////////////////////////////////////
+  ///////////////////////////////////////////////////////////////////////////
+  ///////////////////////////////////////////////////////////////////////////
+
+
 
 }

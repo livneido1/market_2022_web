@@ -15,6 +15,10 @@ import { MessageService } from 'app/services/message.service';
 import { ModelAdapterService } from 'app/services/model-adapter.service';
 import { RemoveDiscountFromShopRequest } from 'app/http/requests/remove-discount-from-shop-request';
 import { Response } from 'app/http/facadeObjects/response';
+import { TreeViewAdapterService, TreeViewItem } from 'app/services/tree-view-adapter.service';
+import { MatTreeNestedDataSource } from '@angular/material/tree';
+import { NestedTreeControl } from '@angular/cdk/tree';
+
 
 @Component({
   selector: 'app-discount-main',
@@ -25,6 +29,11 @@ export class DiscountMainComponent implements OnInit {
   shop: ShopFacade;
   lastUpdate: string;
   currentDiscounts: DiscountTypeFacade[];
+  selectedDiscount: DiscountTypeFacade;
+  selectedNode: TreeViewItem;
+
+  treeControl = new NestedTreeControl<TreeViewItem>((node) => node.children);
+  discountDataSource = new MatTreeNestedDataSource<TreeViewItem>();
   constructor(
     private engine: EngineService,
     private messageService: MessageService,
@@ -32,6 +41,7 @@ export class DiscountMainComponent implements OnInit {
     private modelAdapter: ModelAdapterService,
     public dialog: MatDialog,
     private policiesService: PoliciesService,
+    private treeAdapter: TreeViewAdapterService,
   ) {}
 
   ngOnInit(): void {
@@ -70,7 +80,7 @@ export class DiscountMainComponent implements OnInit {
 
   backToShop() {}
 
-  
+
   isOwnerOrManager(): boolean {
     if (this.shop.employees.has(this.config.visitor.name)) {
       return true;
@@ -98,6 +108,7 @@ export class DiscountMainComponent implements OnInit {
             const wrapper = new DiscountTypeWrapper().deserialize(wrappersJson);
             const discountType = wrapper.getDiscountType();
             this.currentDiscounts.push(discountType);
+            this.updateDiscountTreeData();
           }
           this.messageService.validMessage(
             "successfully loaded shop's discounts"
@@ -110,4 +121,41 @@ export class DiscountMainComponent implements OnInit {
       }
     });
   }
+
+  canDelete(){
+    return this.selectedNode && this.selectedNode.isParent;
+  }
+
+
+  /////////////////////////// Tree view Code ////////////////////////////
+  ///////////////////////////////////////////////////////////////////////
+  ///////////////////////////////////////////////////////////////////////
+  ///////////////////////////////////////////////////////////////////////
+  getDiscountInfo(){
+    if (this.selectedDiscount){
+      return this.selectedDiscount.getString();
+    }
+    return "";
+  }
+  updateDiscountTreeData() {
+    const items: TreeViewItem[] = [];
+    for (const discount of this.currentDiscounts) {
+      items.push(this.treeAdapter.DiscountToTreeViewItem(discount,true));
+    }
+    this.discountDataSource.data = items;
+  }
+  onDiscountSelect(node: TreeViewItem){
+    this.selectedDiscount = node.value;
+    this.selectedNode = node;
+  }
+
+
+
+  hasChild(_: number, node: TreeViewItem){
+    return (!!node.children && node.children.length > 0);
+  }
+
+  ///////////////////////////////////////////////////////////////////////////
+  ///////////////////////////////////////////////////////////////////////////
+  ///////////////////////////////////////////////////////////////////////////
 }

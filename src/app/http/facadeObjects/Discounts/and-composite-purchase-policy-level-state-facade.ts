@@ -10,7 +10,9 @@ export class AndCompositePurchasePolicyLevelStateFacade
   implements Deserializable {
 
     constructor( purchasePolicyLevelStateFacades?: PurchasePolicyLevelStateFacade[]){
-      super("AndCompositePurchasePolicyLevelStateFacade",purchasePolicyLevelStateFacades);
+      super("AndCompositePurchasePolicyLevelStateFacade",
+      'All Sub Purchase Policies',
+      purchasePolicyLevelStateFacades);
 
     }
 
@@ -38,6 +40,10 @@ export class AndCompositePurchasePolicyLevelStateFacade
         Category.cellular,
         subWrappers
       );
+    }
+
+    getString(): string {
+        return "All Sub Level Purchase Policies are needed"
     }
 
 

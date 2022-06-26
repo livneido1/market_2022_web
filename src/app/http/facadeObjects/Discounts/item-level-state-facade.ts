@@ -30,4 +30,8 @@ export class ItemLevelStateFacade
       []
     );
   }
+
+  getString(): string {
+      return "Level: Item Discount\nItemId:"+this.itemID;
+  }
 }

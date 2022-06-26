@@ -21,6 +21,7 @@ export class ConditionalDiscountFacade
   ) {
     super(
       'ConditionalDiscountFacade',
+      'Conditional Discount',
       percentageOfDiscount,
       discountLevelState
     );
@@ -51,5 +52,10 @@ export class ConditionalDiscountFacade
       this.conditionFacade.getWrapper(),
       []
     );
+  }
+
+  getString(): string {
+      return  "percentage:" + this.percentageOfDiscount +"\n" + 
+              "level:" + this.discountLevelState.title +"\n"  
   }
 }

@@ -5,31 +5,53 @@
         <p class="tableTitle">Created Levels</p>
         <table class="levelTable">
           <thead>
-            <tr style="border-bottom: solid;">
+            <tr >
               <th>
-                <p class="tableHeaderMain"> Levels </p>
+                <p> Levels </p>
               </th>
               <th>
-                <!-- this is just to save 2 slots in a row -->
+
               </th>
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let level of currentLevels" style="border-bottom: solid;">
+            <tr>
               <td>
-                <div
-                  style="cursor: pointer;"
-                  >
-                  {{getLevelName(level)}}
-                </div>
+                <mat-tree [dataSource]="levelDataSource" [treeControl]="treeControl" class="example-tree">
+                  <mat-nested-tree-node *matTreeNodeDef="let node; when: hasChild">
+                    <div class="mat-tree-node">
+                      <button mat-icon-button matTreeNodeToggle
+                        [attr.aria-label]="'Toggle ' + node.name"
+                        [ngClass]="{'selectedNode': this.selectedLevel && node.value === this.selectedLevel}"
+                        (click)="onLevelSelect(node)">
+                        <mat-icon *ngIf="hasChild(1,node)" class="mat-icon-rtl-mirror">
+                          {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                        </mat-icon>
+                        {{node.name}}
+                      </button>
+                    </div>
+                    <div [class.example-tree-invisible]="!treeControl.isExpanded(node)"
+                        role="group">
+                      <ng-container matTreeNodeOutlet></ng-container>
+                    </div>
+                  </mat-nested-tree-node>
+                </mat-tree>
               </td>
-              <td>
-                <button
-                  title="remove"
-                  class="removeButton"
-                  (click)="removeLevel(level)">
-                  <span class='material-icons'>delete</span>
-                </button>
+              <td style="width: 50%;">
+                <div *ngIf="this.selectedLevel">
+                  <div>
+                    <p class="treeItemInfo">{{getLevelInfo()}}</p>
+                  </div>
+                  <div style="text-align: center;">
+                    <button
+                      *ngIf="this.selectedLevelNode && this.selectedLevelNode.isParent"
+                      title="remove"
+                      class="removeButton"
+                      (click)="removeLevel(this.selectedLevel)">
+                      <span class='material-icons'>delete</span>
+                    </button>
+                  </div>
+                </div>
               </td>
             </tr>
           </tbody>
@@ -62,35 +84,54 @@
         <p class="tableTitle">Created Conditions</p>
         <table class="levelTable">
           <thead>
-            <tr style="border-bottom: solid;">
+            <tr >
               <th>
-                <p class="tableHeaderMain"> Conditions </p>
+                <p> Conditions </p>
               </th>
               <th>
-                <!-- this is just to save 2 slots in a row -->
+
               </th>
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let cond of currentConditions" style="border-bottom: solid;">
+            <tr>
               <td>
-                <div
-                  style="cursor: pointer;"
-                  >
-                  {{cond.title}}
+                <mat-tree [dataSource]="conditionDataSource" [treeControl]="treeControl" class="example-tree">
+                  <mat-nested-tree-node *matTreeNodeDef="let nodeCond; when: hasChild">
+                    <div class="mat-tree-node">
+                      <button mat-icon-button matTreeNodeToggle
+                        [attr.aria-label]="'Toggle ' + nodeCond.name"
+                        [ngClass]="{'selectedNode': this.selectedCondition && nodeCond.value === this.selectedCondition}"
+                        (click)="onConditionSelect(nodeCond)">
+                        <mat-icon *ngIf="hasChild(1,nodeCond)" class="mat-icon-rtl-mirror">
+                          {{treeControl.isExpanded(nodeCond) ? 'expand_more' : 'chevron_right'}}
+                        </mat-icon>
+                        {{nodeCond.name}}
+                      </button>
+                    </div>
+                    <div [class.example-tree-invisible]="!treeControl.isExpanded(nodeCond)"
+                        role="group">
+                      <ng-container matTreeNodeOutlet></ng-container>
+                    </div>
+                  </mat-nested-tree-node>
+                </mat-tree>
+              </td>
+              <td style="width: 50%;">
+                <div *ngIf="this.selectedCondition">
+                  <div>
+                    <p class="treeItemInfo">{{getConditionInfo()}}</p>
+                  </div>
+                  <div style="text-align: center;">
+                    <button
+                      *ngIf="this.selectedConditionNode && this.selectedConditionNode.isParent"
+                      title="remove"
+                      class="removeButton"
+                      (click)="removeCondition(this.selectedCondition)">
+                      <span class='material-icons'>delete</span>
+                    </button>
+                  </div>
                 </div>
               </td>
-              <td>
-                <button
-                  title="remove"
-                  class="removeButton"
-                  (click)="removeCondition(cond)">
-                  <span class='material-icons'>delete</span>
-                </button>
-              </td>
-              
-
-
             </tr>
           </tbody>
         </table>

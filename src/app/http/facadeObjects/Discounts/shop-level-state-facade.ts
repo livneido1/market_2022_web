@@ -28,4 +28,8 @@ export class ShopLevelStateFacade extends DiscountLevelStateFacade  implements D
         []
       )
   }
+
+  getString(): string {
+      return "Level: All Shop"
+  }
 }

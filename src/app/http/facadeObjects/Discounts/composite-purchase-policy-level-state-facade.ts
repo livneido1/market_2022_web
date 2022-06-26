@@ -9,9 +9,10 @@ export abstract class CompositePurchasePolicyLevelStateFacade
   purchasePolicyLevelStateFacades: PurchasePolicyLevelStateFacade[];
   constructor(
     type?: string,
+    title?: string,
     purchasePolicyLevelStateFacades?: PurchasePolicyLevelStateFacade[]
   ) {
-    super(type);
+    super(type,title);
     this.purchasePolicyLevelStateFacades = purchasePolicyLevelStateFacades
       ? purchasePolicyLevelStateFacades
       : [];

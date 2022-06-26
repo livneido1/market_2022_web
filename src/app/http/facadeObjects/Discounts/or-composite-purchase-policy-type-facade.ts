@@ -16,6 +16,7 @@ export class OrCompositePurchasePolicyTypeFacade
   ) {
     super(
       'OrCompositePurchasePolicyTypeFacade',
+      'One Of Many Policies',
       purchasePolicyLevelStateFacade,
       purchasePolicyTypeFacades
     );
@@ -33,5 +34,9 @@ export class OrCompositePurchasePolicyTypeFacade
       shopLevelFacade,
       subWrappers
     );
+  }
+
+  getString(): string {
+      return "Info: To buy - must at least one of sub policies"
   }
 }

@@ -8,8 +8,8 @@ export abstract class CompositePurchasePolicyTypeFacade
   implements Deserializable
 {
   purchasePolicyTypeFacades: PurchasePolicyTypeFacade[];
-  constructor(type?:string, purchasePolicyLevelStateFacade?:PurchasePolicyLevelStateFacade, purchasePolicyTypeFacades?: PurchasePolicyTypeFacade[]){
-    super(type, purchasePolicyLevelStateFacade);
+  constructor(type?:string,title?:string, purchasePolicyLevelStateFacade?:PurchasePolicyLevelStateFacade, purchasePolicyTypeFacades?: PurchasePolicyTypeFacade[]){
+    super(type,title, purchasePolicyLevelStateFacade);
     this.purchasePolicyTypeFacades = purchasePolicyTypeFacades;
   }
 

@@ -11,4 +11,5 @@ export abstract class DiscountLevelStateFacade {
 
 
   abstract getWrapper(): DiscountLevelStateWrapper;
+  abstract getString(): string;
 }

@@ -21,6 +21,11 @@ import { ConfigService } from 'app/services/config-service.service';
 import { PoliciesService } from 'app/services/policies-service.service';
 import { EngineService } from 'app/services/engine.service';
 import { MessageService } from 'app/services/message.service';
+import { MatTreeNestedDataSource } from '@angular/material/tree';
+import { NestedTreeControl } from '@angular/cdk/tree';
+import { CompositeDiscountLevelStateFacade } from 'app/http/facadeObjects/Discounts/composite-discount-level-state-facade';
+import { TreeViewAdapterService, TreeViewItem } from 'app/services/tree-view-adapter.service';
+
 
 @Component({
   selector: 'app-sub-discount',
@@ -31,13 +36,21 @@ export class SubDiscountComponent implements OnInit {
   currentLevels: DiscountLevelStateFacade[];
   currentConditions: ConditionFacade[];
   currentPercentage: number;
+  selectedLevel: DiscountLevelStateFacade;
+  selectedLevelNode: TreeViewItem;
+  selectedCondition: ConditionFacade;
+  selectedConditionNode: TreeViewItem;
 
+  treeControl = new NestedTreeControl<TreeViewItem>((node) => node.children);
+  levelDataSource = new MatTreeNestedDataSource<TreeViewItem>();
+  conditionDataSource = new MatTreeNestedDataSource<TreeViewItem>();
   constructor(
     public dialog: MatDialog,
     private config: ConfigService,
     private messageService: MessageService,
     private discountService: PoliciesService,
-    private engine: EngineService
+    private engine: EngineService,
+    private treeAdapter: TreeViewAdapterService
   ) {}
 
   ngOnInit(): void {
@@ -53,6 +66,8 @@ export class SubDiscountComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.currentConditions.push(result);
+        this.updateConditionTreeData();
+
       }
     });
   }
@@ -64,6 +79,7 @@ export class SubDiscountComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.currentLevels.push(result);
+        this.updateLevelTreeData();
       }
     });
   }
@@ -80,6 +96,7 @@ export class SubDiscountComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result: ConditionFacade[]) => {
       if (result) {
         this.currentConditions = result;
+        this.updateConditionTreeData();
       }
     });
   }
@@ -93,6 +110,8 @@ export class SubDiscountComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result: DiscountLevelStateFacade[]) => {
       if (result) {
         this.currentLevels = result;
+        this.updateLevelTreeData();
+
       }
     });
   }
@@ -112,17 +131,17 @@ export class SubDiscountComponent implements OnInit {
     );
   }
 
-  removeCondition(condition: ConditionFacade){
+  removeCondition(condition: ConditionFacade) {
     const index = this.currentConditions.indexOf(condition);
-    if (index >-1){
-      this.currentConditions.splice(index,1);
+    if (index > -1) {
+      this.currentConditions.splice(index, 1);
     }
   }
 
-  removeLevel(level:DiscountLevelStateFacade){
+  removeLevel(level: DiscountLevelStateFacade) {
     const index = this.currentLevels.indexOf(level);
-    if (index >-1){
-      this.currentLevels.splice(index,1);
+    if (index > -1) {
+      this.currentLevels.splice(index, 1);
     }
   }
 
@@ -141,16 +160,15 @@ export class SubDiscountComponent implements OnInit {
     }
 
     const discount: DiscountTypeFacade = this.createDiscountType();
-    this.discountService.createdDiscountList.push(discount)
+    this.discountService.createdDiscountList.push(discount);
     this.config.isAddNewDiscountClicked = true;
-
   }
 
-  canMergeConditions(){
-    return this.currentConditions && this.currentConditions.length>0;
+  canMergeConditions() {
+    return this.currentConditions && this.currentConditions.length > 0;
   }
-  canMergeLevels(){
-    return this.currentLevels && this.currentLevels.length>0;
+  canMergeLevels() {
+    return this.currentLevels && this.currentLevels.length > 0;
   }
   private createDiscountType() {
     let discount: DiscountTypeFacade;
@@ -178,4 +196,58 @@ export class SubDiscountComponent implements OnInit {
   public atMostOneCondition() {
     return this.currentConditions.length <= 1;
   }
+
+
+
+
+
+  //////////////////////////////// TreeView Methds ////////////////////////////////
+  /////////////////////////////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////////////////////////
+
+  getLevelInfo(){
+    if (this.selectedLevel){
+      return this.selectedLevel.getString();
+    }
+    return "";
+  }
+  updateLevelTreeData() {
+    const items: TreeViewItem[] = [];
+    for (const lvl of this.currentLevels) {
+      items.push(this.treeAdapter.discountLevelToTreeViewItem(lvl,true));
+    }
+    this.levelDataSource.data = items;
+  }
+  onLevelSelect(node: TreeViewItem){
+    this.selectedLevel = node.value;
+    this.selectedLevelNode = node;
+  }
+
+  getConditionInfo(){
+    if (this.selectedCondition){
+      return this.selectedCondition.getString();
+    }
+    return "";
+  }
+  updateConditionTreeData() {
+    const items: TreeViewItem[] = [];
+    for (const cond of this.currentConditions) {
+      items.push(this.treeAdapter.ConditionToTreeViewItem(cond,true));
+    }
+    this.conditionDataSource.data = items;
+  }
+  onConditionSelect(node: TreeViewItem){
+    this.selectedCondition = node.value;
+    this.selectedConditionNode = node;
+  }
+
+
+
+  hasChild(_: number, node: TreeViewItem){
+    return (!!node.children && node.children.length > 0);
+  }
+
+
+
 }

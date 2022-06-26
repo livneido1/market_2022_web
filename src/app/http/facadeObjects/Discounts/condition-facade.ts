@@ -9,4 +9,6 @@ export abstract class ConditionFacade {
   };
 
   abstract getWrapper():ConditionWrapper;
+
+  abstract getString():string
 }
