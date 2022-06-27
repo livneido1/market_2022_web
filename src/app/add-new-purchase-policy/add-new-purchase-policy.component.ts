@@ -65,8 +65,9 @@ export class AddNewPurchasePolicyComponent implements OnInit {
     });
   }
 
-  // TODO implement here
-  backToShop() {}
+  onBackClicked(){
+    this.config.isMainPurcahsePolicyClicked = true;
+  }
 
   openPurchaseDialog(purchase: PurchasePolicyTypeFacade) {}
   getPurchasePolicyName(policy: PurchasePolicyTypeFacade) {

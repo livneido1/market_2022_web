@@ -91,6 +91,10 @@ export class SubPurchasePolicyComponent implements OnInit {
     return this.exactOneLevel() && !this.isAmountError();
   }
 
+  onBackClicked(){
+    this.config.isAddNewPurchasePolicyClicked=true;
+  }
+
   selectType(type: PurchasePolicyTypeFacade) {
     this.currentType = type;
   }

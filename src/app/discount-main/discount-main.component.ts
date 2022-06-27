@@ -15,10 +15,12 @@ import { MessageService } from 'app/services/message.service';
 import { ModelAdapterService } from 'app/services/model-adapter.service';
 import { RemoveDiscountFromShopRequest } from 'app/http/requests/remove-discount-from-shop-request';
 import { Response } from 'app/http/facadeObjects/response';
-import { TreeViewAdapterService, TreeViewItem } from 'app/services/tree-view-adapter.service';
+import {
+  TreeViewAdapterService,
+  TreeViewItem,
+} from 'app/services/tree-view-adapter.service';
 import { MatTreeNestedDataSource } from '@angular/material/tree';
 import { NestedTreeControl } from '@angular/cdk/tree';
-
 
 @Component({
   selector: 'app-discount-main',
@@ -41,7 +43,7 @@ export class DiscountMainComponent implements OnInit {
     private modelAdapter: ModelAdapterService,
     public dialog: MatDialog,
     private policiesService: PoliciesService,
-    private treeAdapter: TreeViewAdapterService,
+    private treeAdapter: TreeViewAdapterService
   ) {}
 
   ngOnInit(): void {
@@ -51,26 +53,28 @@ export class DiscountMainComponent implements OnInit {
     this.reset();
   }
 
-
   openDiscountDialog(discount: DiscountTypeFacade) {}
 
-  getDiscountName(discount:DiscountTypeFacade) {
+  getDiscountName(discount: DiscountTypeFacade) {
     return this.policiesService.getDiscountName(discount);
   }
 
-  removeDiscount(discount:DiscountTypeFacade) {
+  removeDiscount(discount: DiscountTypeFacade) {
     const wrapper = discount.getWrapper();
-    const request = new RemoveDiscountFromShopRequest(wrapper,this.shop.shopName, this.config.visitor.name);
-    this.engine.removeDiscountFromShop(request).subscribe(responseJson =>{
+    const request = new RemoveDiscountFromShopRequest(
+      wrapper,
+      this.shop.shopName,
+      this.config.visitor.name
+    );
+    this.engine.removeDiscountFromShop(request).subscribe((responseJson) => {
       const response = new Response().deserialize(responseJson);
-      if (response.isErrorOccurred()){
+      if (response.isErrorOccurred()) {
         this.messageService.errorMessage(response.getMessage());
-      }
-      else {
+      } else {
         this.reset();
-        this.messageService.validMessage("discount successfully removed");
+        this.messageService.validMessage('discount successfully removed');
       }
-    })
+    });
   }
 
   addDiscount() {
@@ -78,8 +82,9 @@ export class DiscountMainComponent implements OnInit {
     this.config.isAddNewDiscountClicked = true;
   }
 
-  backToShop() {}
-
+  backToShop() {
+    this.config.isShopInfoClicked = true;
+  }
 
   isOwnerOrManager(): boolean {
     if (this.shop.employees.has(this.config.visitor.name)) {
@@ -122,37 +127,34 @@ export class DiscountMainComponent implements OnInit {
     });
   }
 
-  canDelete(){
+  canDelete() {
     return this.selectedNode && this.selectedNode.isParent;
   }
-
 
   /////////////////////////// Tree view Code ////////////////////////////
   ///////////////////////////////////////////////////////////////////////
   ///////////////////////////////////////////////////////////////////////
   ///////////////////////////////////////////////////////////////////////
-  getDiscountInfo(){
-    if (this.selectedDiscount){
+  getDiscountInfo() {
+    if (this.selectedDiscount) {
       return this.selectedDiscount.getString();
     }
-    return "";
+    return '';
   }
   updateDiscountTreeData() {
     const items: TreeViewItem[] = [];
     for (const discount of this.currentDiscounts) {
-      items.push(this.treeAdapter.DiscountToTreeViewItem(discount,true));
+      items.push(this.treeAdapter.DiscountToTreeViewItem(discount, true));
     }
     this.discountDataSource.data = items;
   }
-  onDiscountSelect(node: TreeViewItem){
+  onDiscountSelect(node: TreeViewItem) {
     this.selectedDiscount = node.value;
     this.selectedNode = node;
   }
 
-
-
-  hasChild(_: number, node: TreeViewItem){
-    return (!!node.children && node.children.length > 0);
+  hasChild(_: number, node: TreeViewItem) {
+    return !!node.children && node.children.length > 0;
   }
 
   ///////////////////////////////////////////////////////////////////////////

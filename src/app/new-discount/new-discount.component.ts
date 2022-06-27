@@ -83,6 +83,9 @@ export class NewDiscountComponent implements OnInit {
   canDelete(){
     return this.selectedNode && this.selectedNode.isParent
   }
+  onBackClicked(){
+    this.config.isMainDiscountClicked=true;
+  }
 
   submit() {
     if (this.currentDiscounts.length !== 1 ){
