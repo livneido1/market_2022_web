@@ -1,5 +1,14 @@
 <div  class="backgroundComp">
   <div class="rowLevels">
+    <div style="height: 10%; text-align: left; width: 70%;">
+      <button
+        class="backButton"
+        (click)="onBackClicked()"
+        title="Go back to Shop added shop policies"
+        >
+        <span class="material-icons">arrow_back</span>
+      </button>
+    </div>
     <div class="colLeft scrollable">
       <div *ngIf="this.currentLevels.length >0; else noLevels">
         <p class="tableTitle">Created Levels</p>

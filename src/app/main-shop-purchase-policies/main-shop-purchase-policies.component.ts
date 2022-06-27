@@ -74,8 +74,9 @@ export class MainShopPurchasePoliciesComponent implements OnInit {
     this.policiesService.reset();
     this.config.isAddNewPurchasePolicyClicked = true;
   }
-  // TODO
-  backToShop() {}
+  onBackClicked(){
+    this.config.isShopInfoClicked=true;
+  }
 
   reset() {
     this.lastUpdate = new Date().toLocaleString();

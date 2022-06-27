@@ -1,13 +1,13 @@
 <div  class="backgroundComp">
-  <div style="height: 10%; text-align: left;">
+  <div style="height: 10%; text-align: left; width: 70%;">
     <button
       class="backButton"
-      (click)="backToShop()"
+      (click)="onBackClicked()"
       title="Go back to Shop"
       >
       <span class="material-icons">arrow_back</span>
     </button>
-</div>
+  </div>
 <p class="mainTitle"> {{shop.shopName}} </p>
   <div *ngIf="this.currentPolicies.length > 0" class="resultColumn">
     <p class="resultTitle">Purchase Policies in Shop</p>
