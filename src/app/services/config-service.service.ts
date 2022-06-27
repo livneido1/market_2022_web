@@ -70,7 +70,7 @@ export class ConfigService {
     this._itemsSearched = undefined;
     this.selectedShop = undefined;
     this._isManagerLoggedIn = false;
-    this.currentStatistics = new StatisticsData(1,1,1,0,1);
+    this.currentStatistics = new StatisticsData(1,1,0,0,0);
   }
 
   cleanAllComponents() {
