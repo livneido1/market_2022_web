@@ -60,7 +60,7 @@ export class ShopInfoComponentComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.reset();
+    this.resetShop();
   }
 
   openDialog(item: ItemFacade): void {
@@ -415,6 +415,7 @@ export class ShopInfoComponentComponent implements OnInit {
   }
 
   resetShop() {
+    this.reset();
     const request = new TwoStringRequest();
     request.name = this.config.visitor.name;
     request.shopName = this.shop.shopName;

@@ -56,7 +56,7 @@
       <mat-label >Search by {{productSearchBy}}</mat-label>
       <mat-select>
         <mat-option *ngFor="let category of getAllCategories()"
-        (onSelectionChange)="selectCategory(category)"
+        (onSelectionChange)="selectCategory(category, $event)"
         [value]="searchText">
           {{category}}
         </mat-option>
