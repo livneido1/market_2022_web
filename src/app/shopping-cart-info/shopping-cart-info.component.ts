@@ -90,12 +90,14 @@ export class ShoppingCartInfoComponent implements OnInit {
     return itemsAndAmount;
   }
   myBids() {
+    this.resetShoppingCart();
     const bids: BidFacade[] = [];
     for (const basket of this.cart.cart.values()) {
       bids.push(...basket.bids.values());
     }
     const dialogRef = this.dialog.open(UserBidsDialogComponent, {
       width: '500px',
+      height: '400px',
       data: { bids: bids },
     });
 
