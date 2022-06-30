@@ -16,7 +16,7 @@ export class ModelAdapterService {
 
 
   getAllPermissions(): string[] {
-    return ['Employees edit', 'See History', 'Can Approve Bids'];
+    return ['Employees edit', 'See History', 'Can Approve Bids', 'Inventory Permission'];
   }
   getPermissionFromText(text: string): PermissionFacade {
     const permit = new PermissionFacade();
@@ -30,6 +30,9 @@ export class ModelAdapterService {
       case 'Can Approve Bids':
         permit.name = 'ApproveBidPermission';
         return permit;
+      case 'Inventory Permission':
+        permit.name = 'EditInventoryPermission';
+        return permit;
     }
     return undefined;
   }
@@ -42,6 +45,8 @@ export class ModelAdapterService {
           return "See History";
         case "ApproveBidPermission":
           return "Can Approve Bids";
+        case "EditInventoryPermission":
+          return 'Inventory Permission';
       }
       return undefined;
   }
@@ -77,7 +82,7 @@ export class ModelAdapterService {
     return undefined;
   }
 
-  
+
   hasPermission(shop:ShopFacade, visitorName:string, permission: string):boolean{
     if (shop.employees.has(visitorName)){
       const app:AppointmentFacade = shop.employees.get(visitorName);

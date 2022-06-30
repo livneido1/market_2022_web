@@ -66,7 +66,7 @@
                 </div>
                 <div style="text-align: center;">
                   <button
-                    *ngIf="canDelete() && isOwnerOrManager()"
+                    *ngIf="canDelete() && isOwner()"
                     title="remove"
                     class="removeButton"
                     (click)="removePolicy(this.selectedPolicy)">
@@ -87,7 +87,7 @@
   <div class="SideBar">
     <div style="height: 10%; text-align: center; margin-top: 20%;">
       <button
-        *ngIf="isOwnerOrManager()"
+        *ngIf="isOwner()"
         class="optionalButton"
         (click)="addPolicy()"
         >

@@ -364,11 +364,12 @@ export class ShopInfoComponentComponent implements OnInit {
       'ApproveBidPermission'
     );
   }
-  isOwnerOrManager(): boolean {
-    if (this.shop.employees.has(this.config.visitor.name)) {
-      return true;
-    }
-    return false;
+  hasInventoryPermission(): boolean {
+    return this.modelAdapter.hasPermission(
+      this.shop,
+      this.config.visitor.name,
+      'EditInventoryPermission'
+    );
   }
   hasEmployeePermission(): boolean {
     return this.modelAdapter.hasPermission(

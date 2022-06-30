@@ -63,9 +63,9 @@ export class PurchasePolicyTypeWrapper implements Deserializable {
       case 'OrCompositePurchasePolicyTypeFacade':
         return PurchasePolicyTypeWrapperType.OrCompositePurchasePolicyTypeFacade;
       case 'AtMostPurchasePolicyTypeFacade':
-        return PurchasePolicyTypeWrapperType.AtLeastPurchasePolicyTypeFacade;
-      case 'AtLeastPurchasePolicyTypeFacade':
         return PurchasePolicyTypeWrapperType.AtMostPurchasePolicyTypeFacade;
+      case 'AtLeastPurchasePolicyTypeFacade':
+        return PurchasePolicyTypeWrapperType.AtLeastPurchasePolicyTypeFacade;
     }
     return undefined;
   }

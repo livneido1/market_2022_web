@@ -15,6 +15,7 @@ import { Response } from 'app/http/facadeObjects/response';
 import { NestedTreeControl } from '@angular/cdk/tree';
 import { TreeViewAdapterService, TreeViewItem } from 'app/services/tree-view-adapter.service';
 import { MatTreeNestedDataSource } from '@angular/material/tree';
+import { ShopOwnerAppointmentFacade } from 'app/http/facadeObjects/ShopOwnerAppointmentFacade';
 
 @Component({
   selector: 'app-main-shop-purchase-policies',
@@ -112,9 +113,10 @@ export class MainShopPurchasePoliciesComponent implements OnInit {
     });
   }
 
-  isOwnerOrManager(): boolean {
+  isOwner(): boolean {
     if (this.shop.employees.has(this.config.visitor.name)) {
-      return true;
+      const app = this.shop.employees.get(this.config.visitor.name);
+      return (app.type === new ShopOwnerAppointmentFacade().type)
     }
     return false;
   }

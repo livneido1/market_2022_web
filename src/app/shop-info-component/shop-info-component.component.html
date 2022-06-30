@@ -53,7 +53,7 @@
               <div>
 
                 <button
-                  *ngIf="isOwnerOrManager()"
+                  *ngIf="hasInventoryPermission()"
                   title="Remove Item From Shop"
                   style="float:right; cursor: pointer;"
                   (click)="removeItem(item)">
@@ -61,7 +61,7 @@
                 </button>
 
                 <button
-                  *ngIf="isOwnerOrManager()"
+                  *ngIf="hasInventoryPermission()"
                   title="set item info"
                   style="cursor: pointer;"
                   (click)="setItemInfo(item)">
@@ -80,7 +80,7 @@
 
               <div>
                 <button
-                  *ngIf="isOwnerOrManager()"
+                  *ngIf="hasInventoryPermission()"
                   style="cursor: pointer; width: 100%;margin-top: 10px;"
                   (click)="setItemAmount(item)">
                   Change Item Amount in Shop
@@ -100,7 +100,7 @@
   <div class="SideBar">
     <div style="height: 10%; text-align: center; margin-top: 20%;">
       <button
-        *ngIf="isOwnerOrManager()"
+        *ngIf="hasInventoryPermission()"
         class="optionalButton"
         (click)="addItemToShop()"
         >
@@ -117,6 +117,7 @@
     </div>
     <div class="optionalButtonsDiv">
       <button class="optionalButton"
+        *ngIf="hasBidPermissions()"
         (click)="getMyPendingApps()"
       >
         My Pending Appointments
