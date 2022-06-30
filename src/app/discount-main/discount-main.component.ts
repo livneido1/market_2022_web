@@ -85,13 +85,14 @@ export class DiscountMainComponent implements OnInit {
   backToShop() {
     this.config.isShopInfoClicked = true;
   }
-
-  isOwnerOrManager(): boolean {
+  isOwner(): boolean {
     if (this.shop.employees.has(this.config.visitor.name)) {
-      return true;
+      const app = this.shop.employees.get(this.config.visitor.name);
+      return (app.type === new ShopOwnerAppointmentFacade().type)
     }
     return false;
   }
+
 
   reset() {
     this.lastUpdate = new Date().toLocaleString();
