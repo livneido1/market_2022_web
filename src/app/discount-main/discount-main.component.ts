@@ -21,6 +21,7 @@ import {
 } from 'app/services/tree-view-adapter.service';
 import { MatTreeNestedDataSource } from '@angular/material/tree';
 import { NestedTreeControl } from '@angular/cdk/tree';
+import { ShopOwnerAppointmentFacade } from 'app/http/facadeObjects/ShopOwnerAppointmentFacade';
 
 @Component({
   selector: 'app-discount-main',
